@@ -22,6 +22,7 @@ const Login = () => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
       user
     );
+    console.log(res);
   };
   return (
     <>
