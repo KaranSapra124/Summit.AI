@@ -1,7 +1,18 @@
 import { Request, Response } from "express";
-const userLogin = (req: Request, res: Response) => {
-    console.log(req.body)
-  res.json({ message: "User Logged In" });
+import UserModel from "../Models/UserModel";
+
+interface UserLoginRequest {
+  name: string;
+  email: string;
+}
+
+const userLogin = async (
+  req: Request<{}, {}, UserLoginRequest>,
+  res: Response
+) => {
+  const { name, email } = req.body;
+  const newUser = await UserModel.create({ name: name, email: email });
+  return res.json({ message: "Logged In Successfully!", newUser });
 };
 
 export { userLogin };
