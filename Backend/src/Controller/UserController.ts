@@ -12,7 +12,7 @@ const userLogin = async (
 ) => {
   const { name, email } = req.body;
   const newUser = await UserModel.create({ name: name, email: email });
-  return res.json({ message: "Logged In Successfully!", newUser });
+  res.json({ message: "Logged In Successfully!", newUser });
 };
 
 export { userLogin };
