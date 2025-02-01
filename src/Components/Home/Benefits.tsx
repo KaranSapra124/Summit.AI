@@ -1,3 +1,4 @@
+import Divider from "../../Utils/Divider";
 import Container from "../Global/Container";
 
 const Benefits = () => {
@@ -22,26 +23,27 @@ const Benefits = () => {
 
   return (
     <>
-      <Container className="bg-gradient-to-tr from-black/60 via-gray-900/90 to-white/10">
+      <Container className=" bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
         <div>
-          <h1 className="text-center my-2 text-5xl font-bold">
+          <h1 className="text-center my-2 text-5xl text-white font-bold">
             How{" "}
-            <span className="text-emerald-500 font-extrabold">
-              Summit.AI
-            </span>{" "}
+            <span className="text-emerald-500 font-extrabold">Summit.AI</span>{" "}
             Helps To Get Your Tasks Done ?
           </h1>
-          <p className="text-center text-gray-700 font-extrabold text-xs my-4">Make use of our AI to get your tasks done on time!</p>
-          <div className="flex  justify-between">
+          <p className="text-center text-gray-300 font-semibold text-xs my-4">
+            Make use of our AI to get your tasks done on time!
+          </p>
+          <div className="flex  justify-evenly ">
             {benefits?.map((elem: imageData, index: number) => {
               return (
                 <>
                   <div
-                    className="border-l-4 rounded-lg h-fit shadow-md shadow-gray-400 p-5 flex flex-col justify-center items-center border-b-4 border-emerald-500"
+                    className="border-l-2 bg-gradient-to-br from-black/50 to-black/90 rounded-lg  h-fit w-fit  p-5 flex flex-col justify-center items-center border-b-2 border-emerald-500"
                     key={index}
                   >
-                    <img className="w-20" src={elem?.icon} alt="No Image" />
-                    <p className="text-justify  text-sm font-semibold text-gray-700">
+                    <img className="w-12 rounded-full" src={elem?.icon} alt="No Image" />
+                    <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4"/>
+                    <p className="text-center  text-sm font-light text-gray-200">
                       {elem?.description}
                     </p>
                   </div>

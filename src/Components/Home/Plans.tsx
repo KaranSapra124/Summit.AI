@@ -1,32 +1,39 @@
 import Container from "../Global/Container";
 import { pricingPlans, PricingPlanType } from "../../Utils/PlanData";
+import Divider from "../../Utils/Divider";
 const Plans = () => {
   const isFeatureAvailable = (val: boolean, feature: string) => {
     return val ? `✔️ ${feature}` : `❌ ${feature}`;
   };
   return (
     <>
-      <Container className="">
-        <h1 className="text-5xl font-bold text-center my-4">
+      <Container className="bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90">
+        <h1 className="text-5xl text-white font-bold text-center my-4">
           Explore Our{" "}
           <span className="text-emerald-500 font-extrabold">Pocket</span>{" "}
           Friendly Plans!
         </h1>
-        <p className="text-center text-gray-700 font-bold my-6">Wanna Try our product , but low on 💵 , don't worry!</p>
+        <p className="text-center text-gray-300 font-semibold text-xs my-6">
+          Wanna Try our product , but low on 💵 , don't worry!
+        </p>
         <div className="flex justify-around">
           {pricingPlans?.map((elem: PricingPlanType, index: number) => {
             return (
-              <div key={index} className=" p-4 bg-black/80 w-96 rounded">
+              <div
+                key={index}
+                className="border-l-2 border-b-2 border-emerald-500 p-2  bg-gradient-to-br from-black/50 to-black/90 w-96 rounded"
+              >
                 <h2 className="text-xl text-white font-medium">{elem?.name}</h2>
                 <p className="text-white text-2xl my-2 font-bold">
                   {elem?.price === "Custom Pricing"
                     ? elem?.price
                     : `₹ ${elem?.price}`}
                 </p>
-                <button className="bg-emerald-500 cursor-pointer hover:scale-105 transition-all w-full text-white font-medium py-2 rounded-sm text-lg ">
+                <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-4"/>
+                <button className="bg-emerald-500 cursor-pointer  hover:scale-[102%] transition-all w-full text-white font-medium py-2 rounded-sm text-lg ">
                   {elem?.price === 0 ? "Try Now" : "Buy Now"}
                 </button>
-                <div className="py-4 ">
+                <div className="py-2 ">
                   <p
                     className={`${
                       elem?.fileUploads
