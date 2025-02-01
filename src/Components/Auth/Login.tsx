@@ -26,20 +26,20 @@ const Login = () => {
   };
   return (
     <>
-      <Container className="h-screen py-10 px-10">
-        <div className="flex">
+      {/* <Container > */}
+        <div className="h-full flex bg-black/90 ">
           <div className="w-1/2 mx-4 flex flex-col justify-center items-center">
-            <h1 className="text-3xl font-bold text-gray-700">
+            <h1 className="text-5xl font-bold text-white">
               Create A{" "}
               <span className="text-emerald-500 font-extrabold">Free</span>{" "}
               Account
             </h1>
             <div className="h-1 w-12 bg-emerald-500 rounded-full my-4"></div>
-            <label className="input w-full p-2 my-4 input-bordered flex items-center gap-2">
+            <label className="input border border-emerald-500 rounded-md w-full p-2 my-4 input-bordered flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
-                fill="currentColor"
+                fill="white"
                 className="h-4 w-4 opacity-70"
               >
                 <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
@@ -47,17 +47,18 @@ const Login = () => {
               </svg>
               <input
                 type="text"
-                className="grow"
+                className="grow text-white p-2 focus:outline-0"
                 name="name"
                 onChange={handleChange}
                 placeholder="Email"
+                
               />
             </label>
-            <label className="input w-full p-2 my-4 input-bordered flex items-center gap-2">
+            <label className="input border border-emerald-500 rounded-md w-full p-2 my-4 input-bordered flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
-                fill="currentColor"
+                fill="white"
                 className="h-4 w-4 opacity-70"
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
@@ -66,7 +67,7 @@ const Login = () => {
                 type="text"
                 name="email"
                 onChange={handleChange}
-                className="grow"
+                className="grow p-2 focus:outline-0 text-white"
                 placeholder="Username"
               />
             </label>
@@ -78,12 +79,12 @@ const Login = () => {
             </button>
           </div>
           <img
-            className="w-1/2 "
+            className="w-1/2 h-screen"
             src="https://img.freepik.com/free-vector/man-reading-concept-illustration_114360-8515.jpg?ga=GA1.1.1152584770.1732648307&semt=ais_hybrid"
             alt="No Image"
           />
         </div>
-      </Container>
+      {/* </Container> */}
     </>
   );
 };
