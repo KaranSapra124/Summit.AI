@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Container from "../Global/Container";
+import Divider from "../../Utils/Divider";
 
 const Demo = () => {
   const [formData, setFormData] = useState({
@@ -57,13 +58,14 @@ const Demo = () => {
       <p className="text-sm sm:text-xs my-4 font-semibold text-gray-300">
         Get a hand on <strong>SUPERPOWERS </strong>of <strong>summit.AI</strong>
       </p>
+      <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4" />
 
       <div className="flex flex-col sm:flex-row justify-center  space-y-4 sm:space-x-4 sm:space-y-0">
         <textarea
           cols={10}
           rows={10}
           placeholder="Enter Your Paragraph..."
-          className="p-4  rounded-lg border-2 border-gray-300 shadow-md w-full text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="p-4  rounded-lg border-2 border-emerald-500 shadow-md w-full text-gray-200 focus:outline-none "
           value={formData?.para}
           onChange={(e) =>
             setFormData((prev) => ({
@@ -100,18 +102,23 @@ const Demo = () => {
           </ul>
         </div> */}
         <div>
-          <select name="" className="bg-emerald-500 border-none text-white text-lg font-semibold rounded-md p-2 " id="">
+          <select
+            name=""
+            className="bg-emerald-500 border-none text-white text-lg font-semibold rounded-md p-2"
+            id=""
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                selectedVal: e.target.value,
+              }))
+            }
+          >
             {values?.map((elem: string, index: number) => {
               return (
                 <option
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      selectedVal: elem,
-                    }))
-                  }
                   className="m-0.5 text-md font-semibold hover:bg-white/70 duration-200 transition-all w-full p-2 rounded cursor-pointer text-center hover:text-black"
                   key={index}
+                  value={elem}
                 >
                   {elem}
                 </option>

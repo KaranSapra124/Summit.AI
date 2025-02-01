@@ -11,10 +11,11 @@ const WhyToUse = () => {
             Summit.AI ?
           </strong>
         </h1>
-        <p className="text-xs font-bold text-gray-300 my-4">
+        <p className="text-xs font-bold text-gray-300 my-6">
           <strong>Summit.AI</strong> has got immense powers to help you improve
           your overall personality!
         </p>
+        <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-2"/>
         <div>
           <DisplayPoints />
         </div>

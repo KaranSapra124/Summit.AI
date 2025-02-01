@@ -19,7 +19,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white py-8">
+    <footer className="bg-gradient-to-br border-t-2 border-gray-500   from-black/60 via-gray-900/90 to-black/90 text-white py-8">
       <Container className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 py-10 px-12">
         {/* Logo and App Name */}
         <div className="text-2xl font-bold">

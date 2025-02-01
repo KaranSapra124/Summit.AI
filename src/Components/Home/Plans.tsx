@@ -16,6 +16,7 @@ const Plans = () => {
         <p className="text-center text-gray-300 font-semibold text-xs my-6">
           Wanna Try our product , but low on 💵 , don't worry!
         </p>
+        <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4"/>
         <div className="flex justify-around">
           {pricingPlans?.map((elem: PricingPlanType, index: number) => {
             return (

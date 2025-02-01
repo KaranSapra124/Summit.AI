@@ -5,9 +5,9 @@ const Hero = () => {
   return (
     <>
       <Container
-        className={`px-40 bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90  h-screen   flex flex-col justify-center items-center `}
+        className={`px-40 bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90  h-full  flex flex-col justify-center items-center `}
       >
-        <div className="flex flex-col mt-20 justify-center">
+        <div className="flex flex-col  justify-center">
           <h1 className="text-5xl text-center font-bold  dark:text-white">
             Summarize Your Content With
             <br />
