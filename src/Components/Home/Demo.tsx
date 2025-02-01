@@ -52,12 +52,12 @@ const Demo = () => {
   };
 
   return (
-    <Container className="px-8 py-12 sm:px-16 lg:px-20 text-center">
-      <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
+    <Container className="px-8 py-12 sm:px-16 lg:px-20 text-center bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90">
+      <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
         Try Out The Capabilities{" "}
         <span className="text-emerald-500 font-extrabold">Of Our App!</span>
       </h1>
-      <p className="text-sm sm:text-base my-4 font-semibold text-gray-700">
+      <p className="text-sm sm:text-xs my-4 font-semibold text-gray-300">
         Get a hand on <strong>SUPERPOWERS </strong>of{" "}
         <strong>summit.AI</strong>
       </p>
@@ -67,7 +67,7 @@ const Demo = () => {
           cols={10}
           rows={10}
           placeholder="Enter Your Paragraph..."
-          className="p-4 rounded-lg border-2 border-gray-300 shadow-md w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="p-4 rounded-lg border-2 border-gray-300 shadow-md w-full text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           value={formData?.para}
           onChange={(e) =>
             setFormData((prev) => ({
@@ -77,7 +77,7 @@ const Demo = () => {
           }
         ></textarea>
 
-        <div className="dropdown dropdown-bottom w-full sm:w-auto mx-auto">
+        {/* <div className="dropdown dropdown-bottom w-full sm:w-auto mx-auto">
           <div tabIndex={0} role="button" className="btn w-full sm:w-52 m-1 text-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-2 focus:ring-emerald-500 rounded-md">
             {formData?.selectedVal}
           </div>
@@ -102,7 +102,7 @@ const Demo = () => {
               );
             })}
           </ul>
-        </div>
+        </div> */}
       </div>
 
       <button

@@ -5,7 +5,7 @@ type PropObj = {
 
 const Container = ({ className, children }: PropObj) => {
   return (
-    <div className={`${className ? className : ""} py-10 px-20`}>{children}</div>
+    <div className={`${className ? className : ""} p-20`}>{children}</div>
   );
 };
 

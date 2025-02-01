@@ -22,7 +22,7 @@ const Benefits = () => {
 
   return (
     <>
-      <Container className="">
+      <Container className="bg-gradient-to-tr from-black/60 via-gray-900/90 to-white/10">
         <div>
           <h1 className="text-center my-2 text-5xl font-bold">
             How{" "}

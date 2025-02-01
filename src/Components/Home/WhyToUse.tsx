@@ -1,16 +1,17 @@
+import Divider from "../../Utils/Divider";
 import Container from "../Global/Container";
 
 const WhyToUse = () => {
   return (
     <>
-      <Container className="text-center">
-        <h1 className="text-gray-900 text-5xl font-bold">
+      <Container className="text-center bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
+        <h1 className="text-white text-5xl font-bold">
           Why To Use{" "}
           <strong className="text-emerald-500 font-extrabold">
             Summit.AI ?
           </strong>
         </h1>
-        <p className="text-xs font-bold text-gray-800 my-4">
+        <p className="text-xs font-bold text-gray-300 my-4">
           <strong>Summit.AI</strong> has got immense powers to help you improve
           your overall personality!
         </p>
@@ -58,18 +59,22 @@ const DisplayPoints = () => {
   ];
   return (
     <>
-      <ul className="steps ">
+      <ul className="flex gap-2">
         {data?.map((elem, index) => {
           return (
-           <>
-             <li key={index} className="step m-1  step-success ">
-              <div className="shadow border-l-4 border-b-4 my-4 border-emerald-500 bg-gray-100 shadow-black  rounded-sm h-28 p-2 ">
-                <h2 className="text-sm line-clamp-1 text-emerald-500 font-extrabold">{elem?.title}</h2>
-                <p className="text-xs text-justify font-medium py-2">{elem?.description}</p>
-              </div>
-             </li>
-
-           </>
+            <>
+              <li key={index} className="w-64 ">
+                <div className="shadow border-l-2 border-b-2 my-4 border-emerald-500 bg-gradient-to-br from-black/50 to-black/90 shadow-black  rounded-sm h-28 p-2 ">
+                  <h2 className="text-sm line-clamp-1 text-gray-200 font-extrabold">
+                    {elem?.title}
+                  </h2>
+                  <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-3 mx-auto"/>
+                  <p className="text-xs text-center font-light  text-white">
+                    {elem?.description}
+                  </p>
+                </div>
+              </li>
+            </>
           );
         })}
       </ul>

@@ -5,9 +5,9 @@ const Hero = () => {
   return (
     <>
       <Container
-        className={`px-40   h-screen  flex flex-col justify-center items-center `}
+        className={`px-40 bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90  h-screen   flex flex-col justify-center items-center `}
       >
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col mt-20 justify-center">
           <h1 className="text-5xl text-center font-bold  dark:text-white">
             Summarize Your Content With
             <br />
@@ -18,7 +18,7 @@ const Hero = () => {
             summarizing Your huge paragraphs into smaller and concised form
             which helps you to save your time and energy.
           </p>
-          <button className="border border-gray-300 w-fit mx-auto  dark:border-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600 hover:text-black cursor-pointer duration-200 hover:font-bold font-semibold p-2 rounded-lg">
+          <button className="border border-gray-300 w-fit mx-auto  dark:border-gray-700  hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-200 cursor-pointer duration-200 hover:font-bold font-semibold p-2 rounded-lg">
             Try Now, It's Free!
           </button>
           <SubComponent />
