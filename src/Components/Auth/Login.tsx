@@ -2,8 +2,10 @@ import { useState } from "react";
 import Container from "../Global/Container";
 import axios from "axios";
 import Modal from "../Helper/Modal";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const Navigate = useNavigate();
   type UserType = {
     name: string;
     email: string;
@@ -37,7 +39,10 @@ const Login = () => {
           <p className="text-black text-lg font-semibold">{response}</p>
           <div className="flex justify-end">
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                Navigate("/user");
+              }}
               className="px-4 py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-800 transition duration-300"
             >
               Close

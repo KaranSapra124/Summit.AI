@@ -9,6 +9,7 @@ import Hero from "./Components/Home/Hero";
 import Plans from "./Components/Home/Plans";
 import WhyToUse from "./Components/Home/WhyToUse";
 import Home from "./Pages/Home";
+import Dashboard from "./Components/UserPanel/Dashboard";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -20,13 +21,16 @@ function App() {
           element: <Home />,
           path: "/",
         },
-
       ],
     },
     {
-      element:<Login/>,
-      path:"/login"
-    }
+      element: <Login />,
+      path: "/login",
+    },
+    {
+      element: <Dashboard />,
+      path: "/user",
+    },
   ]);
   return (
     <>
