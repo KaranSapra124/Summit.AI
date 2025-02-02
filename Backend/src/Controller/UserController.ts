@@ -11,8 +11,13 @@ const userLogin = async (
   res: Response
 ) => {
   const { name, email } = req.body;
-  const newUser = await UserModel.create({ name: name, email: email });
-  res.json({ message: "Logged In Successfully!", newUser });
+  const exisitingUser = await UserModel.findOne({ email: email });
+  if (!exisitingUser) {
+    const newUser = await UserModel.create({ name: name, email: email });
+    res.json({ message: "Account Created Successfully!", newUser });
+  } else {
+    res.json({ message: "Logged In Successfully!", exisitingUser });
+  }
 };
 
 export { userLogin };
