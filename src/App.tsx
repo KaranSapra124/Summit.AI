@@ -10,7 +10,7 @@ import Plans from "./Components/Home/Plans";
 import WhyToUse from "./Components/Home/WhyToUse";
 import Home from "./Pages/Home";
 import Dashboard from "./Components/UserPanel/Dashboard";
-import Cards from "./Components/UserPanel/Components/Dashboard/Cards";
+import Profile from "./Components/UserPanel/Components/Profile/Profile";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -33,6 +33,8 @@ function App() {
       path: "/user",
       children: [
         {
+          element:<Profile/>,
+          path:"/user/profile"
         },
       ],
     },

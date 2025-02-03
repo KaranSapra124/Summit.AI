@@ -113,7 +113,7 @@ const Dashboard = () => {
           </ul>
         </div>
       </div>
-      {window.location.pathname.includes("/user") ? (
+      {window.location.pathname === "/user" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4">
           {aiTextSummarizerDashboardData?.map((elem, index) => {
             return (
