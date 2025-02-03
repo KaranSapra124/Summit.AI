@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Container from "../Global/Container";
 import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
@@ -113,13 +113,26 @@ const Dashboard = () => {
           </ul>
         </div>
       </div>
-      <div>
-        {aiTextSummarizerDashboardData?.map((elem, index) => {
-          return (
-            <Cards title={elem?.title} icon={elem?.icon} value={elem?.value} />
-          );
-        })}
-      </div>
+      {window.location.pathname.includes("/user") ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4">
+          {aiTextSummarizerDashboardData?.map((elem, index) => {
+            return (
+              <div
+                key={index}
+                className="bg-emerald-500 text-white p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center"
+              >
+                <Cards
+                  title={elem?.title}
+                  icon={elem?.icon}
+                  value={elem?.value}
+                />
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </Container>
   );
 };
