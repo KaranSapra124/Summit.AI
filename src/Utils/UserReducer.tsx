@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
-interface userState {
+export interface userState {
   userData: object;
   theme: string;
 }

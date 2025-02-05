@@ -2,6 +2,9 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import Container from "../Global/Container";
 import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
+import { useContext } from "react";
+import { UserContext } from "../../Utils/UserContext";
+import { userState } from "../../Utils/UserReducer";
 
 const Dashboard = () => {
   const links = [
@@ -83,9 +86,15 @@ const Dashboard = () => {
 
   const location = useLocation();
   const { pathname } = location;
+  const context = useContext(UserContext);
+  const { theme } = context as userState;
   return (
     <Container
-      className={` bg-gradient-to-tr from-black/60 via-gray-900/90 to-black/90  flex h-screen`}
+      className={`${
+        theme === "Dark"
+          ? "bg-gradient-to-tr from-black/60 via-gray-900/90 to-black/90"
+          : "bg-gray-100"
+      }   flex h-screen`}
     >
       <div>
         <div className="flex flex-col gap-5 w-fit p-2 ">
@@ -98,14 +107,22 @@ const Dashboard = () => {
               src="https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg?t=st=1738491064~exp=1738494664~hmac=227c279bbb497e946449214b64803fb9dfe4435e29fee1c2f2ca296f3b892000&w=740"
               alt=""
             />
-            <p className="text-white py-4 font-bold">Karan Sapra</p>
+            <p
+              className={`${
+                theme === "Dark" ? "text-white" : "text-black"
+              } py-4 font-bold`}
+            >
+              Karan Sapra
+            </p>
           </div>
           <ul>
             {links?.map((elem, index) => {
               return (
                 <Link
                   key={index}
-                  className="flex gap-2 items-center text-white text-md p-1 shadow-sm w-40 bg-gray-100/10 rounded-md my-2"
+                  className={`flex gap-2 items-center ${
+                    theme === "Dark" ? "text-white" : "text-black"
+                  } text-md p-1 shadow-sm w-40 bg-gray-100/10 rounded-md my-2`}
                   to={elem?.link}
                 >
                   {elem?.icon} <span>{elem?.title}</span>
@@ -124,7 +141,9 @@ const Dashboard = () => {
             return (
               <div
                 key={index}
-                className="bg-emerald-500 text-white p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center"
+                className={`bg-emerald-500 ${
+                  theme === "Dark" ? "text-white" : "text-black"
+                } p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center`}
               >
                 <Cards
                   title={elem?.title}
