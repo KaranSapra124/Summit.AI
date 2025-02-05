@@ -4,7 +4,7 @@ import Modal from "../../../Helper/Modal";
 
 const Settings = () => {
   const [theme, setTheme] = useState<Boolean>(false);
-  const [password, setPassword] = useState<String>("");
+  const [email, setEmail] = useState<string>("");
   const [isPass, setIsPass] = useState<Boolean>(false);
   const passwordModal = (
     <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
@@ -13,7 +13,9 @@ const Settings = () => {
           Enter Your Email
         </h2>
         <input
+          onChange={(e) => setEmail(e.target.value)}
           type="email"
+          value={email}
           className="w-full p-3 mb-4 border border-gray-500 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
           placeholder="Enter Your Email..."
         />
