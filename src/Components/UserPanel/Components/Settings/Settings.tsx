@@ -21,6 +21,7 @@ const Settings = () => {
             {/* <button className="bg-red-500 text-white font-semibold p-2 rounded-sm">Dark</button> */}
             <label className="inline-flex items-center cursor-pointer">
               <input
+                onClick={() => setTheme(!theme)}
                 type="checkbox"
                 checked={!theme ? false : true}
                 className="sr-only peer"
