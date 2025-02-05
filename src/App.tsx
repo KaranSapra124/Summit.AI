@@ -1,17 +1,14 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Login from "./Components/Auth/Login";
-import Footer from "./Components/Global/Footer";
 import Navbar from "./Components/Global/Navbar";
-import Benefits from "./Components/Home/Benefits";
-import Demo from "./Components/Home/Demo";
-import Hero from "./Components/Home/Hero";
-import Plans from "./Components/Home/Plans";
-import WhyToUse from "./Components/Home/WhyToUse";
 import Home from "./Pages/Home";
 import Dashboard from "./Components/UserPanel/Dashboard";
 import Profile from "./Components/UserPanel/Components/Profile/Profile";
 import Settings from "./Components/UserPanel/Components/Settings/Settings";
+import { UserContext } from "./Utils/UserContext";
+import { useContext, useReducer } from "react";
+import { initialState, UserReducers } from "./Utils/UserReducer";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -44,6 +41,8 @@ function App() {
       ],
     },
   ]);
+  const [state, dispatch] = useReducer(UserReducers, initialState);
+  const { theme, userData } = state;
   return (
     <>
       {/* <Navbar />
@@ -54,7 +53,11 @@ function App() {
       <Plans />
       <Footer /> */}
       {/* <Login /> */}
-      <RouterProvider router={appRoutes} />
+      <UserContext.Provider
+        value={{ theme: theme, userData: userData, dispatch: dispatch }}
+      >
+        <RouterProvider router={appRoutes} />
+      </UserContext.Provider>
     </>
   );
 }
