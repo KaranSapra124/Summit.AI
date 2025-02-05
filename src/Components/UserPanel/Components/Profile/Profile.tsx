@@ -1,8 +1,10 @@
 import { FaEdit } from "react-icons/fa";
 import Divider from "../../../../Utils/Divider";
 import Container from "../../../Global/Container";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../../../Helper/Modal";
+import { UserContext } from "../../../../Utils/UserContext";
+import { userState } from "../../../../Utils/UserReducer";
 
 interface planDetail {
   type: string;
@@ -16,6 +18,8 @@ interface profileDetails {
 }
 function Profile() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const context = useContext(UserContext);
+  const { theme } = context as userState;
   const [details, setDetails] = useState<profileDetails>({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -34,8 +38,11 @@ function Profile() {
       [name]: value,
     }));
   };
+
   const profileModalData = (
-    <div className="p-6 bg-white flex flex-col relative mt-52  rounded-2xl shadow-xl w-96 mx-auto space-y-6">
+    <div
+      className={`p-6 bg-white flex flex-col relative mt-52  rounded-2xl shadow-xl w-96 mx-auto space-y-6`}
+    >
       <h1 className="text-2xl font-bold text-gray-800">Update Profile</h1>
       <div className="space-y-4">
         <input
@@ -76,7 +83,11 @@ function Profile() {
     <>
       {isOpen && <Modal data={profileModalData} />}
       <Container className="p-20 w-full">
-        <div className="flex justify-between items-center shadow-sm bg-gray-100/40 rounded-lg p-2 ">
+        <div
+          className={`flex justify-between items-center shadow-sm ${
+            theme === "Dark" ? "bg-gray-100/40" : "bg-gray-900"
+          } rounded-lg p-2 `}
+        >
           <img
             className="w-22 rounded-full mx-5"
             src="https://i.pinimg.com/236x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg"
@@ -87,14 +98,22 @@ function Profile() {
               onClick={() => setIsOpen(true)}
               className="text-white text-3xl cursor-pointer hover:bg-black transition-all duration-200 ml-auto border p-1 rounded-full"
             />
-            <h1 className="text-xl font-bold text-black">
+            <h1
+              className={`text-xl font-bold ${
+                theme === "Dark" ? "text-black" : "text-white/60"
+              }`}
+            >
               <span className="text-gray-200 font-extrabold ">
                 Owner Name :{" "}
               </span>
               {details?.name}
             </h1>
             <Divider className="h-0.5 w-full bg-black rounded-full my-2 " />
-            <h2 className="text-xl font-bold text-black">
+            <h2
+              className={`text-xl font-bold ${
+                theme === "Dark" ? "text-black" : "text-white/60"
+              }`}
+            >
               {" "}
               <span className="text-gray-200 font-extrabold ">
                 Owner Email :{" "}
@@ -103,27 +122,77 @@ function Profile() {
             </h2>
           </div>
         </div>
-        <div className="shadow-sm  shadow-white bg-gray-100/40 my-2  p-2 w-full justify-center items-center">
+        <div
+          className={`shadow-sm  ${
+            theme === "Dark" ? "shadow-white" : "shadow-gray-900"
+          } bg-gray-100/40 my-2  p-2 w-full justify-center rounded-md items-center`}
+        >
           <h2 className="text-gray-900 text-2xl font-extrabold">
             Plan Details:
           </h2>
           <div className="flex justify-between">
-            <table className="flex justify-between w-full rounded-sm  border border-gray-100 ">
-              <td className="border  w-full border-gray-100 p-2 font-bold">
-                <tr className="text-lg  border-b-2 border-white">Plan Name</tr>
-                <td className="text-xl font-extrabold text-gray-100 py-4">
+            <table
+              className={`flex justify-between w-full rounded-sm  border ${
+                theme === "Dark" ? "border-gray-100 " : "border-gray-900"
+              }`}
+            >
+              <td
+                className={`border ${
+                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                }  w-full  p-2 font-bold`}
+              >
+                <tr
+                  className={`text-lg  border-b-2 ${
+                    theme === "Dark" ? "border-white" : "border-gray-900"
+                  }`}
+                >
+                  Plan Name
+                </tr>
+                <td
+                  className={`text-xl font-extrabold ${
+                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                  } py-4`}
+                >
                   {details?.plan.type}
                 </td>
               </td>
-              <td className="border w-full border-gray-100 p-2 font-bold">
-                <tr className="text-lg  border-b-2 border-white">Plan Limit</tr>
-                <td className="text-xl font-extrabold text-gray-100 py-4">
+              <td
+                className={`border ${
+                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                }  w-full  p-2 font-bold`}
+              >
+                <tr
+                  className={`text-lg  border-b-2 ${
+                    theme === "Dark" ? "border-white" : "border-gray-900"
+                  }`}
+                >
+                  Plan Limit
+                </tr>
+                <td
+                  className={`text-xl font-extrabold ${
+                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                  } py-4`}
+                >
                   {details?.plan.limit}
                 </td>
               </td>
-              <td className="border w-full border-gray-100 p-2 font-bold">
-                <tr className="text-lg  border-b-2 border-white">Plan Usage</tr>
-                <td className="text-xl font-extrabold text-gray-100 py-4">
+              <td
+                className={`border ${
+                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                }  w-full  p-2 font-bold`}
+              >
+                <tr
+                  className={`text-lg  border-b-2 ${
+                    theme === "Dark" ? "border-white" : "border-gray-900"
+                  }`}
+                >
+                  Plan Usage
+                </tr>
+                <td
+                  className={`text-xl font-extrabold ${
+                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                  } py-4`}
+                >
                   {details?.plan.usage}
                 </td>
               </td>
