@@ -17,12 +17,12 @@ const Dashboard = () => {
     },
     {
       title: "Settings",
-      link: "/settings",
+      link: "/user/settings",
       icon: <FaCog />,
     },
     {
       title: "Log Out",
-      link: "/log-out",
+      link: "/user/log-out",
       icon: <FaSignOutAlt />,
     },
   ];

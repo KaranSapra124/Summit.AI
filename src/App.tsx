@@ -11,6 +11,7 @@ import WhyToUse from "./Components/Home/WhyToUse";
 import Home from "./Pages/Home";
 import Dashboard from "./Components/UserPanel/Dashboard";
 import Profile from "./Components/UserPanel/Components/Profile/Profile";
+import Settings from "./Components/UserPanel/Components/Settings/Settings";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -33,8 +34,12 @@ function App() {
       path: "/user",
       children: [
         {
-          element:<Profile/>,
-          path:"/user/profile"
+          element: <Profile />,
+          path: "/user/profile",
+        },
+        {
+          element: <Settings />,
+          path: "/user/settings",
         },
       ],
     },
