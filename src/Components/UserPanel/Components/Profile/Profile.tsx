@@ -25,8 +25,8 @@ function Profile() {
       limit: 10,
     },
   });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target as HTMLInputElement;
     console.log(name, value);
 
     setDetails((prev) => ({
