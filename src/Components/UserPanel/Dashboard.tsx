@@ -7,12 +7,12 @@ const Dashboard = () => {
   const links = [
     {
       title: "Home",
-      link: "/",
+      link: "/user",
       icon: <FaHome />,
     },
     {
       title: "My Profile",
-      link: "/my-profile",
+      link: "/user/profile",
       icon: <FaUser />,
     },
     {
@@ -114,7 +114,10 @@ const Dashboard = () => {
         </div>
       </div>
       {window.location.pathname === "/user" ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4">
+        <div
+          // key={isChanged}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4"
+        >
           {aiTextSummarizerDashboardData?.map((elem, index) => {
             return (
               <div
