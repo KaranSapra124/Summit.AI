@@ -47,13 +47,13 @@ function Profile() {
             </h2>
           </div>
         </div>
-        <div className="shadow-sm shadow-white bg-gray-100/40 my-2  p-2 w-full justify-center items-center">
+        <div className="shadow-sm  shadow-white bg-gray-100/40 my-2  p-2 w-full justify-center items-center">
           <h2 className="text-gray-900 text-2xl font-extrabold">
             Plan Details:
           </h2>
           <div className="flex justify-between">
-            <table className="flex justify-between w-full border border-gray-100 ">
-              <td className="border w-full border-gray-100 p-2 font-bold">
+            <table className="flex justify-between w-full rounded-sm  border border-gray-100 ">
+              <td className="border  w-full border-gray-100 p-2 font-bold">
                 <tr className="text-lg  border-b-2 border-white">Plan Name</tr>
                 <td className="text-xl font-extrabold text-gray-100 py-4">{details?.plan.type}</td>
               </td>

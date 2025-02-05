@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Container from "../Global/Container";
 import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
@@ -81,6 +81,8 @@ const Dashboard = () => {
     },
   ];
 
+  const location = useLocation();
+  const { pathname } = location;
   return (
     <Container
       className={` bg-gradient-to-tr from-black/60 via-gray-900/90 to-black/90  flex h-screen`}
@@ -113,7 +115,7 @@ const Dashboard = () => {
           </ul>
         </div>
       </div>
-      {window.location.pathname === "/user" ? (
+      {pathname === "/user" ? (
         <div
           // key={isChanged}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4"
