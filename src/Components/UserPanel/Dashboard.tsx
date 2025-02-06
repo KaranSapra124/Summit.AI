@@ -7,6 +7,10 @@ import { UserContext } from "../../Utils/UserContext";
 import { userState } from "../../Utils/UserReducer";
 
 const Dashboard = () => {
+  type userDetails = {
+    name: string;
+    email: string;
+  };
   const links = [
     {
       title: "Home",
@@ -32,7 +36,7 @@ const Dashboard = () => {
   const aiTextSummarizerDashboardData = [
     {
       title: "Total Summaries Processed",
-      value: 120,
+      value: 0,
       description: "Number of text summaries you have processed so far.",
       icon: "📝",
       status: "completed", // Can be 'completed', 'in-progress'
@@ -40,7 +44,7 @@ const Dashboard = () => {
     },
     {
       title: "Summary Characters Count",
-      value: "45,000/50,000",
+      value: 0,
       description:
         "Total number of characters processed against your usage limit.",
       icon: "🔠",
@@ -49,7 +53,7 @@ const Dashboard = () => {
     },
     {
       title: "Remaining Summaries",
-      value: 8,
+      value: 0,
       description:
         "Summaries you can still process with your current plan this month.",
       icon: "📊",
@@ -87,8 +91,9 @@ const Dashboard = () => {
   const location = useLocation();
   const { pathname } = location;
   const context = useContext(UserContext);
-  const { theme } = context as userState;
-  const Navigate = useNavigate()
+  const { theme, userData } = context as userState;
+  const { name } = userData as userDetails;
+  const Navigate = useNavigate();
   return (
     <Container
       className={`${
@@ -113,8 +118,15 @@ const Dashboard = () => {
                 theme === "Dark" ? "text-white" : "text-black"
               } py-4 font-bold`}
             >
-              Karan Sapra
+              {name}
             </p>
+            {/* <p
+              className={`${
+                theme === "Dark" ? "text-white" : "text-black"
+              } py-1 font-bold`}
+            >
+              {email}
+            </p> */}
           </div>
           <ul>
             {links?.map((elem, index) => {
@@ -130,7 +142,10 @@ const Dashboard = () => {
                 </Link>
               );
             })}
-            <div onClick={()=>Navigate("/login")} className="flex gap-2 items-center bg-red-500 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-red-600 transition-all">
+            <div
+              onClick={() => Navigate("/login")}
+              className="flex gap-2 items-center bg-red-500 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-red-600 transition-all"
+            >
               <FaSignOutAlt />
               <span>Log Out</span>
             </div>

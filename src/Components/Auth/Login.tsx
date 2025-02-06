@@ -45,7 +45,7 @@ const Login = () => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
       user
     );
-    console.log(res)
+    // console.log(res)
     dispatch({
       type: "SET_USER",
       payload:
@@ -58,7 +58,7 @@ const Login = () => {
     setIsOpen(true);
   };
 
-  useEffect(() => console.log(userData), [userData]);
+  // useEffect(() => console.log(userData), [userData]);
   const ModalData = (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">
@@ -103,9 +103,9 @@ const Login = () => {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
-              type="text"
+              type="email"
               className="grow text-white p-2 focus:outline-0"
-              name="name"
+              name="email"
               onChange={handleChange}
               placeholder="Email"
             />
@@ -121,7 +121,7 @@ const Login = () => {
             </svg>
             <input
               type="text"
-              name="email"
+              name="name"
               onChange={handleChange}
               className="grow p-2 focus:outline-0 text-white"
               placeholder="Username"
