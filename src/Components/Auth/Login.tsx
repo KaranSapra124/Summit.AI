@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FaShield } from "react-icons/fa6";
 import { UserContext } from "../../Utils/UserContext";
 import { UserAction } from "../../Utils/UserReducer";
+import jscookie from "js-cookie";
 
 const Login = () => {
   interface UserContextType {
@@ -28,7 +29,7 @@ const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [response, SetResponse] = useState("");
   const context = useContext(UserContext);
-  const { dispatch, userData } = context as UserContextType;
+  const { dispatch } = context as UserContextType;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     // console.log(e);
@@ -43,8 +44,12 @@ const Login = () => {
     // console.log(user)
     const res = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
-      user
+      user,
+      {
+        withCredentials: true,
+      }
     );
+
     // console.log(res)
     dispatch({
       type: "SET_USER",
@@ -54,6 +59,7 @@ const Login = () => {
           : res?.data?.exisitingUser,
     });
     SetResponse(res?.data?.message);
+    jscookie.set("userToken", res?.data?.token, { expires: 7 });
 
     setIsOpen(true);
   };
@@ -69,6 +75,7 @@ const Login = () => {
               onClick={() => {
                 // console.log(response)
                 setIsOpen(false);
+
                 response !== "Password Incorrect!" && Navigate("/user");
               }}
               className="px-4 py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-800 transition duration-300"

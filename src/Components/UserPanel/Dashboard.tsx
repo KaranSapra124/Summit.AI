@@ -120,13 +120,6 @@ const Dashboard = () => {
             >
               {name}
             </p>
-            {/* <p
-              className={`${
-                theme === "Dark" ? "text-white" : "text-black"
-              } py-1 font-bold`}
-            >
-              {email}
-            </p> */}
           </div>
           <ul>
             {links?.map((elem, index) => {
