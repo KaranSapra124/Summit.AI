@@ -4,8 +4,8 @@ import Container from "../Global/Container";
 const WhyToUse = () => {
   return (
     <>
-      <Container className="text-center bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
-        <h1 className="text-white text-5xl font-bold">
+      <Container id="Features"  className="text-center bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
+        <h1  className="text-white text-5xl font-bold">
           Why To Use{" "}
           <strong className="text-emerald-500 font-extrabold">
             Summit.AI ?
@@ -16,7 +16,7 @@ const WhyToUse = () => {
           your overall personality!
         </p>
         <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-2"/>
-        <div>
+        <div >
           <DisplayPoints />
         </div>
       </Container>

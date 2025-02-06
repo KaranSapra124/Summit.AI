@@ -1,11 +1,14 @@
 type PropObj = {
   className: string | undefined;
   children?: React.ReactNode;
+  id?: string | undefined;
 };
 
-const Container = ({ className, children }: PropObj) => {
+const Container = ({ className, id, children }: PropObj) => {
   return (
-    <div className={`${className ? className : ""} p-20`}>{children}</div>
+    <div id={id} className={`${className ? className : ""} p-20`}>
+      {children}
+    </div>
   );
 };
 
