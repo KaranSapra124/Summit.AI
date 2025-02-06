@@ -141,8 +141,8 @@ const Dashboard = () => {
             return (
               <div
                 key={index}
-                className={`bg-emerald-500 ${
-                  theme === "Dark" ? "text-white" : "text-black"
+                className={`${
+                  theme === "Dark" ? "text-white bg-emerald-500 " : "text-black bg-gray-200 "
                 } p-4 w-full rounded-2xl h-52 shadow-lg flex flex-col `}
               >
                 <Cards
