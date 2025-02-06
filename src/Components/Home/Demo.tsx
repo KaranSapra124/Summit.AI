@@ -44,8 +44,7 @@ const Demo = () => {
   ) => {
     setFormData((prev) => ({
       ...prev,
-      para:
-        endpoint === "summarize" ? data.summary.toString() : data?.corrected,
+      para: endpoint === "summarize" ? data.summary.join("") : data?.corrected,
     }));
   };
 
@@ -56,7 +55,8 @@ const Demo = () => {
         <span className="text-emerald-500 font-extrabold">Of Our App!</span>
       </h1>
       <p className="text-sm sm:text-xs my-4 font-semibold text-gray-300">
-        Get a hand on <strong>SUPERPOWERS </strong>of <strong>summit.AI</strong>
+        Get a hand on <strong>SUPERPOWERS </strong>of <strong>summit.AI</strong>{" "}
+        (For Just Once)
       </p>
       <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4" />
 

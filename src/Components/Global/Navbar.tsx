@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { Outlet, useLocation } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 
 const Navbar = () => {
@@ -10,9 +10,9 @@ const Navbar = () => {
     "Pricing",
     "About Us",
     "Contact Us",
-    "Login",
   ];
   const location = useLocation();
+  const Navigate = useNavigate();
   const { hash } = location;
   // console.log()
   return (
@@ -38,6 +38,12 @@ const Navbar = () => {
                 </>
               );
             })}
+            <button
+              className="bg-emerald-500 p-1 px-2 rounded-md shadow shadow-white"
+              onClick={() => Navigate("/Login")}
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>
