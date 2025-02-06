@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Container from "../Global/Container";
 import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
@@ -23,11 +23,11 @@ const Dashboard = () => {
       link: "/user/settings",
       icon: <FaCog />,
     },
-    {
-      title: "Log Out",
-      link: "/user/log-out",
-      icon: <FaSignOutAlt />,
-    },
+    // {
+    //   title: "Log Out",
+    //   link: "/user/log-out",
+    //   icon: <FaSignOutAlt />,
+    // },
   ];
   const aiTextSummarizerDashboardData = [
     {
@@ -88,6 +88,7 @@ const Dashboard = () => {
   const { pathname } = location;
   const context = useContext(UserContext);
   const { theme } = context as userState;
+  const Navigate = useNavigate()
   return (
     <Container
       className={`${
@@ -129,6 +130,10 @@ const Dashboard = () => {
                 </Link>
               );
             })}
+            <div onClick={()=>Navigate("/login")} className="flex gap-2 items-center bg-red-500 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-red-600 transition-all">
+              <FaSignOutAlt />
+              <span>Log Out</span>
+            </div>
           </ul>
         </div>
       </div>
@@ -142,14 +147,12 @@ const Dashboard = () => {
               <div
                 key={index}
                 className={`${
-                  theme === "Dark" ? "text-white bg-emerald-500 " : "text-black bg-gray-200 "
+                  theme === "Dark"
+                    ? "text-white bg-emerald-500 "
+                    : "text-black bg-gray-200 "
                 } p-4 w-full rounded-2xl h-52 shadow-lg flex flex-col `}
               >
-                <Cards
-                  title={elem?.title}
-                 
-                  value={elem?.value}
-                />
+                <Cards title={elem?.title} value={elem?.value} />
               </div>
             );
           })}
