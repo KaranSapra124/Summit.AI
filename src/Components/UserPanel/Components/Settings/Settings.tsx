@@ -12,6 +12,7 @@ const Settings = () => {
   }
   // const [theme, setTheme] = useState<Boolean>(false);
   const [email, setEmail] = useState<string>("");
+  // const context = useContext(UserContext);
   const [isPass, setIsPass] = useState<Boolean>(false);
   const context = useContext(UserContext);
   const { theme, dispatch } = context as UserContextType;
@@ -49,10 +50,24 @@ const Settings = () => {
     <>
       {isPass && <Modal data={passwordModal} />}
       <Container className="p-20 w-full">
-        <h1 className="text-3xl font-bold text-gray-100">Settings</h1>
+        <h1
+          className={`text-3xl font-bold ${
+            theme === "Dark" ? "text-gray-100" : "text-gray-900"
+          }`}
+        >
+          Settings
+        </h1>
         <div className="my-4">
-          <div className="flex p-2 items-center justify-between w-full shadow-sm shadow-white">
-            <h1 className="text-white text-xl font-semibold">
+          <div
+            className={`flex p-2 items-center rounded-md my-2 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
+              theme === "Dark" ? "shadow-white" : "shadow-gray-900"
+            }`}
+          >
+            <h1
+              className={`${
+                theme === "Dark" ? "text-white" : "text-black"
+              } text-xl font-semibold`}
+            >
               Change Account Password
             </h1>
             <button
@@ -62,8 +77,18 @@ const Settings = () => {
               Change Password
             </button>
           </div>
-          <div className="flex p-2 items-center  justify-between w-full shadow-sm shadow-white">
-            <h1 className="text-white text-xl font-semibold">Theme</h1>
+          <div
+            className={`flex p-2 items-center rounded-md my-2 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
+              theme === "Dark" ? "shadow-white" : "shadow-gray-900"
+            }`}
+          >
+            <h1
+              className={`${
+                theme === "Dark" ? "text-white" : "text-black"
+              } text-xl font-semibold`}
+            >
+              Theme
+            </h1>
             {/* <button className="bg-red-500 text-white font-semibold p-2 rounded-sm">Dark</button> */}
             <label className="inline-flex items-center cursor-pointer">
               <input
