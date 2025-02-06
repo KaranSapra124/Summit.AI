@@ -19,7 +19,8 @@ interface profileDetails {
 function Profile() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const context = useContext(UserContext);
-  const { theme } = context as userState;
+  const { theme, userData } = context as userState;
+  const { name, email, PurchasePlan } = userData as profileDetails;
   const [details, setDetails] = useState<profileDetails>({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -106,7 +107,7 @@ function Profile() {
               <span className="text-gray-200 font-extrabold ">
                 Owner Name :{" "}
               </span>
-              {details?.name}
+              {name}
             </h1>
             <Divider className="h-0.5 w-full bg-black rounded-full my-2 " />
             <h2
@@ -118,7 +119,7 @@ function Profile() {
               <span className="text-gray-200 font-extrabold ">
                 Owner Email :{" "}
               </span>
-              {details?.email}
+              {email}
             </h2>
           </div>
         </div>
@@ -131,72 +132,78 @@ function Profile() {
             Plan Details:
           </h2>
           <div className="flex justify-between">
-            <table
-              className={`flex justify-between w-full rounded-sm  border ${
-                theme === "Dark" ? "border-gray-100 " : "border-gray-900"
-              }`}
-            >
-              <td
-                className={`border ${
-                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                }  w-full  p-2 font-bold`}
+            {PurchasePlan ? (
+              <table
+                className={`flex justify-between w-full rounded-sm  border ${
+                  theme === "Dark" ? "border-gray-100 " : "border-gray-900"
+                }`}
               >
-                <tr
-                  className={`text-lg  border-b-2 ${
-                    theme === "Dark" ? "border-white" : "border-gray-900"
-                  }`}
-                >
-                  Plan Name
-                </tr>
                 <td
-                  className={`text-xl font-extrabold ${
-                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                  } py-4`}
+                  className={`border ${
+                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                  }  w-full  p-2 font-bold`}
                 >
-                  {details?.plan.type}
+                  <tr
+                    className={`text-lg  border-b-2 ${
+                      theme === "Dark" ? "border-white" : "border-gray-900"
+                    }`}
+                  >
+                    Plan Name
+                  </tr>
+                  <td
+                    className={`text-xl font-extrabold ${
+                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                    } py-4`}
+                  >
+                    {details?.plan.type}
+                  </td>
                 </td>
-              </td>
-              <td
-                className={`border ${
-                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                }  w-full  p-2 font-bold`}
-              >
-                <tr
-                  className={`text-lg  border-b-2 ${
-                    theme === "Dark" ? "border-white" : "border-gray-900"
-                  }`}
-                >
-                  Plan Limit
-                </tr>
                 <td
-                  className={`text-xl font-extrabold ${
-                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                  } py-4`}
+                  className={`border ${
+                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                  }  w-full  p-2 font-bold`}
                 >
-                  {details?.plan.limit}
+                  <tr
+                    className={`text-lg  border-b-2 ${
+                      theme === "Dark" ? "border-white" : "border-gray-900"
+                    }`}
+                  >
+                    Plan Limit
+                  </tr>
+                  <td
+                    className={`text-xl font-extrabold ${
+                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                    } py-4`}
+                  >
+                    {details?.plan.limit}
+                  </td>
                 </td>
-              </td>
-              <td
-                className={`border ${
-                  theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                }  w-full  p-2 font-bold`}
-              >
-                <tr
-                  className={`text-lg  border-b-2 ${
-                    theme === "Dark" ? "border-white" : "border-gray-900"
-                  }`}
-                >
-                  Plan Usage
-                </tr>
                 <td
-                  className={`text-xl font-extrabold ${
-                    theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                  } py-4`}
+                  className={`border ${
+                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
+                  }  w-full  p-2 font-bold`}
                 >
-                  {details?.plan.usage}
+                  <tr
+                    className={`text-lg  border-b-2 ${
+                      theme === "Dark" ? "border-white" : "border-gray-900"
+                    }`}
+                  >
+                    Plan Usage
+                  </tr>
+                  <td
+                    className={`text-xl font-extrabold ${
+                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
+                    } py-4`}
+                  >
+                    {details?.plan.usage}
+                  </td>
                 </td>
-              </td>
-            </table>
+              </table>
+            ) : (
+              <h1 className="text-center text-white font-extrabold">
+                No Plan Exists
+              </h1>
+            )}
             {/* <h1>{details.plan.type}</h1>
             <p>{details.plan.limit}</p>
             <p>{details.plan.usage}</p> */}
