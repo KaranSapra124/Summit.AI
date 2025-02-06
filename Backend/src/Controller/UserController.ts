@@ -29,15 +29,17 @@ const userLogin = async (
     res.json({
       message: "Account Created Successfully!",
       newUser,
-      token: generateToken(newUser._id, secretKey, 7),
+      token: generateToken(newUser._id, secretKey, "7d"),
     });
   } else {
+    // const p1 = new Promise()
+    console.log(name, email);
     const result = await compare(password, exisitingUser?.password);
     result
       ? res.json({
           message: "Logged In Successfully!",
           exisitingUser,
-          token: generateToken(exisitingUser._id, secretKey, 7),
+          token: generateToken(exisitingUser._id, secretKey, "7d"),
         })
       : res.json({ message: "Password Incorrect!" });
   }

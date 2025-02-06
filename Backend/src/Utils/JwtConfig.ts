@@ -1,4 +1,4 @@
-import { sign, verify } from "jsonwebtoken";
+import { sign, SignOptions, verify } from "jsonwebtoken";
 
 interface DecodedToken {
   userId: string;
@@ -9,9 +9,9 @@ interface DecodedToken {
 export const generateToken = (
   id: string,
   secretKey: string,
-  expiresIn: number
+  expiresIn: string
 ) => {
-  return sign({ userId: id }, secretKey, { expiresIn });
+  return sign({ userId: id }, secretKey, { expiresIn } as SignOptions);
 };
 
 export const verifyToken = (token: string, secretKey: string) => {

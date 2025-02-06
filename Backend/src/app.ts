@@ -3,12 +3,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import router from "./Routes/UserRoutes";
 import { dbConfig } from "./Utils/dbConfig";
+import CookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-dbConfig()
+dbConfig();
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
@@ -16,6 +17,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(CookieParser());
 
 app.use("/api/v1/user", router);
 
