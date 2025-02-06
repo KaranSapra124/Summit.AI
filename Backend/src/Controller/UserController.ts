@@ -11,6 +11,7 @@ const userLogin = async (
   res: Response
 ) => {
   const { name, email } = req.body;
+  console.log(name,email)
   const exisitingUser = await UserModel.findOne({ email: email });
   if (!exisitingUser) {
     const newUser = await UserModel.create({ name: name, email: email });
