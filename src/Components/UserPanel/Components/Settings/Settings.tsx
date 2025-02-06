@@ -5,7 +5,7 @@ import { UserContext } from "../../../../Utils/UserContext";
 import { UserAction } from "../../../../Utils/UserReducer";
 
 const Settings = () => {
-  interface UserContextType {
+   interface UserContextType {
     theme: string;
     userData: object; // You can be more specific about this type if needed
     dispatch: React.Dispatch<UserAction>;
@@ -44,7 +44,7 @@ const Settings = () => {
     </div>
   );
 
-  useEffect(() => console.log(theme), [theme]);
+  // useEffect(() => console.log(theme), [theme]);
 
   return (
     <>

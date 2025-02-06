@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "../Global/Container";
 import axios from "axios";
 import Modal from "../Helper/Modal";
 import { useNavigate } from "react-router-dom";
 import { FaShield } from "react-icons/fa6";
+import { UserContext } from "../../Utils/UserContext";
+import { UserAction } from "../../Utils/UserReducer";
 
 const Login = () => {
+  interface UserContextType {
+    theme: string;
+    userData: object; // You can be more specific about this type if needed
+    dispatch: React.Dispatch<UserAction>;
+  }
   const Navigate = useNavigate();
   type UserType = {
     name: string;
@@ -17,8 +24,12 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const [isOpen, setIsOpen] = useState(false);
   const [response, SetResponse] = useState("");
+  const context = useContext(UserContext);
+  const { dispatch, userData } = context as UserContextType;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     // console.log(e);
     const { name, value } = e.target as HTMLInputElement;
@@ -34,11 +45,20 @@ const Login = () => {
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
       user
     );
+    console.log(res)
+    dispatch({
+      type: "SET_USER",
+      payload:
+        res?.data?.newUser !== undefined && res?.data?.newUser !== null
+          ? res?.data?.newUser
+          : res?.data?.exisitingUser,
+    });
     SetResponse(res?.data?.message);
 
     setIsOpen(true);
   };
 
+  useEffect(() => console.log(userData), [userData]);
   const ModalData = (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">

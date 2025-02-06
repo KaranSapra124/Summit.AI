@@ -19,7 +19,8 @@ export const initialState: userState = {
 };
 export type UserAction =
   | { type: "GET_USER"; payload: Object }
-  | { type: "SET_THEME"; payload: string };
+  | { type: "SET_THEME"; payload: string }
+  | { type: "SET_USER"; payload: Object };
 
 export const UserReducers = (state: userState, action: UserAction) => {
   switch (action.type) {
@@ -28,6 +29,10 @@ export const UserReducers = (state: userState, action: UserAction) => {
     }
     case "SET_THEME": {
       return { ...state, theme: action.payload };
+    }
+    case "SET_USER": {
+      console.log(action.payload,'PAYLOAD')
+      return { ...state, userData: action.payload };
     }
   }
 };
