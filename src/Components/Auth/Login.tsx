@@ -67,8 +67,9 @@ const Login = () => {
           <div className="flex justify-end">
             <button
               onClick={() => {
+                // console.log(response)
                 setIsOpen(false);
-                Navigate("/user");
+                response !== "Password Incorrect!" && Navigate("/user");
               }}
               className="px-4 py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-800 transition duration-300"
             >

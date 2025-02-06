@@ -6,7 +6,8 @@ interface PurchasePlan {
   features: string[];
 }
 
-interface User extends Document {
+export interface User extends Document {
+  _id: string;
   name: string;
   email: string;
   password: string;
