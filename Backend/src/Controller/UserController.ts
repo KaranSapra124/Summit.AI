@@ -2,12 +2,19 @@ import { Request, Response } from "express";
 import UserModel, { User } from "../Models/UserModel";
 import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
+import { JwtPayload } from "jsonwebtoken";
 
 interface UserLoginRequest {
   name: string;
   email: string;
   password: string;
 }
+interface CustomRequest extends Request {
+  user?: string | JwtPayload;
+}
+type userPayload = {
+  userId: string;
+};
 
 const userLogin = async (
   req: Request<{}, {}, UserLoginRequest>,
@@ -26,6 +33,7 @@ const userLogin = async (
       email: email,
       password: hashPass,
     });
+
     res.json({
       message: "Account Created Successfully!",
       newUser,
@@ -45,4 +53,24 @@ const userLogin = async (
   }
 };
 
-export { userLogin };
+const getUser = async (req: CustomRequest, res: Response): Promise<void> => {
+  console.log(req.user, "ID");
+  try {
+    // Accessing the userId from req.user, which was set by the userAuth middleware
+    const { userId } = req.user as { userId: string };
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    // console.log(user);
+
+    res.json({ message: "User retrieved successfully!", user });
+  } catch (error) {
+    console.error("Error in getUser:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export { userLogin, getUser };

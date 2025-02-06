@@ -2,11 +2,18 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Container from "../Global/Container";
 import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../Utils/UserContext";
-import { userState } from "../../Utils/UserReducer";
+// import { UserContext } from "../../Utils/UserReducer";
+import axios from "axios";
+import { UserAction } from "../../Utils/UserReducer";
 
 const Dashboard = () => {
+  interface UserContextType {
+    theme: string;
+    userData: object; // You can be more specific about this type if needed
+    dispatch: React.Dispatch<UserAction>;
+  }
   type userDetails = {
     name: string;
     email: string;
@@ -91,9 +98,23 @@ const Dashboard = () => {
   const location = useLocation();
   const { pathname } = location;
   const context = useContext(UserContext);
-  const { theme, userData } = context as userState;
+  const { theme, userData, dispatch } = context as UserContextType;
   const { name } = userData as userDetails;
   const Navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-user`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch({ type: "SET_USER", payload: res?.data?.user });
+    };
+    fetchUser();
+  }, []);
   return (
     <Container
       className={`${

@@ -18,9 +18,8 @@ export const userAuth = (
     } else {
       const id = verifyToken(userToken, secretKey); // Assuming this function verifies the token and returns the user ID
       req.user = id; // Attach the user ID to the request object
-      console.log(id, "ID");
     }
-    // next();
+    next();
   } catch (error) {
     res.status(401).json({ message: "Invalid or Expired Token" });
   }
