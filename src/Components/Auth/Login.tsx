@@ -3,14 +3,20 @@ import Container from "../Global/Container";
 import axios from "axios";
 import Modal from "../Helper/Modal";
 import { useNavigate } from "react-router-dom";
+import { FaShield } from "react-icons/fa6";
 
 const Login = () => {
   const Navigate = useNavigate();
   type UserType = {
     name: string;
     email: string;
+    password: string;
   };
-  const [user, setUser] = useState<UserType>({ name: "", email: "" });
+  const [user, setUser] = useState<UserType>({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [isOpen, setIsOpen] = useState(false);
   const [response, SetResponse] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -23,6 +29,7 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
+    // console.log(user)
     const res = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
       user
@@ -98,6 +105,16 @@ const Login = () => {
               onChange={handleChange}
               className="grow p-2 focus:outline-0 text-white"
               placeholder="Username"
+            />
+          </label>
+          <label className="input border border-emerald-500 rounded-md w-full p-2 my-4 input-bordered flex items-center gap-2">
+            <FaShield className="text-gray-400" />
+            <input
+              type="password"
+              className="grow text-white p-2 focus:outline-0"
+              name="password"
+              onChange={handleChange}
+              placeholder="Enter Your Password..."
             />
           </label>
           <button

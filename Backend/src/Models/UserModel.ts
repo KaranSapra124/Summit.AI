@@ -9,6 +9,7 @@ interface PurchasePlan {
 interface User extends Document {
   name: string;
   email: string;
+  password: string;
   purchasePlan: PurchasePlan | null;
   usage: number;
 }
@@ -22,10 +23,14 @@ const userSchema: Schema<User> = new Schema(
     email: {
       type: String,
       required: true, // Fixed typo here
-      unique: true,  // Added unique to ensure email uniqueness
+      unique: true, // Added unique to ensure email uniqueness
+    },
+    password: {
+      type: String,
+      required: true,
     },
     purchasePlan: {
-      type: Schema.Types.Mixed,  // Use Mixed type for more flexible objects if plan structure is variable
+      type: Schema.Types.Mixed, // Use Mixed type for more flexible objects if plan structure is variable
       default: null,
     },
     usage: {
