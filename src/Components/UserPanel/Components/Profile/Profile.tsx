@@ -14,7 +14,7 @@ interface planDetail {
 interface profileDetails {
   name: string;
   email: string;
-  plan: planDetail;
+  PurchasePlan: planDetail;
 }
 function Profile() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -155,7 +155,7 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {details?.plan.type}
+                    {PurchasePlan.type}
                   </td>
                 </td>
                 <td
@@ -175,7 +175,7 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {details?.plan.limit}
+                    {PurchasePlan.limit}
                   </td>
                 </td>
                 <td
@@ -195,7 +195,7 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {details?.plan.usage}
+                    {PurchasePlan.usage}
                   </td>
                 </td>
               </table>
