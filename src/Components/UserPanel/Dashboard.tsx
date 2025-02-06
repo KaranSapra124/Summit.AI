@@ -135,7 +135,7 @@ const Dashboard = () => {
       {pathname === "/user" ? (
         <div
           // key={isChanged}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  mx-auto gap-4 p-4"
+          className="grid sm:grid-cols-3 gap-4 h-fit mx-auto "
         >
           {aiTextSummarizerDashboardData?.map((elem, index) => {
             return (
@@ -143,11 +143,11 @@ const Dashboard = () => {
                 key={index}
                 className={`bg-emerald-500 ${
                   theme === "Dark" ? "text-white" : "text-black"
-                } p-6 rounded-2xl shadow-lg flex flex-col items-center justify-center`}
+                } p-4 w-full rounded-2xl h-52 shadow-lg flex flex-col `}
               >
                 <Cards
                   title={elem?.title}
-                  icon={elem?.icon}
+                 
                   value={elem?.value}
                 />
               </div>
