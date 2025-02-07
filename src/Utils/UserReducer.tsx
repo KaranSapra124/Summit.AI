@@ -5,6 +5,15 @@ export interface userState {
   userData: object;
   theme: string;
 }
+export interface userDataInterface {
+  name: string;
+  email: string;
+  plan: {
+    type: string;
+    usage: number;
+    limit: number;
+  };
+}
 export const initialState: userState = {
   userData: {
     name: "John Doe",
@@ -31,7 +40,7 @@ export const UserReducers = (state: userState, action: UserAction) => {
       return { ...state, theme: action.payload };
     }
     case "SET_USER": {
-      console.log(action.payload,'PAYLOAD')
+      console.log(action.payload, "PAYLOAD");
       return { ...state, userData: action.payload };
     }
   }

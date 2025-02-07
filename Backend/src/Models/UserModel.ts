@@ -1,9 +1,7 @@
 import mongoose, { Document, model, Schema } from "mongoose";
-
 // Define a specific interface for the purchase plan if you have any structure for it
 interface PurchasePlan {
-  planName: string;
-  features: string[];
+  planId: Schema.Types.ObjectId;
 }
 
 export interface User extends Document {

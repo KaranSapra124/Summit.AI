@@ -1,14 +1,31 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Container from "../../../Global/Container";
 import Divider from "../../../../Utils/Divider";
+import { UserContext } from "../../../../Utils/UserContext";
+import { userDataInterface, userState } from "../../../../Utils/UserReducer";
+import Modal from "../../../Helper/Modal";
+import Plan from "../Plans/Plan";
+import { RxCross1 } from "react-icons/rx";
 
 const Layout = () => {
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     para: "",
     selectedVal: "Select value",
   });
+  const context = useContext(UserContext);
+  const { userData } = context as userState;
+  const { name, email, plan } = userData as userDataInterface;
 
-  const [values] = useState(["correct", "summarize"]);
+  const [values] = useState([
+    "correct",
+    "summarize",
+    "grammar",
+    "detect",
+    "readability",
+    "spelling",
+  ]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSubmit = async (data: typeof formData) => {
     setFormData((prev) => ({
@@ -25,7 +42,7 @@ const Layout = () => {
       },
       body: new URLSearchParams({
         text: data?.para,
-        max_sentences: "3",
+        max_sentences: "5",
       }),
     };
     try {
@@ -37,6 +54,15 @@ const Layout = () => {
       console.error(error);
     }
   };
+  const modalData = (
+    <>
+      <Plan />
+      <RxCross1
+        onClick={() => setIsOpen(false)}
+        className="absolute text-black top-4 right-96 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full "
+      />
+    </>
+  );
 
   const handleUpdateState = (
     endpoint: string,
@@ -44,97 +70,113 @@ const Layout = () => {
   ) => {
     setFormData((prev) => ({
       ...prev,
-      para: endpoint === "summarize" ? data.summary.join("") : data?.corrected,
+      para: endpoint === "summarize" ? data.summary.join(" ") : data?.corrected,
     }));
   };
 
   return (
-    <Container className="px-8 py-12 sm:px-16 lg:px-20 text-center bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90">
-      <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-        Try Out The Capabilities{" "}
-        <span className="text-emerald-500 font-extrabold">Of Our App!</span>
-      </h1>
-      <p className="text-sm sm:text-xs my-4 font-semibold text-gray-300">
-        Get a hand on <strong>SUPERPOWERS </strong>of <strong>summit.AI</strong>{" "}
-        (For Just Once)
-      </p>
-      <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4" />
+    <>
+      {isOpen && <Modal data={modalData} />}
+      <Container className="px-6 py-10 sm:px-12 lg:px-16 text-center mx-auto ">
+        {plan !== undefined && plan !== null ? (
+          <>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
+              Welcome Back! Enjoy Your{" "}
+              <span className="text-emerald-500">Premium Plan</span>
+            </h1>
+            <p className="text-sm sm:text-base font-medium text-gray-300 mb-6">
+              Experience the full <span className="font-bold">Superpowers</span>{" "}
+              of Summit.AI. We're glad to have you!
+            </p>
+            <Divider className="h-1 w-16 mx-auto bg-emerald-500 rounded-full mb-8" />
 
-      <div className="flex flex-col sm:flex-row justify-center  space-y-4 sm:space-x-4 sm:space-y-0">
-        <textarea
-          cols={10}
-          rows={10}
-          placeholder="Enter Your Paragraph..."
-          className="p-4  rounded-lg border-2 border-emerald-500 shadow-md w-full text-gray-200 focus:outline-none "
-          value={formData?.para}
-          onChange={(e) =>
-            setFormData((prev) => ({
-              ...prev,
-              para: e.target.value,
-            }))
-          }
-        ></textarea>
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <textarea
+                cols={10}
+                rows={8}
+                placeholder="Enter your paragraph here..."
+                className="p-4 text-sm rounded-lg border border-emerald-500 shadow-md w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none bg-gray-100"
+                value={formData?.para}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    para: e.target.value,
+                  }))
+                }
+              ></textarea>
 
-        {/* <div className="dropdown dropdown-bottom w-full sm:w-auto mx-auto">
-          <div tabIndex={0} role="button" className="btn w-full sm:w-52 m-1 text-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-2 focus:ring-emerald-500 rounded-md">
-            {formData?.selectedVal}
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-emerald-500 text-white rounded-box z-[1] w-full sm:w-52 p-2 shadow-xl"
-          >
-            {values?.map((elem: string, index: number) => {
-              return (
-                <li
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      selectedVal: elem,
-                    }))
-                  }
-                  className="m-0.5 text-md font-semibold hover:bg-white/70 duration-200 transition-all w-full p-2 rounded cursor-pointer text-center hover:text-black"
-                  key={index}
+              <div className="relative w-52">
+                <button
+                  className="w-full bg-emerald-500 text-white font-semibold rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 flex items-center justify-between"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
-                  {elem}
-                </li>
-              );
-            })}
-          </ul>
-        </div> */}
-        <div>
-          <select
-            name=""
-            className="bg-emerald-500 border-none text-white text-lg font-semibold rounded-md p-2"
-            id=""
-            onChange={(e) =>
-              setFormData((prev) => ({
-                ...prev,
-                selectedVal: e.target.value,
-              }))
-            }
-          >
-            {values?.map((elem: string, index: number) => {
-              return (
-                <option
-                  className="m-0.5 text-md font-semibold hover:bg-white/70 duration-200 transition-all w-full p-2 rounded cursor-pointer text-center hover:text-black"
-                  key={index}
-                  value={elem}
-                >
-                  {elem}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-      </div>
+                  {formData.selectedVal}
+                  <svg
+                    className={`w-4 h-4 ml-2 transform transition-transform duration-200 ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {isDropdownOpen && (
+                  <ul className="absolute  left-0 right-0 bg-white shadow-lg rounded-md mt-2 z-10">
+                    {values?.map((elem: string, index: number) => (
+                      <li
+                        key={index}
+                        className="px-4 py-2 text-gray-800 hover:bg-emerald-100 cursor-pointer"
+                        onClick={() => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            selectedVal: elem,
+                          }));
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        {elem}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
 
-      <button
-        onClick={() => handleSubmit(formData)}
-        className="mt-6 p-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-md focus:ring-2 focus:ring-emerald-500"
-      >
-        Generate
-      </button>
-    </Container>
+            <button
+              onClick={() => handleSubmit(formData)}
+              className="mt-8 px-6 py-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
+            >
+              Generate
+            </button>
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
+              You Got No Plan 😔
+            </h1>
+            <p className="text-base sm:text-lg font-medium text-gray-300 mb-6">
+              Don't miss out! Purchase a plan now to access the{" "}
+              <span className="text-emerald-500 font-bold">
+                Premium Features
+              </span>{" "}
+              and unlock the full power of Summit.AI!
+            </p>
+            <button
+              onClick={() => setIsOpen(true)}
+              className="px-6 cursor-pointer py-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
+            >
+              Upgrade Now
+            </button>
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
