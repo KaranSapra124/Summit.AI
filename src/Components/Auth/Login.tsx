@@ -64,7 +64,9 @@ const Login = () => {
     setIsOpen(true);
   };
 
-  // useEffect(() => console.log(userData), [userData]);
+  useEffect(() => {
+    if (document.cookie.includes("userToken")) Navigate("/user");
+  }, []);
   const ModalData = (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">

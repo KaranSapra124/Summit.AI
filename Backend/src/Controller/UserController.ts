@@ -54,7 +54,6 @@ const userLogin = async (
 };
 
 const getUser = async (req: CustomRequest, res: Response): Promise<void> => {
-  console.log(req.user, "ID");
   try {
     // Accessing the userId from req.user, which was set by the userAuth middleware
     const { userId } = req.user as { userId: string };
