@@ -1,8 +1,9 @@
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
-
-const email = process.env.EMAIL;
-const password = process.env.PASSWORD;
+import dotenv from "dotenv";
+dotenv.config();
+const email = process.env.USER_EMAIL;
+const password = process.env.USER_PASSWORD;
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -13,7 +14,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendAcknowledgeEmail = async (
+export const sendAcknowledgeEmail = async (
   tomail: string,
   subject: string,
   message: string
@@ -35,7 +36,7 @@ const sendAcknowledgeEmail = async (
   }
 };
 
-const sendOTP = async (
+export const sendOTP = async (
   tomail: string,
   subject: string,
   message: string

@@ -20,8 +20,16 @@ const Settings = () => {
   // const context = useContext(UserContext);
   const [isPass, setIsPass] = useState<Boolean>(false);
 
-  const sendOTP = async(email: string) => {
-   const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`)
+  const sendOTP = async (email: string) => {
+    const res = await axios.post(
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/api/v1/user/change-password/${email}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
   };
   const passwordModal = (
     <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
