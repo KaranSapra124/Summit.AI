@@ -151,10 +151,14 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
 
   const generateRes = (
     param: string,
-    data: { corrected?: string; summary?: string[] }
+    data: { corrected?: string; summary?: [] }
   ) => {
-    if (param === "correct") data.corrected;
-    else if (param === "summarize") data.summary.join("");
+    if (param == "correct") {
+      // console.log(data.corrected)
+      return data?.corrected;
+    } else if (param == "summarize") {
+      return data?.summary?.join("");
+    }
   };
 
   try {

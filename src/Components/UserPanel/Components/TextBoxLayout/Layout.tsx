@@ -34,10 +34,10 @@ const Layout = () => {
       { data },
       { withCredentials: true }
     );
-    // setFormData((prev) => ({
-    //   ...prev,
-    //   para: "Loading...",
-    // }));
+    setFormData((prev) => ({
+      ...prev,
+      para: res?.data?.result,
+    }));
     // const url: string = `https://textgears-textgears-v1.p.rapidapi.com/${data?.selectedVal}`;
     // const options: object = {
     //   method: "POST",
