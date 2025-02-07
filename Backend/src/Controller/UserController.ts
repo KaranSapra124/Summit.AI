@@ -129,6 +129,10 @@ const purchasePlan = async (
   res.json({ message: "Plan Purchased Successfully!" });
 };
 
+const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
+  console.log(req.body);
+};
+
 export {
   userLogin,
   getUser,

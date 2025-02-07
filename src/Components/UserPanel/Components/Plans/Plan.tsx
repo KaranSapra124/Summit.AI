@@ -3,7 +3,11 @@ import { pricingPlans, PricingPlanType } from "../../../../Utils/PlanData";
 import Divider from "../../../../Utils/Divider";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { RxCross1 } from "react-icons/rx";
+import Modal from "../../../Helper/Modal";
 const Plan = () => {
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [response, setResponse] = useState<String>("");
   const [plans, setPlans] = useState<[]>([]);
   const isFeatureAvailable = (val: boolean, feature: string) => {
     return val ? `✔️ ${feature}` : `❌ ${feature}`;
@@ -14,8 +18,18 @@ const Plan = () => {
       { item },
       { withCredentials: true }
     );
-    console.log(res);
+    setResponse(res?.data?.message);
+    setIsOpen(true);
   };
+  const modalData = (
+    <div>
+      <h1 >{response}</h1>
+      <RxCross1
+        onClick={() => setIsOpen(false)}
+        className="bg-emerald-500 p-1 text-xl rounded-md"
+      />
+    </div>
+  );
   useEffect(() => {
     const fetchPlans = async () => {
       const res = await axios.post(
@@ -31,6 +45,7 @@ const Plan = () => {
   }, []);
   return (
     <>
+      {isOpen && <Modal data={modalData} />}
       <Container className="bg-black/95 relative h-full">
         <h1 className="text-5xl text-white font-bold text-center my-4">
           Explore Our{" "}
