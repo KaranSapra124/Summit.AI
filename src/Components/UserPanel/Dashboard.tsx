@@ -4,9 +4,9 @@ import { FaHome, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import Cards from "./Components/Dashboard/Cards";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../Utils/UserContext";
-// import { UserContext } from "../../Utils/UserReducer";
 import axios from "axios";
 import { UserAction } from "../../Utils/UserReducer";
+import Cookies from "js-cookie";
 
 const Dashboard = () => {
   interface UserContextType {
@@ -157,7 +157,10 @@ const Dashboard = () => {
               );
             })}
             <div
-              onClick={() => Navigate("/login")}
+              onClick={() => {
+                Navigate("/login");
+                Cookies.remove("userToken");
+              }}
               className="flex gap-2 items-center bg-red-500 p-2 rounded-md text-white font-bold cursor-pointer hover:bg-red-600 transition-all"
             >
               <FaSignOutAlt />
