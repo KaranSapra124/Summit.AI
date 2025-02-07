@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import Container from "../../../Global/Container";
+import { useLocation } from "react-router-dom";
 
 const OTPForm = () => {
+  const location = useLocation();
+  const { state } = location;
+  //   const { OTP } = state;
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const handleChange = (val: string, ind: number) => {
     const newOtp = [...otp];
@@ -15,7 +19,7 @@ const OTPForm = () => {
   };
 
   const handleSubmit = () => {
-    alert(otp.join(""));
+    state == otp.join("") ? alert("Verified") : alert("Incorrect OTP");
   };
 
   return (
@@ -30,7 +34,8 @@ const OTPForm = () => {
               return (
                 <>
                   <input
-                    autoFocus
+                    autoFocus={index == 0}
+                    max={10}
                     onChange={(e) => handleChange(e.target.value, index)}
                     className=" bg-white shadow shadow-black p-2    w-10 text-right rounded appearance-none"
                     key={index}

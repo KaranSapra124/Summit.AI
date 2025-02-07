@@ -99,6 +99,7 @@ const changePassword = async (
 
   await sendOTP(email, subject, mailBody);
 
+  res.json({ message: "OTP Sent ✔️", OTP });
 };
 
 export { userLogin, getUser, changePassword };

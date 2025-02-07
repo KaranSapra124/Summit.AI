@@ -4,8 +4,10 @@ import Modal from "../../../Helper/Modal";
 import { UserContext } from "../../../../Utils/UserContext";
 import { UserAction } from "../../../../Utils/UserReducer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+  const Navigate = useNavigate();
   const context = useContext(UserContext);
   const { theme, dispatch } = context as UserContextType;
   interface UserContextType {
@@ -14,10 +16,7 @@ const Settings = () => {
     dispatch: React.Dispatch<UserAction>;
   }
 
-  // const [theme, setTheme] = useState<Boolean>(false);
-  // const { useremail } = userData as { name: string; email: string };
   const [email, setEmail] = useState<string>("");
-  // const context = useContext(UserContext);
   const [isPass, setIsPass] = useState<Boolean>(false);
 
   const sendOTP = async (email: string) => {
@@ -30,6 +29,9 @@ const Settings = () => {
         withCredentials: true,
       }
     );
+    Navigate("/user/otp-form", {
+      state: res?.data?.OTP,
+    });
   };
   const passwordModal = (
     <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
