@@ -9,6 +9,7 @@ import Settings from "./Components/UserPanel/Components/Settings/Settings";
 import { UserContext } from "./Utils/UserContext";
 import { useContext, useReducer } from "react";
 import { initialState, UserReducers } from "./Utils/UserReducer";
+import OTPForm from "./Components/UserPanel/Components/Settings/OTPForm";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -37,6 +38,10 @@ function App() {
         {
           element: <Settings />,
           path: "/user/settings",
+        },
+        {
+          path: "/user/otp-form",
+          element: <OTPForm />,
         },
       ],
     },
