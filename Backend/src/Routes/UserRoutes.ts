@@ -3,6 +3,7 @@ import {
   alterPassword,
   changePassword,
   getPlans,
+  getResult,
   getUser,
   purchasePlan,
   userLogin,
@@ -15,5 +16,6 @@ router.post("/change-password/:email", userAuth, changePassword);
 router.post("/alter-password", userAuth, alterPassword);
 router.post("/get-plans", userAuth, getPlans);
 router.post("/purchase-plan", userAuth, purchasePlan);
+router.post("/get-result", userAuth, getResult);
 
 export default router;

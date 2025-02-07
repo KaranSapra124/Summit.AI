@@ -6,6 +6,7 @@ import { userDataInterface, userState } from "../../../../Utils/UserReducer";
 import Modal from "../../../Helper/Modal";
 import Plan from "../Plans/Plan";
 import { RxCross1 } from "react-icons/rx";
+import axios from "axios";
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -28,31 +29,36 @@ const Layout = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSubmit = async (data: typeof formData) => {
-    setFormData((prev) => ({
-      ...prev,
-      para: "Loading...",
-    }));
-    const url: string = `https://textgears-textgears-v1.p.rapidapi.com/${data?.selectedVal}`;
-    const options: object = {
-      method: "POST",
-      headers: {
-        "x-rapidapi-key": import.meta.env.VITE_API_KEY,
-        "x-rapidapi-host": "textgears-textgears-v1.p.rapidapi.com",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        text: data?.para,
-        max_sentences: "5",
-      }),
-    };
-    try {
-      const res = await fetch(url, options);
-      const result = await res.text();
-      const { response } = JSON.parse(result);
-      handleUpdateState(formData?.selectedVal, response);
-    } catch (error) {
-      console.error(error);
-    }
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-result`,
+      { data },
+      { withCredentials: true }
+    );
+    // setFormData((prev) => ({
+    //   ...prev,
+    //   para: "Loading...",
+    // }));
+    // const url: string = `https://textgears-textgears-v1.p.rapidapi.com/${data?.selectedVal}`;
+    // const options: object = {
+    //   method: "POST",
+    //   headers: {
+    //     "x-rapidapi-key": import.meta.env.VITE_API_KEY,
+    //     "x-rapidapi-host": "textgears-textgears-v1.p.rapidapi.com",
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    //   body: new URLSearchParams({
+    //     text: data?.para,
+    //     max_sentences: "5",
+    //   }),
+    // };
+    // try {
+    //   const res = await fetch(url, options);
+    //   const result = await res.text();
+    //   const { response } = JSON.parse(result);
+    //   handleUpdateState(formData?.selectedVal, response);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   const modalData = (
     <>

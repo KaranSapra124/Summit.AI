@@ -5,6 +5,7 @@ import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
 import { sendOTP } from "../Utils/Nodemailer";
 import PlanModel from "../Models/PlanModel";
+import axios from "axios";
 
 interface UserLoginRequest {
   name: string;
@@ -130,7 +131,30 @@ const purchasePlan = async (
 };
 
 const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
-  console.log(req.body);
+  const { data } = req.body;
+  const { para, selectedVal } = data;
+
+  const encodedParams = new URLSearchParams();
+  encodedParams.set("text", para);
+  encodedParams.set("max_sentences", "5");
+
+  const options = {
+    method: "POST",
+    url: `https://textgears-textgears-v1.p.rapidapi.com/${selectedVal}`,
+    headers: {
+      "x-rapidapi-key": process.env.RAPID_KEY,
+      "x-rapidapi-host": "textgears-textgears-v1.p.rapidapi.com",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: encodedParams,
+  };
+
+  try {
+    const response = await axios.request(options);
+    res.json({ message: "Result Fetched", result: response.data });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export {
@@ -140,4 +164,5 @@ export {
   alterPassword,
   getPlans,
   purchasePlan,
+  getResult,
 };
