@@ -1,10 +1,34 @@
 import Container from "../../../Global/Container";
 import { pricingPlans, PricingPlanType } from "../../../../Utils/PlanData";
 import Divider from "../../../../Utils/Divider";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Plan = () => {
+  const [plans, setPlans] = useState<[]>([]);
   const isFeatureAvailable = (val: boolean, feature: string) => {
     return val ? `✔️ ${feature}` : `❌ ${feature}`;
   };
+  const handlePurchase = async (item: PricingPlanType) => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/purchase-plan`,
+      { item },
+      { withCredentials: true }
+    );
+    console.log(res);
+  };
+  useEffect(() => {
+    const fetchPlans = async () => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-plans`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setPlans(res?.data?.plans);
+    };
+    fetchPlans();
+  }, []);
   return (
     <>
       <Container className="bg-black/95 relative h-full">
@@ -18,8 +42,8 @@ const Plan = () => {
         </p>
         <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-4" />
         <div className="flex justify-center gap-4">
-          {pricingPlans
-            ?.filter((elem) => elem?.name !== "Free Plan")
+          {plans
+            ?.filter((elem: PricingPlanType) => elem?.name !== "Free Plan")
             ?.map((elem: PricingPlanType, index: number) => {
               return (
                 <div
@@ -35,7 +59,10 @@ const Plan = () => {
                       : `₹ ${elem?.price}`}
                   </p>
                   <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-4" />
-                  <button className="bg-emerald-500 cursor-pointer  hover:scale-[102%] transition-all w-full text-white font-medium py-2 rounded-sm text-lg ">
+                  <button
+                    onClick={() => handlePurchase(elem)}
+                    className="bg-emerald-500 cursor-pointer  hover:scale-[102%] transition-all w-full text-white font-medium py-2 rounded-sm text-lg "
+                  >
                     {elem?.price === 0 ? "Try Now" : "Buy Now"}
                   </button>
                   <div className="py-2 ">

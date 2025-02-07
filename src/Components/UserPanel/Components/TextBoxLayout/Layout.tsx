@@ -15,7 +15,7 @@ const Layout = () => {
   });
   const context = useContext(UserContext);
   const { userData } = context as userState;
-  const { name, email, plan } = userData as userDataInterface;
+  const { name, email, plan, purchasePlan } = userData as userDataInterface;
 
   const [values] = useState([
     "correct",
@@ -78,7 +78,7 @@ const Layout = () => {
     <>
       {isOpen && <Modal data={modalData} />}
       <Container className="px-6 py-10 sm:px-12 lg:px-16 text-center mx-auto ">
-        {plan !== undefined && plan !== null ? (
+        {purchasePlan !== undefined && purchasePlan !== null ? (
           <>
             <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
               Welcome Back! Enjoy Your{" "}

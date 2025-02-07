@@ -13,6 +13,18 @@ export interface userDataInterface {
     usage: number;
     limit: number;
   };
+  purchasePlan: {
+    _id: string;
+    name: string;
+    price: number | "Custom Pricing";
+    currency: string;
+    textLimit: string;
+    summariesPerDay: number | "Unlimited";
+    fileUploads: boolean;
+    customization: boolean;
+    prioritySupport: boolean;
+    apiAccess: boolean;
+  };
 }
 export const initialState: userState = {
   userData: {

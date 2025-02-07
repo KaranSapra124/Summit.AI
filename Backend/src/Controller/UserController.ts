@@ -4,6 +4,7 @@ import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
 import { sendOTP } from "../Utils/Nodemailer";
+import PlanModel from "../Models/PlanModel";
 
 interface UserLoginRequest {
   name: string;
@@ -113,11 +114,26 @@ const alterPassword = async (
   res.json({ message: "Password Changed Successfully!" });
 };
 
+const getPlans = async (req: CustomRequest, res: Response): Promise<void> => {
+  const plans = await PlanModel.find();
+  res.json({ message: "Plans Fetched!", plans });
+};
+
 const purchasePlan = async (
   req: CustomRequest,
   res: Response
 ): Promise<void> => {
-  
+  const { userId } = req.user as JwtPayload;
+  const plan = req.body;
+  await UserModel.findByIdAndUpdate(userId, { purchasePlan: plan.item });
+  res.json({ message: "Plan Purchased Successfully!" });
 };
 
-export { userLogin, getUser, changePassword, alterPassword };
+export {
+  userLogin,
+  getUser,
+  changePassword,
+  alterPassword,
+  getPlans,
+  purchasePlan,
+};
