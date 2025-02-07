@@ -45,4 +45,4 @@ const PlanModel: Schema<Plan> = new Schema({
   },
 });
 
-module.exports = model<Plan>("PlanModel", PlanModel);
+export default model<Plan>("PlanModel", PlanModel);

@@ -113,4 +113,11 @@ const alterPassword = async (
   res.json({ message: "Password Changed Successfully!" });
 };
 
+const purchasePlan = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  
+};
+
 export { userLogin, getUser, changePassword, alterPassword };
