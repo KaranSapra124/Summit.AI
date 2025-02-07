@@ -1,21 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Container from "../../../Global/Container";
 import Modal from "../../../Helper/Modal";
 import { UserContext } from "../../../../Utils/UserContext";
 import { UserAction } from "../../../../Utils/UserReducer";
+import axios from "axios";
 
 const Settings = () => {
-   interface UserContextType {
+  const context = useContext(UserContext);
+  const { theme, dispatch } = context as UserContextType;
+  interface UserContextType {
     theme: string;
     userData: object; // You can be more specific about this type if needed
     dispatch: React.Dispatch<UserAction>;
   }
+
   // const [theme, setTheme] = useState<Boolean>(false);
+  // const { useremail } = userData as { name: string; email: string };
   const [email, setEmail] = useState<string>("");
   // const context = useContext(UserContext);
   const [isPass, setIsPass] = useState<Boolean>(false);
-  const context = useContext(UserContext);
-  const { theme, dispatch } = context as UserContextType;
+
+  const sendOTP = async(email: string) => {
+   const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user`)
+  };
   const passwordModal = (
     <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
@@ -30,7 +37,10 @@ const Settings = () => {
           placeholder="Enter Your Email..."
         />
         <div className="flex justify-between gap-4">
-          <button className="w-1/2 font-semibold py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 cursor-pointer transition-all focus:outline-none">
+          <button
+            onClick={() => sendOTP(email)}
+            className="w-1/2 font-semibold py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 cursor-pointer transition-all focus:outline-none"
+          >
             Send
           </button>
           <button

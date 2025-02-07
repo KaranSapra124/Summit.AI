@@ -4,6 +4,7 @@ import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
 
+
 interface UserLoginRequest {
   name: string;
   email: string;
@@ -12,9 +13,7 @@ interface UserLoginRequest {
 interface CustomRequest extends Request {
   user?: string | JwtPayload;
 }
-type userPayload = {
-  userId: string;
-};
+
 
 const userLogin = async (
   req: Request<{}, {}, UserLoginRequest>,
