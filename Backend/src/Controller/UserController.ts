@@ -108,7 +108,7 @@ const alterPassword = async (
 ): Promise<void> => {
   const { password } = req.body;
   const { userId } = req.user as JwtPayload;
-  const hashpass = hash(password, 5);
+  const hashpass = await hash(password, 5);
   await UserModel.findByIdAndUpdate(userId, { password: hashpass });
   res.json({ message: "Password Changed Successfully!" });
 };

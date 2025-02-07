@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import Container from "../../../Global/Container";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OTPForm = () => {
+  const Navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
   //   const { OTP } = state;
@@ -19,7 +20,9 @@ const OTPForm = () => {
   };
 
   const handleSubmit = () => {
-    state == otp.join("") ? alert("Verified") : alert("Incorrect OTP");
+    state == otp.join("")
+      ? Navigate("/user/change-password")
+      : alert("Incorrect OTP");
   };
 
   return (
