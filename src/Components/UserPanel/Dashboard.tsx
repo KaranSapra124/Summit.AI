@@ -7,6 +7,7 @@ import { UserContext } from "../../Utils/UserContext";
 import axios from "axios";
 import { UserAction } from "../../Utils/UserReducer";
 import Cookies from "js-cookie";
+import { FaBook } from "react-icons/fa6";
 
 const Dashboard = () => {
   interface UserContextType {
@@ -30,10 +31,16 @@ const Dashboard = () => {
       icon: <FaUser />,
     },
     {
+      title: "Main Editor",
+      link: "/user/main-interface",
+      icon: <FaBook />,
+    },
+    {
       title: "Settings",
       link: "/user/settings",
       icon: <FaCog />,
     },
+
     // {
     //   title: "Log Out",
     //   link: "/user/log-out",
