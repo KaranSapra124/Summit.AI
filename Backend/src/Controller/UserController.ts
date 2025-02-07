@@ -102,4 +102,15 @@ const changePassword = async (
   res.json({ message: "OTP Sent ✔️", OTP });
 };
 
-export { userLogin, getUser, changePassword };
+const alterPassword = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { password } = req.body;
+  const { userId } = req.user as JwtPayload;
+  const hashpass = hash(password, 5);
+  await UserModel.findByIdAndUpdate(userId, { password: hashpass });
+  res.json({ message: "Password Changed Successfully!" });
+};
+
+export { userLogin, getUser, changePassword, alterPassword };

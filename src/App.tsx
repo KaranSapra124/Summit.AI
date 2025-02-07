@@ -10,6 +10,7 @@ import { UserContext } from "./Utils/UserContext";
 import { useContext, useReducer } from "react";
 import { initialState, UserReducers } from "./Utils/UserReducer";
 import OTPForm from "./Components/UserPanel/Components/Settings/OTPForm";
+import ChangePassword from "./Components/UserPanel/Components/Settings/ChangePassword";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -42,6 +43,10 @@ function App() {
         {
           path: "/user/otp-form",
           element: <OTPForm />,
+        },
+        {
+          path: "/user/change-password",
+          element: <ChangePassword />,
         },
       ],
     },
