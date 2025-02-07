@@ -149,9 +149,23 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
     data: encodedParams,
   };
 
+  const generateRes = (
+    param: string,
+    data: { corrected?: string; summary?: string[] }
+  ) => {
+    if (param === "correct") data.corrected;
+    else if (param === "summarize") data.summary.join("");
+  };
+
   try {
-    const response = await axios.request(options);
-    res.json({ message: "Result Fetched", result: response.data });
+    const axiosRes = await axios.request(options);
+    const { data } = axiosRes as unknown as { data: Object };
+    const { response } = data as unknown as { response: Object };
+
+    res.json({
+      message: "Result Fetched",
+      result: generateRes(selectedVal, response),
+    });
   } catch (error) {
     console.error(error);
   }
