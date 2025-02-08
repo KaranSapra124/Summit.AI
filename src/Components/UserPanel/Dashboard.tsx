@@ -4,11 +4,7 @@ import { FaHome, FaUser, FaCog, FaSignOutAlt, FaBars } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Utils/UserContext";
 import axios from "axios";
-import {
-  UserAction,
-  userDataInterface,
-  userState,
-} from "../../Utils/UserReducer";
+import { UserAction, userDataInterface } from "../../Utils/UserReducer";
 import Cookies from "js-cookie";
 import { FaBook } from "react-icons/fa6";
 import Cards from "./Components/Dashboard/Cards";
@@ -19,12 +15,7 @@ const Dashboard = () => {
     userData: object; // You can be more specific about this type if needed
     dispatch: React.Dispatch<UserAction>;
   }
-  type userDetails = {
-    name: string;
-    email: string;
-  };
-  // const context = useContext(UserContext);
-  // const { userData } = context as UserContextType;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Hamburger menu state
   const links = [
     {
@@ -53,8 +44,8 @@ const Dashboard = () => {
   const { pathname } = location;
   const context = useContext(UserContext);
   const { theme, userData, dispatch } = context as UserContextType;
-  const { name, purchasePlan } = userData as userDataInterface;
-  const { summariesPerDay } = purchasePlan;
+  const { name = "Guest", purchasePlan = {} } =
+    (userData as userDataInterface) || {};
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -81,7 +72,7 @@ const Dashboard = () => {
     },
     {
       title: "Current Plan",
-      value: purchasePlan.name,
+      value: purchasePlan?.name,
       description:
         "Total number of characters processed against your usage limit.",
       icon: "🔠",
@@ -91,9 +82,9 @@ const Dashboard = () => {
     {
       title: "Plan Total Usage",
       value:
-        purchasePlan.name === "Pro Plan"
+        purchasePlan?.name === "Pro Plan"
           ? 50
-          : purchasePlan.name === "Free Plan"
+          : purchasePlan?.name === "Free Plan"
           ? 5
           : 100,
       description:
@@ -164,6 +155,7 @@ const Dashboard = () => {
             alt="User Avatar"
           />
           <p className="py-4 font-bold">{name}</p>
+          {/* console.log(name,'VALUE') */}
         </div>
         <ul>
           {links.map((elem, index) => (

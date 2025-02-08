@@ -21,9 +21,7 @@ const Settings = () => {
 
   const sendOTP = async (email: string) => {
     const res = await axios.post(
-      `${
-        import.meta.env.VITE_BACKEND_URL
-      }/api/v1/user/change-password/${email}`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/change-password/${email}`,
       {},
       {
         withCredentials: true,
@@ -33,10 +31,11 @@ const Settings = () => {
       state: res?.data?.OTP,
     });
   };
+
   const passwordModal = (
     <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
-        <h2 className="text-xl font-bold text-left  mb-4 text-gray-700">
+      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-11/12 max-w-sm sm:max-w-md text-center">
+        <h2 className="text-lg md:text-xl font-bold text-left mb-4 text-gray-700">
           Enter Your Email
         </h2>
         <input
@@ -46,16 +45,16 @@ const Settings = () => {
           className="w-full p-3 mb-4 border border-gray-500 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
           placeholder="Enter Your Email..."
         />
-        <div className="flex justify-between gap-4">
+        <div className="flex flex-col md:flex-row justify-between gap-4">
           <button
             onClick={() => sendOTP(email)}
-            className="w-1/2 font-semibold py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 cursor-pointer transition-all focus:outline-none"
+            className="w-full md:w-1/2 font-semibold py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 cursor-pointer transition-all focus:outline-none"
           >
             Send
           </button>
           <button
             onClick={() => setIsPass(false)}
-            className="w-1/2 py-2 font-semibold cursor-pointer bg-red-500 text-white rounded-md transition-all hover:bg-red-600 focus:outline-none"
+            className="w-full md:w-1/2 py-2 font-semibold cursor-pointer bg-red-500 text-white rounded-md transition-all hover:bg-red-600 focus:outline-none"
           >
             Cancel
           </button>
@@ -64,53 +63,52 @@ const Settings = () => {
     </div>
   );
 
-  // useEffect(() => console.log(theme), [theme]);
-
   return (
     <>
       {isPass && <Modal data={passwordModal} />}
-      <Container className="p-20 w-full">
+      <Container className="p-4 sm:p-6 md:p-10 w-full h-screen">
         <h1
-          className={`text-3xl font-bold ${
+          className={`text-lg md:text-3xl font-bold ${
             theme === "Dark" ? "text-gray-100" : "text-gray-900"
           }`}
         >
           Settings
         </h1>
         <div className="my-4">
+          {/* Change Password Section */}
           <div
-            className={`flex p-2 items-center rounded-md my-2 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
+            className={`flex flex-col max-[600px]:flex-row sm:flex-row p-4 items-center rounded-md my-4 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
               theme === "Dark" ? "shadow-white" : "shadow-gray-900"
             }`}
           >
             <h1
-              className={`${
+              className={`mb-2 sm:mb-0 ${
                 theme === "Dark" ? "text-white" : "text-black"
-              } text-xl font-semibold`}
+              } text-xs md:text-xl font-semibold`}
             >
               Change Account Password
             </h1>
             <button
               onClick={() => setIsPass(true)}
-              className="bg-red-500 cursor-pointer hover:bg-red-600 transition-all duration-150 text-white font-bold p-2 rounded-sm"
+              className="bg-red-500 cursor-pointer hover:bg-red-600 transition-all duration-150 text-white max-[600px]:p-0.5 max-[600px]:text-xs font-bold p-2 rounded-sm"
             >
               Change Password
             </button>
           </div>
+          {/* Theme Toggle Section */}
           <div
-            className={`flex p-2 items-center rounded-md my-2 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
+            className={`flex flex-col max-[600px]:flex-row sm:flex-row p-4 items-center rounded-md my-4 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
               theme === "Dark" ? "shadow-white" : "shadow-gray-900"
             }`}
           >
             <h1
-              className={`${
+              className={`mb-2 sm:mb-0 ${
                 theme === "Dark" ? "text-white" : "text-black"
-              } text-xl font-semibold`}
+              } text-lg md:text-xl max-[600px]:text-sm font-semibold`}
             >
               Theme
             </h1>
-            {/* <button className="bg-red-500 text-white font-semibold p-2 rounded-sm">Dark</button> */}
-            <label className="inline-flex items-center cursor-pointer">
+            <label className="inline-flex  items-center cursor-pointer">
               <input
                 onChange={(e) => {
                   const isChecked = (e.target as HTMLInputElement).checked;
