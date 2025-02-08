@@ -33,21 +33,32 @@ const userLogin = async (
       email: email,
       password: hashPass,
     });
-
+    const token = generateToken(newUser._id, secretKey, "7d");
+    res.cookie("userToken", token, {
+      secure: true, // True for HTTPS
+      sameSite: "none", // Or "Lax" depending on your setup
+      domain: ".onrender.com", // Match backend domain
+    });
     res.json({
       message: "Account Created Successfully!",
       newUser,
-      token: generateToken(newUser._id, secretKey, "7d"),
+      token: token,
     });
   } else {
     // const p1 = new Promise()
     console.log(name, email);
+    const token = generateToken(exisitingUser._id, secretKey, "7d");
+    res.cookie("userToken", token, {
+      secure: true, // True for HTTPS
+      sameSite: "none", // Or "Lax" depending on your setup
+      domain: ".onrender.com", // Match backend domain
+    });
     const result = await compare(password, exisitingUser?.password);
     result
       ? res.json({
           message: "Logged In Successfully!",
           exisitingUser,
-          token: generateToken(exisitingUser._id, secretKey, "7d"),
+          token: token,
         })
       : res.json({ message: "Password Incorrect!" });
   }
@@ -204,5 +215,5 @@ export {
   getPlans,
   purchasePlan,
   getResult,
-  updateProfile
+  updateProfile,
 };
