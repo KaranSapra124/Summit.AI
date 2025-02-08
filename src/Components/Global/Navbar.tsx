@@ -36,7 +36,7 @@ const Navbar = () => {
           <div
             className={`${
               isOpen ? "flex" : "hidden"
-            } flex-col absolute top-16 left-0 w-full bg-gray-900 lg:relative lg:flex lg:flex-row lg:items-center lg:gap-4 lg:w-auto lg:bg-transparent lg:static`}
+            } flex-col absolute top-16 left-0 w-full bg-gray-900  lg:flex lg:flex-row lg:items-center lg:gap-4 lg:w-auto lg:bg-transparent lg:static`}
           >
             {navLinks?.map((elem: string, index: number) => {
               return (

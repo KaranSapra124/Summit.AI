@@ -3,7 +3,7 @@ import UserModel, { User } from "../Models/UserModel";
 import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
-import { sendOTP } from "../Utils/Nodemailer";
+import { sendAcknowledgeEmail, sendOTP } from "../Utils/Nodemailer";
 import PlanModel, { Plan } from "../Models/PlanModel";
 import axios from "axios";
 
@@ -32,13 +32,77 @@ const userLogin = async (
       name: name,
       email: email,
       password: hashPass,
+      purchasePlan: {
+        name: "Free Plan",
+        price: 0,
+        currency: "INR",
+        textLimit: "500 words per summary",
+        summariesPerDay: 5,
+        fileUploads: false,
+        customization: false,
+        prioritySupport: false,
+        apiAccess: false,
+      },
     });
+    const message = `<div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <div className="text-center mb-6">
+      <h1 className="text-2xl font-bold text-emerald-500 mb-2">
+        Welcome to Summit.AI, ${newUser.name}!
+      </h1>
+      <p className="text-gray-600">
+        Your journey to smarter AI solutions starts here.
+      </p>
+    </div>
+
+    <div className="text-left">
+      <p className="text-gray-800 text-base mb-4">
+        Hi <b>${newUser.name}</b>,
+      </p>
+      <p className="text-gray-800 text-base mb-4">
+        Thank you for creating an account at <b>Summit.AI</b>. As a warm
+        welcome, we’ve activated your <b>Free Plan</b>, so you can start
+        exploring our features right away!
+      </p>
+      <p className="text-gray-800 text-base mb-4">
+        Here’s what you get with your Free Plan:
+      </p>
+      <ul className="list-disc pl-5 mb-4 text-gray-800">
+        <li className="mb-2">✨ 5 free uses</li>
+        <li className="mb-2">⚡ Access to our powerful AI summarization tools</li>
+        <li>🚀 Opportunities to upgrade for even more features!</li>
+      </ul>
+      <p className="text-gray-800 text-base mb-4">
+        We’re thrilled to have you on board. If you have any questions or need
+        assistance, feel free to reach out to our support team.
+      </p>
+      <div className="text-center mt-6">
+        <a
+          href="https://summit-ai.onrender.com/"
+          className="bg-emerald-500 text-white px-4 py-2 rounded-md text-base font-bold hover:bg-emerald-600"
+        >
+          Start Exploring
+        </a>
+      </div>
+    </div>
+
+    <div className="border-t border-gray-300 mt-6 pt-4 text-center text-sm text-gray-500">
+      &copy; ${new Date().getFullYear()} Summit.AI. All rights reserved.
+      <br />
+      You’re receiving this email because you signed up at Summit.AI.
+    </div>
+  </div>`;
+    await sendAcknowledgeEmail(
+      newUser.email,
+      `🎉 Welcome to Summit.AI, ${newUser.name}! Your Free Plan Awaits! 🚀`,
+      message
+    );
     const token = generateToken(newUser._id, secretKey, "7d");
+
     res.cookie("userToken", token, {
       secure: true, // True for HTTPS
       sameSite: "none", // Or "Lax" depending on your setup
-      // domain: ".onrender.com", // Match backend domain
     });
+
     res.json({
       message: "Account Created Successfully!",
       newUser,
