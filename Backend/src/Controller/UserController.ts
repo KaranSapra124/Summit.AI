@@ -4,7 +4,7 @@ import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
 import { sendOTP } from "../Utils/Nodemailer";
-import PlanModel from "../Models/PlanModel";
+import PlanModel, { Plan } from "../Models/PlanModel";
 import axios from "axios";
 
 interface UserLoginRequest {
@@ -134,6 +134,14 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
   const { data } = req.body;
   const { para, selectedVal } = data;
 
+  const { userId } = req.user as JwtPayload;
+
+  await UserModel.findOneAndUpdate(
+    { _id: userId, "purchasePlan.summariesPerDay": { $gt: 0 } }, // Only decrement if > 0
+    { $inc: { "purchasePlan.summariesPerDay": -1 } }, // Decrement by 1
+    { new: true } // Return the updated document
+  );
+
   const encodedParams = new URLSearchParams();
   encodedParams.set("text", para);
   encodedParams.set("max_sentences", "5");
@@ -151,7 +159,7 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
 
   const generateRes = (
     param: string,
-    data: { corrected?: string; summary?: []; language?: "" }
+    data: { corrected?: string; summary?: []; language?: ""; errors?: [] }
   ) => {
     if (param == "correct") {
       return data?.corrected;
@@ -159,6 +167,8 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
       return data?.summary?.join("");
     } else if (param === "detect") {
       return data?.language;
+    } else if (param === "grammar") {
+      return data?.errors;
     }
   };
 

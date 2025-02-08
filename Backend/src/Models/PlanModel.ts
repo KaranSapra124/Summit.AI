@@ -6,7 +6,7 @@ export interface Plan extends Document {
   price: number | "Custom Pricing";
   currency: string;
   textLimit: string;
-  summariesPerDay: number | "Unlimited";
+  summariesPerDay: number;
   fileUploads: boolean;
   customization: boolean;
   prioritySupport: boolean;
@@ -29,7 +29,7 @@ const PlanModel: Schema<Plan> = new Schema({
     type: String,
   },
   summariesPerDay: {
-    type: Schema.Types.Mixed,
+    type: Number,
   },
   fileUploads: {
     type: Boolean,

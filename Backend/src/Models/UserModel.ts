@@ -1,7 +1,16 @@
 import mongoose, { Document, model, Schema } from "mongoose";
 // Define a specific interface for the purchase plan if you have any structure for it
 interface PurchasePlan {
-  planId: Schema.Types.ObjectId;
+  _id: string;
+  name: string;
+  price: number | "Custom Pricing";
+  currency: string;
+  textLimit: string;
+  summariesPerDay: number;
+  fileUploads: boolean;
+  customization: boolean;
+  prioritySupport: boolean;
+  apiAccess: boolean;
 }
 
 export interface User extends Document {

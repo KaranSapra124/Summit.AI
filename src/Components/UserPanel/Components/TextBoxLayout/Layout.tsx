@@ -9,6 +9,16 @@ import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
 
 const Layout = () => {
+  interface ElemType {
+    bad: string;
+    better: [];
+  }
+
+  interface grammarType {
+    error: string;
+    correct?: string[];
+  }
+
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     para: "",
@@ -17,14 +27,16 @@ const Layout = () => {
   const context = useContext(UserContext);
   const { userData } = context as userState;
   const { name, email, plan, purchasePlan } = userData as userDataInterface;
+  const [grammarMistakes, setGrammarMistakes] = useState<grammarType[]>([]);
+  const [isGrammarMistkesOpen, setIsGrammarMistakes] = useState<Boolean>(false);
 
   const [values] = useState([
     "correct",
     "summarize",
     "grammar",
     "detect",
-    "readability",
-    "spelling",
+    // "readability",
+    // "spelling",
   ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -36,35 +48,66 @@ const Layout = () => {
     );
     setFormData((prev) => ({
       ...prev,
-      para: res?.data?.result,
+      para:
+        formData?.selectedVal !== "grammar"
+          ? res?.data?.result
+          : (() => {
+              res?.data?.result?.map((elem: ElemType, index: number) => {
+                console.log(elem, "elem");
+                return setGrammarMistakes((prev) => [
+                  ...prev,
+                  {
+                    error: elem.bad,
+                    correct: elem?.better.map((elem, index) => elem),
+                  },
+                ]);
+              });
+              setIsGrammarMistakes(true);
+            })(),
     }));
-    // const url: string = `https://textgears-textgears-v1.p.rapidapi.com/${data?.selectedVal}`;
-    // const options: object = {
-    //   method: "POST",
-    //   headers: {
-    //     "x-rapidapi-key": import.meta.env.VITE_API_KEY,
-    //     "x-rapidapi-host": "textgears-textgears-v1.p.rapidapi.com",
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    //   body: new URLSearchParams({
-    //     text: data?.para,
-    //     max_sentences: "5",
-    //   }),
-    // };
-    // try {
-    //   const res = await fetch(url, options);
-    //   const result = await res.text();
-    //   const { response } = JSON.parse(result);
-    //   handleUpdateState(formData?.selectedVal, response);
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
   const modalData = (
     <>
       <Plan />
       <RxCross1
         onClick={() => setIsOpen(false)}
+        className="absolute text-black top-4 right-96 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full "
+      />
+    </>
+  );
+  const grammarModalData = (
+    <>
+      <div className="overflow-x-auto">
+        <table className="max-w-screen-md mx-auto my-52  border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="px-4 py-2 border">Mistake</th>
+              <th className="px-4 py-2 border">Suggestions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {grammarMistakes?.map((elem: grammarType, index: number) => (
+              <tr key={index} className="odd:bg-white even:bg-gray-50">
+                <td className="px-4 py-2 border">{elem.error}</td>
+                <td className="px-4 py-2 border">
+                  {elem.correct &&
+                    elem.correct.map((suggestion, i) => (
+                      <span
+                        key={i}
+                        className="inline-block bg-blue-100 text-blue-600 rounded px-2 py-1 m-1"
+                      >
+                        {suggestion}
+                      </span>
+                    ))}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <RxCross1
+        onClick={() => setIsGrammarMistakes(false)}
         className="absolute text-black top-4 right-96 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full "
       />
     </>
@@ -83,6 +126,7 @@ const Layout = () => {
   return (
     <>
       {isOpen && <Modal data={modalData} />}
+      {isGrammarMistkesOpen && <Modal data={grammarModalData} />}
       <Container className="px-6 py-10 sm:px-12 lg:px-16 text-center mx-auto ">
         {purchasePlan !== undefined && purchasePlan !== null ? (
           <>
