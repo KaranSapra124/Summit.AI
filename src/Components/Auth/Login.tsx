@@ -62,7 +62,6 @@ const Login = () => {
       expires: 7,
       secure: true,
       sameSite: "Lax",
-      path: "/",
       domain:".onrender.com"
     });
 
