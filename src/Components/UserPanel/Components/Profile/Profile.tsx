@@ -148,13 +148,14 @@ function Profile() {
             theme === "Dark" ? "shadow-white" : "shadow-gray-900"
           } bg-gray-100/40 my-2  p-2 w-full justify-center rounded-md items-center`}
         >
-          <h2 className="text-gray-900 text-2xl font-extrabold">
+          <h2 className="text-gray-900 max-[600px]:text-sm my-2 text-2xl font-extrabold">
             Plan Details:
           </h2>
+          <Divider className="h-0.5 w-12 bg-emerald-500 my-2 rounded-full"/>
           <div className="flex justify-between">
             {purchasePlan ? (
               <table
-                className={`flex justify-between w-full rounded-sm  border ${
+                className={`flex justify-between w-full rounded-sm max-[600px]:flex-col  border ${
                   theme === "Dark" ? "border-gray-100 " : "border-gray-900"
                 }`}
               >
@@ -164,14 +165,14 @@ function Profile() {
                   }  w-full  p-2 font-bold`}
                 >
                   <tr
-                    className={`text-lg  border-b-2 ${
+                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
                       theme === "Dark" ? "border-white" : "border-gray-900"
                     }`}
                   >
                     Plan Name
                   </tr>
                   <td
-                    className={`text-xl font-extrabold ${
+                    className={`text-xl max-[600px]:text-sm font-extrabold ${
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
@@ -184,14 +185,14 @@ function Profile() {
                   }  w-full  p-2 font-bold`}
                 >
                   <tr
-                    className={`text-lg  border-b-2 ${
+                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
                       theme === "Dark" ? "border-white" : "border-gray-900"
                     }`}
                   >
                     Plan Limit
                   </tr>
                   <td
-                    className={`text-xl font-extrabold ${
+                    className={`text-xl max-[600px]:text-sm font-extrabold ${
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
@@ -208,14 +209,14 @@ function Profile() {
                   }  w-full  p-2 font-bold`}
                 >
                   <tr
-                    className={`text-lg  border-b-2 ${
+                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
                       theme === "Dark" ? "border-white" : "border-gray-900"
                     }`}
                   >
                     Plan Usage
                   </tr>
                   <td
-                    className={`text-xl font-extrabold ${
+                    className={`text-xl max-[600px]:text-sm font-extrabold ${
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
