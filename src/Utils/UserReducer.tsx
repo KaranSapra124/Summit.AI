@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { UserContext } from "./UserContext";
+import React from "react";
+// import { UserContext } from "./UserContext";
 
 export interface userState {
   userData: object;

@@ -42,10 +42,11 @@ const Dashboard = () => {
 
   const location = useLocation();
   const { pathname } = location;
+  // const [isLoading, setIsLoading] = useState<Boolean>(false);
   const context = useContext(UserContext);
   const { theme, userData, dispatch } = context as UserContextType;
-  const { name = "Guest", purchasePlan = {} } =
-    (userData as userDataInterface) || {};
+  const { name = "Guest", purchasePlan = { summariesPerDay: 0, name: "N/A" } } =
+    userData as userDataInterface;
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -61,6 +62,7 @@ const Dashboard = () => {
     };
     fetchUser();
   }, []);
+
   const aiTextSummarizerDashboardData = [
     {
       title: "Theme",

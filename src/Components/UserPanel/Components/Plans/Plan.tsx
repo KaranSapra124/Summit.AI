@@ -1,5 +1,5 @@
 import Container from "../../../Global/Container";
-import { pricingPlans, PricingPlanType } from "../../../../Utils/PlanData";
+import {  PricingPlanType } from "../../../../Utils/PlanData";
 import Divider from "../../../../Utils/Divider";
 import { useEffect, useState } from "react";
 import axios from "axios";

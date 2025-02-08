@@ -7,7 +7,6 @@ import Modal from "../../../Helper/Modal";
 import Plan from "../Plans/Plan";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
-import { PricingPlanType } from "../../../../Utils/PlanData";
 
 const Layout = () => {
   interface ElemType {
@@ -27,7 +26,7 @@ const Layout = () => {
   });
   const context = useContext(UserContext);
   const { userData, theme } = context as userState;
-  const { name, email, plan, purchasePlan } = userData as userDataInterface;
+  const { purchasePlan } = userData as userDataInterface;
 
   const [grammarMistakes, setGrammarMistakes] = useState<grammarType[]>([]);
   const [isGrammarMistkesOpen, setIsGrammarMistakes] = useState<Boolean>(false);
@@ -47,12 +46,12 @@ const Layout = () => {
         formData?.selectedVal !== "grammar"
           ? res?.data?.result
           : (() => {
-              res?.data?.result?.map((elem: ElemType, index: number) => {
+              res?.data?.result?.map((elem: ElemType) => {
                 return setGrammarMistakes((prev) => [
                   ...prev,
                   {
                     error: elem.bad,
-                    correct: elem?.better.map((elem, index) => elem),
+                    correct: elem?.better.map((elem) => elem),
                   },
                 ]);
               });
