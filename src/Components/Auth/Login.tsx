@@ -60,6 +60,9 @@ const Login = () => {
     SetResponse(res?.data?.message);
     jscookie.set("userToken", res?.data?.token, {
       expires: 7,
+      path: "/",
+      sameSite: "none",
+
       // domain: ".onrender.com",
     });
     setIsOpen(true);
