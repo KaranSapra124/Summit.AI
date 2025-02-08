@@ -26,7 +26,7 @@ const Layout = () => {
     selectedVal: "Select value",
   });
   const context = useContext(UserContext);
-  const { userData } = context as userState;
+  const { userData, theme } = context as userState;
   const { name, email, plan, purchasePlan } = userData as userDataInterface;
 
   const [grammarMistakes, setGrammarMistakes] = useState<grammarType[]>([]);
@@ -117,11 +117,21 @@ const Layout = () => {
         purchasePlan !== null &&
         purchasePlan?.summariesPerDay !== 0 ? (
           <>
-            <h1 className="text-3xl max-[600px]:text-sm max-[600px]:mb-2 sm:text-4xl font-extrabold text-white mb-4">
-              Welcome Back! Enjoy Your <span className="text-emerald-500">Premium Plan</span>
+            <h1
+              className={`${
+                theme === "Dark" ? "text-white" : "text-gray-800"
+              } text-3xl max-[600px]:text-sm max-[600px]:mb-2 sm:text-4xl font-extrabold  mb-4`}
+            >
+              Welcome Back! Enjoy Your{" "}
+              <span className="text-emerald-500">Premium Plan</span>
             </h1>
-            <p className="text-sm sm:text-base max-[600px]:text-xs max-[600px]:mb-2 font-medium text-gray-300 mb-6">
-              Experience the full <span className="font-bold">Superpowers</span> of Summit.AI. We're glad to have you!
+            <p
+              className={`${
+                theme === "Dark" ? "text-gray-300" : "text-gray-800"
+              } text-sm sm:text-base max-[600px]:text-xs max-[600px]:mb-2 font-medium  mb-6`}
+            >
+              Experience the full <span className="font-bold">Superpowers</span>{" "}
+              of Summit.AI. We're glad to have you!
             </p>
             <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full mb-6" />
 
@@ -201,7 +211,11 @@ const Layout = () => {
               You Got No Plan 😔
             </h1>
             <p className="text-sm sm:text-base font-medium text-gray-300 mb-6">
-              Don't miss out! Purchase a plan now to access the <span className="text-emerald-500 font-bold">Premium Features</span> and unlock the full power of Summit.AI!
+              Don't miss out! Purchase a plan now to access the{" "}
+              <span className="text-emerald-500 font-bold">
+                Premium Features
+              </span>{" "}
+              and unlock the full power of Summit.AI!
             </p>
             <button
               onClick={() => setIsOpen(true)}
