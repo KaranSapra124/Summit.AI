@@ -7,6 +7,7 @@ import Modal from "../../../Helper/Modal";
 import Plan from "../Plans/Plan";
 import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
+import { PricingPlanType } from "../../../../Utils/PlanData";
 
 const Layout = () => {
   interface ElemType {
@@ -27,6 +28,9 @@ const Layout = () => {
   const context = useContext(UserContext);
   const { userData } = context as userState;
   const { name, email, plan, purchasePlan } = userData as userDataInterface;
+  // const { summariesPerDay } = purchasePlan as PricingPlanType;
+  // console.log(summariesPerDay,'PER DAY');
+
   const [grammarMistakes, setGrammarMistakes] = useState<grammarType[]>([]);
   const [isGrammarMistkesOpen, setIsGrammarMistakes] = useState<Boolean>(false);
 
@@ -177,28 +181,33 @@ const Layout = () => {
                   </svg>
                 </button>
                 {isDropdownOpen && (
-                  <ul className="absolute  left-0 right-0 bg-white shadow-lg rounded-md mt-2 z-10">
-                    {values?.map((elem: string, index: number) => (
-                      <li
-                        key={index}
-                        className="px-4 py-2 text-gray-800 hover:bg-emerald-100 cursor-pointer"
-                        onClick={() => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            selectedVal: elem,
-                          }));
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        {elem}
-                      </li>
-                    ))}
+                  <ul
+                    aria-disabled={purchasePlan.summariesPerDay === 0}
+                    className="absolute  left-0 right-0 bg-white shadow-lg rounded-md mt-2 z-10"
+                  >
+                    {purchasePlan.summariesPerDay !== 0 &&
+                      values?.map((elem: string, index: number) => (
+                        <li
+                          key={index}
+                          className="px-4 py-2 text-gray-800 hover:bg-emerald-100 cursor-pointer"
+                          onClick={() => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              selectedVal: elem,
+                            }));
+                            setIsDropdownOpen(false);
+                          }}
+                        >
+                          {elem}
+                        </li>
+                      ))}
                   </ul>
                 )}
               </div>
             </div>
 
             <button
+              disabled={purchasePlan.summariesPerDay !== 0}
               onClick={() => handleSubmit(formData)}
               className="mt-8 px-6 py-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
             >
