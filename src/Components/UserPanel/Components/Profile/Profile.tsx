@@ -37,7 +37,7 @@ function Profile() {
   };
 
   const handleSubmit = async (name: string, email: string) => {
-    const res = await axios.post(
+    await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update-profile`,
       { name: name, email: email },
       { withCredentials: true }
@@ -98,29 +98,29 @@ function Profile() {
       </div>
     </div>
   );
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <>
       {isOpen && <Modal data={profileModalData} />}
-      <Container className="p-20 w-full">
+      <Container className="w-full">
         <div
-          className={`flex justify-between items-center shadow-sm ${
+          className={`flex justify-between items-center max-[600px]:flex-col shadow-sm ${
             theme === "Dark" ? "bg-gray-100/40" : "bg-gray-900"
           } rounded-lg p-2 `}
         >
           <img
-            className="w-22 rounded-full mx-5"
+            className="w-22 max-[600px]:w-10 rounded-full mx-5"
             src="https://i.pinimg.com/236x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg"
             alt="No Image"
           />
           <div>
             <FaEdit
               onClick={() => setIsOpen(true)}
-              className="text-white text-3xl cursor-pointer hover:bg-black transition-all duration-200 ml-auto border p-1 rounded-full"
+              className="text-white text-3xl cursor-pointer max-[600px]:text-[1.5rem] hover:bg-black transition-all duration-200 ml-auto  border p-1 rounded-full"
             />
             <h1
-              className={`text-xl font-bold ${
+              className={`text-xl max-[600px]:text-xs font-bold ${
                 theme === "Dark" ? "text-black" : "text-white/60"
               }`}
             >
@@ -129,9 +129,9 @@ function Profile() {
               </span>
               {name}
             </h1>
-            <Divider className="h-0.5 w-full bg-black rounded-full my-2 " />
+            <Divider className="h-0.5  w-full bg-black rounded-full my-2 " />
             <h2
-              className={`text-xl font-bold ${
+              className={`text-xl max-[600px]:text-xs font-bold ${
                 theme === "Dark" ? "text-black" : "text-white/60"
               }`}
             >
