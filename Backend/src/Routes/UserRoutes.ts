@@ -6,6 +6,7 @@ import {
   getResult,
   getUser,
   purchasePlan,
+  updateProfile,
   userLogin,
 } from "../Controller/UserController";
 import { userAuth } from "../Middlewares/Auth";
@@ -17,5 +18,6 @@ router.post("/alter-password", userAuth, alterPassword);
 router.post("/get-plans", userAuth, getPlans);
 router.post("/purchase-plan", userAuth, purchasePlan);
 router.post("/get-result", userAuth, getResult);
+router.post("/update-profile", userAuth, updateProfile);
 
 export default router;

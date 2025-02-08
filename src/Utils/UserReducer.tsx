@@ -1,9 +1,14 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "./UserContext";
 
 export interface userState {
   userData: object;
   theme: string;
+}
+export interface UserContextType {
+  theme: string;
+  userData: object; // You can be more specific about this type if needed
+  dispatch: React.Dispatch<UserAction>;
 }
 export interface userDataInterface {
   name: string;

@@ -4,31 +4,27 @@ import Container from "../../../Global/Container";
 import { useContext, useState } from "react";
 import Modal from "../../../Helper/Modal";
 import { UserContext } from "../../../../Utils/UserContext";
-import { userState } from "../../../../Utils/UserReducer";
+import {
+  UserContextType,
+  userDataInterface,
+  // userState,
+} from "../../../../Utils/UserReducer";
+import axios from "axios";
 
-interface planDetail {
-  type: string;
-  usage: number;
-  limit: number;
-}
 interface profileDetails {
   name: string;
   email: string;
-  PurchasePlan: planDetail;
+  // PurchasePlan: planDetail;
 }
 function Profile() {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const context = useContext(UserContext);
-  const { theme, userData } = context as userState;
-  const { name, email, PurchasePlan } = userData as profileDetails;
+  const { theme, userData, dispatch } = context as UserContextType;
+  const { name, email, purchasePlan } = userData as userDataInterface;
+
   const [details, setDetails] = useState<profileDetails>({
-    name: "John Doe",
-    email: "john.doe@example.com",
-    plan: {
-      type: "Pro",
-      usage: 5,
-      limit: 10,
-    },
+    name: name || "John Doe",
+    email: email || "john.doe@example.com",
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target as HTMLInputElement;
@@ -38,6 +34,24 @@ function Profile() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSubmit = async (name: string, email: string) => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update-profile`,
+      { name: name, email: email },
+      { withCredentials: true }
+    );
+    await fetchUser();
+  };
+
+  const fetchUser = async () => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-user`,
+      {},
+      { withCredentials: true }
+    );
+    dispatch({ type: "SET_USER", payload: res?.data?.user });
   };
 
   const profileModalData = (
@@ -65,13 +79,18 @@ function Profile() {
       </div>
       <div className="flex justify-between space-x-4">
         <button
-          onClick={() => console.log(details?.name)}
+          onClick={async () => {
+            await handleSubmit(details?.name, details?.email);
+            setIsOpen(false);
+          }}
           className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-all"
         >
           Submit
         </button>
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+          }}
           className="w-full cursor-pointer px-4 py-2 font-semibold text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition-all"
         >
           Cancel
@@ -79,6 +98,7 @@ function Profile() {
       </div>
     </div>
   );
+  console.log(userData);
 
   return (
     <>
@@ -132,7 +152,7 @@ function Profile() {
             Plan Details:
           </h2>
           <div className="flex justify-between">
-            {PurchasePlan ? (
+            {purchasePlan ? (
               <table
                 className={`flex justify-between w-full rounded-sm  border ${
                   theme === "Dark" ? "border-gray-100 " : "border-gray-900"
@@ -155,7 +175,7 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {PurchasePlan.type}
+                    {purchasePlan.name}
                   </td>
                 </td>
                 <td
@@ -175,7 +195,11 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {PurchasePlan.limit}
+                    {purchasePlan.name == "Pro Plan"
+                      ? 50
+                      : purchasePlan.name === "Free Plan"
+                      ? 5
+                      : 100}
                   </td>
                 </td>
                 <td
@@ -195,7 +219,7 @@ function Profile() {
                       theme === "Dark" ? "text-gray-100" : "text-gray-900"
                     } py-4`}
                   >
-                    {PurchasePlan.usage}
+                    {purchasePlan.summariesPerDay}
                   </td>
                 </td>
               </table>

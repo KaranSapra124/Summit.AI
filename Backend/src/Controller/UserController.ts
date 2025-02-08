@@ -186,6 +186,16 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
   }
 };
 
+const updateProfile = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { userId } = req.user as JwtPayload;
+  const { name, email } = req.body;
+  await UserModel.findByIdAndUpdate(userId, { name: name, email: email });
+  res.json({ message: "User Updated!" });
+};
+
 export {
   userLogin,
   getUser,
@@ -194,4 +204,5 @@ export {
   getPlans,
   purchasePlan,
   getResult,
+  updateProfile
 };
