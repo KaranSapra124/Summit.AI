@@ -7,6 +7,7 @@ import axios from "axios";
 import { UserAction } from "../../Utils/UserReducer";
 import Cookies from "js-cookie";
 import { FaBook } from "react-icons/fa6";
+import Cards from "./Components/Dashboard/Cards";
 
 const Dashboard = () => {
   interface UserContextType {
@@ -63,6 +64,60 @@ const Dashboard = () => {
     };
     fetchUser();
   }, []);
+  const aiTextSummarizerDashboardData = [
+    {
+      title: "Total Summaries Processed",
+      value: 0,
+      description: "Number of text summaries you have processed so far.",
+      icon: "📝",
+      status: "completed", // Can be 'completed', 'in-progress'
+      color: "bg-green-500",
+    },
+    {
+      title: "Summary Characters Count",
+      value: 0,
+      description:
+        "Total number of characters processed against your usage limit.",
+      icon: "🔠",
+      status: "in-progress",
+      color: "bg-yellow-500",
+    },
+    {
+      title: "Remaining Summaries",
+      value: 0,
+      description:
+        "Summaries you can still process with your current plan this month.",
+      icon: "📊",
+      status: "in-progress",
+      color: "bg-blue-500",
+    },
+    {
+      title: "Subscription Plan",
+      value: "Premium",
+      description:
+        "You are currently subscribed to the Premium plan with no usage limits.",
+      icon: "💳",
+      status: "active", // Can be 'active', 'inactive'
+      color: "bg-purple-500",
+    },
+    {
+      title: "Account Status",
+      value: "Active",
+      description: "Your account is active and ready to use.",
+      icon: "✅",
+      status: "active",
+      color: "bg-teal-500",
+    },
+    {
+      title: "Upgrade Plan",
+      value: "Not Upgraded",
+      description:
+        "Consider upgrading to unlock more features and higher usage limits.",
+      icon: "⚡",
+      status: "pending",
+      color: "bg-gray-500",
+    },
+  ];
 
   return (
     <Container
@@ -70,7 +125,7 @@ const Dashboard = () => {
         theme === "Dark"
           ? "bg-gradient-to-tr from-black/60 via-gray-900/90 to-black/90"
           : "bg-gray-100"
-      } flex h-screen`}
+      } flex h-screen max-[600px]:h-full`}
     >
       {/* Hamburger Menu */}
       <div className="md:hidden fixed top-4 left-4 z-50">
@@ -86,12 +141,12 @@ const Dashboard = () => {
       <div
         className={`${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed top-0 left-0 z-40 w-64 h-full bg-gray-800 text-white p-4 transform transition-transform duration-300 md:relative md:translate-x-0`}
+        } fixed top-0 left-0 z-40 w-64 h-full max-[600px]:bg-gray-800/95   text-white p-4 transform transition-transform duration-300 md:relative md:translate-x-0`}
       >
-        <h2 className="text-emerald-500 text-3xl font-extrabold">Summit.AI</h2>
+        <h2 className="text-emerald-500 text-3xl font-extrabold max-[600px]:text-center max-[600px]:text-xl">Summit.AI</h2>
         <div className="flex flex-col gap-2 items-center mt-6">
           <img
-            className="w-20 rounded-full"
+            className="w-20 max-[600px]:w-12 rounded-full"
             src="https://img.freepik.com/free-vector/illustration-user-avatar-icon_53876-5907.jpg"
             alt="User Avatar"
           />
@@ -124,9 +179,21 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="flex-1 ml-0  p-4">
         {pathname === "/user" ? (
-          <div className="grid sm:grid-cols-3 gap-4 h-fit mx-auto">
-            {/* Dashboard Cards */}
-            {/* Add your card rendering logic here */}
+          <div className="grid sm:grid-cols-3  gap-4 h-fit mx-auto">
+            {aiTextSummarizerDashboardData?.map((elem, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`${
+                    theme === "Dark"
+                      ? "text-white bg-emerald-500 "
+                      : "text-black bg-gray-200 "
+                  } p-4 w-full rounded-2xl h-52 max-[600px]:h-44 max-[600px]:w-44  text-wrap shadow-lg flex flex-col`}
+                >
+                  <Cards title={elem?.title} value={elem?.value} />
+                </div>
+              );
+            })}
           </div>
         ) : (
           <Outlet />
