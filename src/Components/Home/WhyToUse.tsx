@@ -60,13 +60,13 @@ const DisplayPoints = () => {
   ];
   return (
     <>
-      <ul className="flex gap-2">
+      <ul className="flex gap-2 max-[600px]:flex-col">
         {data?.map((elem, index) => {
           return (
             <>
-              <li key={index} className="w-64 ">
-                <div className="shadow border-l-2 border-b-2 my-4 border-emerald-500 bg-gradient-to-br from-black/50 to-black/90 shadow-black  rounded-sm h-28 p-2 ">
-                  <h2 className="text-sm line-clamp-1 text-gray-200 font-extrabold">
+              <li key={index} className="w-64 max-[600px]:w-full ">
+                <div className="shadow border-l-2 max-[600px]:h-fit max-[600px]:p-5 max-[600px]:rounded-lg border-b-2 my-4  border-emerald-500 bg-gradient-to-br from-black/50 to-black/90 shadow-black  rounded-sm h-28 p-2 ">
+                  <h2 className="text-sm  line-clamp-1 text-gray-200 font-extrabold">
                     {elem?.title}
                   </h2>
                   <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-3 mx-auto"/>
