@@ -112,7 +112,7 @@ const Layout = () => {
     <>
       {isOpen && <Modal data={modalData} />}
       {isGrammarMistkesOpen && <Modal data={grammarModalData} />}
-      <Container className="px-4 py-6  text-center mx-auto">
+      <Container className="px-4 py-6  text-center mx-auto h-screen">
         {purchasePlan !== undefined &&
         purchasePlan !== null &&
         purchasePlan?.summariesPerDay !== 0 ? (

@@ -4,7 +4,11 @@ import { FaHome, FaUser, FaCog, FaSignOutAlt, FaBars } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Utils/UserContext";
 import axios from "axios";
-import { UserAction } from "../../Utils/UserReducer";
+import {
+  UserAction,
+  userDataInterface,
+  userState,
+} from "../../Utils/UserReducer";
 import Cookies from "js-cookie";
 import { FaBook } from "react-icons/fa6";
 import Cards from "./Components/Dashboard/Cards";
@@ -19,7 +23,8 @@ const Dashboard = () => {
     name: string;
     email: string;
   };
-
+  // const context = useContext(UserContext);
+  // const { userData } = context as UserContextType;
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Hamburger menu state
   const links = [
     {
@@ -48,7 +53,8 @@ const Dashboard = () => {
   const { pathname } = location;
   const context = useContext(UserContext);
   const { theme, userData, dispatch } = context as UserContextType;
-  const { name } = userData as userDetails;
+  const { name, purchasePlan } = userData as userDataInterface;
+  const { summariesPerDay } = purchasePlan;
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -66,16 +72,16 @@ const Dashboard = () => {
   }, []);
   const aiTextSummarizerDashboardData = [
     {
-      title: "Total Summaries Processed",
-      value: 0,
+      title: "Theme",
+      value: theme,
       description: "Number of text summaries you have processed so far.",
       icon: "📝",
       status: "completed", // Can be 'completed', 'in-progress'
       color: "bg-green-500",
     },
     {
-      title: "Summary Characters Count",
-      value: 0,
+      title: "Current Plan",
+      value: purchasePlan.name,
       description:
         "Total number of characters processed against your usage limit.",
       icon: "🔠",
@@ -83,8 +89,13 @@ const Dashboard = () => {
       color: "bg-yellow-500",
     },
     {
-      title: "Remaining Summaries",
-      value: 0,
+      title: "Plan Total Usage",
+      value:
+        purchasePlan.name === "Pro Plan"
+          ? 50
+          : purchasePlan.name === "Free Plan"
+          ? 5
+          : 100,
       description:
         "Summaries you can still process with your current plan this month.",
       icon: "📊",
@@ -92,8 +103,8 @@ const Dashboard = () => {
       color: "bg-blue-500",
     },
     {
-      title: "Subscription Plan",
-      value: "Premium",
+      title: "Remaining Usage",
+      value: purchasePlan?.summariesPerDay,
       description:
         "You are currently subscribed to the Premium plan with no usage limits.",
       icon: "💳",
@@ -102,15 +113,15 @@ const Dashboard = () => {
     },
     {
       title: "Account Status",
-      value: "Active",
+      value: purchasePlan.summariesPerDay !== 0 ? "Active" : "InActive",
       description: "Your account is active and ready to use.",
       icon: "✅",
       status: "active",
       color: "bg-teal-500",
     },
     {
-      title: "Upgrade Plan",
-      value: "Not Upgraded",
+      title: "Plan Renewal",
+      value: purchasePlan?.summariesPerDay !== 0 ? "Not Required" : "Required!",
       description:
         "Consider upgrading to unlock more features and higher usage limits.",
       icon: "⚡",
@@ -143,7 +154,9 @@ const Dashboard = () => {
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } fixed top-0 left-0 z-40 w-64 h-full max-[600px]:bg-gray-800/95   text-white p-4 transform transition-transform duration-300 md:relative md:translate-x-0`}
       >
-        <h2 className="text-emerald-500 text-3xl font-extrabold max-[600px]:text-center max-[600px]:text-xl">Summit.AI</h2>
+        <h2 className="text-emerald-500 text-3xl font-extrabold max-[600px]:text-center max-[600px]:text-xl">
+          Summit.AI
+        </h2>
         <div className="flex flex-col gap-2 items-center mt-6">
           <img
             className="w-20 max-[600px]:w-12 rounded-full"
@@ -179,7 +192,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="flex-1 ml-0  p-4">
         {pathname === "/user" ? (
-          <div className="grid sm:grid-cols-3  gap-4 h-fit mx-auto">
+          <div className="grid sm:grid-cols-3 justify-center gap-4 h-fit mx-auto">
             {aiTextSummarizerDashboardData?.map((elem, index) => {
               return (
                 <div
