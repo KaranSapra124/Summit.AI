@@ -28,20 +28,11 @@ const Layout = () => {
   const context = useContext(UserContext);
   const { userData } = context as userState;
   const { name, email, plan, purchasePlan } = userData as userDataInterface;
-  // const { summariesPerDay } = purchasePlan as PricingPlanType;
-  // console.log(summariesPerDay,'PER DAY');
 
   const [grammarMistakes, setGrammarMistakes] = useState<grammarType[]>([]);
   const [isGrammarMistkesOpen, setIsGrammarMistakes] = useState<Boolean>(false);
 
-  const [values] = useState([
-    "correct",
-    "summarize",
-    "grammar",
-    "detect",
-    // "readability",
-    // "spelling",
-  ]);
+  const [values] = useState(["correct", "summarize", "grammar", "detect"]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSubmit = async (data: typeof formData) => {
@@ -57,7 +48,6 @@ const Layout = () => {
           ? res?.data?.result
           : (() => {
               res?.data?.result?.map((elem: ElemType, index: number) => {
-                console.log(elem, "elem");
                 return setGrammarMistakes((prev) => [
                   ...prev,
                   {
@@ -70,19 +60,21 @@ const Layout = () => {
             })(),
     }));
   };
+
   const modalData = (
     <>
       <Plan />
       <RxCross1
         onClick={() => setIsOpen(false)}
-        className="absolute text-black top-4 right-96 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full "
+        className="absolute text-black top-4 right-4 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full"
       />
     </>
   );
+
   const grammarModalData = (
     <>
       <div className="overflow-x-auto">
-        <table className="max-w-screen-md mx-auto my-52  border border-gray-300">
+        <table className="max-w-full mx-auto my-10 border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
               <th className="px-4 py-2 border">Mistake</th>
@@ -109,45 +101,34 @@ const Layout = () => {
           </tbody>
         </table>
       </div>
-
       <RxCross1
         onClick={() => setIsGrammarMistakes(false)}
-        className="absolute text-black top-4 right-96 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full "
+        className="absolute text-black top-4 right-4 bg-white p-1 text-2xl cursor-pointer hover:scale-110 transition-all rounded-full"
       />
     </>
   );
-
-  const handleUpdateState = (
-    endpoint: string,
-    data: { summary: []; corrected: "" }
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      para: endpoint === "summarize" ? data.summary.join(" ") : data?.corrected,
-    }));
-  };
 
   return (
     <>
       {isOpen && <Modal data={modalData} />}
       {isGrammarMistkesOpen && <Modal data={grammarModalData} />}
-      <Container className="px-6 py-10 sm:px-12 lg:px-16 text-center mx-auto ">
-        {purchasePlan !== undefined && purchasePlan !== null ? (
+      <Container className="px-4 py-6  text-center mx-auto">
+        {purchasePlan !== undefined &&
+        purchasePlan !== null &&
+        purchasePlan?.summariesPerDay !== 0 ? (
           <>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
-              Welcome Back! Enjoy Your{" "}
-              <span className="text-emerald-500">Premium Plan</span>
+            <h1 className="text-3xl max-[600px]:text-sm max-[600px]:mb-2 sm:text-4xl font-extrabold text-white mb-4">
+              Welcome Back! Enjoy Your <span className="text-emerald-500">Premium Plan</span>
             </h1>
-            <p className="text-sm sm:text-base font-medium text-gray-300 mb-6">
-              Experience the full <span className="font-bold">Superpowers</span>{" "}
-              of Summit.AI. We're glad to have you!
+            <p className="text-sm sm:text-base max-[600px]:text-xs max-[600px]:mb-2 font-medium text-gray-300 mb-6">
+              Experience the full <span className="font-bold">Superpowers</span> of Summit.AI. We're glad to have you!
             </p>
-            <Divider className="h-1 w-16 mx-auto bg-emerald-500 rounded-full mb-8" />
+            <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full mb-6" />
 
-            <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-center gap-4">
               <textarea
                 cols={10}
-                rows={8}
+                rows={6}
                 placeholder="Enter your paragraph here..."
                 className="p-4 text-sm rounded-lg border border-emerald-500 shadow-md w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none bg-gray-100"
                 value={formData?.para}
@@ -159,9 +140,9 @@ const Layout = () => {
                 }
               ></textarea>
 
-              <div className="relative w-52">
+              <div className="relative w-fit sm:w-40 max-[600px]:mx-auto">
                 <button
-                  className="w-full bg-emerald-500 text-white font-semibold rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 flex items-center justify-between"
+                  className="w-full max-[600px]:text-xs bg-emerald-500 text-white font-semibold rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 flex items-center justify-between"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 >
                   {formData.selectedVal}
@@ -183,7 +164,7 @@ const Layout = () => {
                 {isDropdownOpen && (
                   <ul
                     aria-disabled={purchasePlan.summariesPerDay === 0}
-                    className="absolute  left-0 right-0 bg-white shadow-lg rounded-md mt-2 z-10"
+                    className="absolute left-0 right-0 bg-white shadow-lg rounded-md mt-2 z-10"
                   >
                     {purchasePlan.summariesPerDay !== 0 &&
                       values?.map((elem: string, index: number) => (
@@ -207,28 +188,24 @@ const Layout = () => {
             </div>
 
             <button
-              disabled={purchasePlan.summariesPerDay !== 0}
+              disabled={purchasePlan.summariesPerDay === 0}
               onClick={() => handleSubmit(formData)}
-              className="mt-8 px-6 py-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
+              className="mt-6 px-6 py-3 max-[600px]:text-xs text-base sm:text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
             >
               Generate
             </button>
           </>
         ) : (
           <>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
               You Got No Plan 😔
             </h1>
-            <p className="text-base sm:text-lg font-medium text-gray-300 mb-6">
-              Don't miss out! Purchase a plan now to access the{" "}
-              <span className="text-emerald-500 font-bold">
-                Premium Features
-              </span>{" "}
-              and unlock the full power of Summit.AI!
+            <p className="text-sm sm:text-base font-medium text-gray-300 mb-6">
+              Don't miss out! Purchase a plan now to access the <span className="text-emerald-500 font-bold">Premium Features</span> and unlock the full power of Summit.AI!
             </p>
             <button
               onClick={() => setIsOpen(true)}
-              className="px-6 cursor-pointer py-3 text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
+              className="px-6 cursor-pointer py-3 text-base sm:text-lg font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-lg focus:ring-2 focus:ring-emerald-500"
             >
               Upgrade Now
             </button>
