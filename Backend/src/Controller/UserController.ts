@@ -37,7 +37,7 @@ const userLogin = async (
     res.cookie("userToken", token, {
       secure: true, // True for HTTPS
       sameSite: "none", // Or "Lax" depending on your setup
-      domain: ".onrender.com", // Match backend domain
+      // domain: ".onrender.com", // Match backend domain
     });
     res.json({
       message: "Account Created Successfully!",
@@ -51,7 +51,7 @@ const userLogin = async (
     res.cookie("userToken", token, {
       secure: true, // True for HTTPS
       sameSite: "none", // Or "Lax" depending on your setup
-      domain: ".onrender.com", // Match backend domain
+      // domain: ".onrender.com", // Match backend domain
     });
     const result = await compare(password, exisitingUser?.password);
     result

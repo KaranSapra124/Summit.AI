@@ -61,7 +61,7 @@ const Login = () => {
     jscookie.set("userToken", res?.data?.token, {
       secure: true, // True for HTTPS
       sameSite: "None", // Or "Lax" depending on your setup
-      domain: ".onrender.com", // Match backend domain
+      // domain: ".onrender.com", // Match backend domain
       // domain: ".onrender.com",
     });
     setIsOpen(true);
