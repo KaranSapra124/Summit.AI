@@ -1,4 +1,3 @@
-
 import Container from "./Container";
 import { FaTwitter, FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 
@@ -19,21 +18,21 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br border-t-2 border-gray-500   from-black/60 via-gray-900/90 to-black/90 text-white py-8">
-      <Container className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 py-10 px-12">
+    <footer className=" border-gray-500 bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90 text-white py-8">
+      <Container className="flex flex-col space-y-8 items-center justify-center md:justify-between md:flex-row py-8 px-6 max-w-screen-xl mx-auto">
         {/* Logo and App Name */}
-        <div className="text-2xl font-bold">
-          <span className="text-emerald-400 font-extrabold ">Summit</span>
-          <span className="text-emerald-400 font-extrabold ">.AI</span>
+        <div className="text-2xl font-bold text-center md:text-left">
+          <span className="text-emerald-400 font-extrabold">Summit</span>
+          <span className="text-emerald-400 font-extrabold">.AI</span>
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center space-x-6">
+        <nav className="flex flex-wrap justify-center gap-4 text-sm md:gap-6 md:text-base">
           {navLinks.map((link, index) => (
             <a
               key={index}
               href="#"
-              className="text-gray-300 hover:text-blue-500 transition-colors"
+              className="text-gray-300 hover:text-blue-500 transition-colors whitespace-nowrap"
             >
               {link}
             </a>
@@ -41,23 +40,23 @@ const Footer = () => {
         </nav>
 
         {/* Social Media Links */}
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 justify-center">
           {socialLinks.map((social, index) => (
             <a
               key={index}
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-blue-500 transition-colors"
+              className="text-gray-300 hover:text-blue-500 transition-colors text-xl"
             >
               {social.icon}
             </a>
           ))}
         </div>
       </Container>
-        <hr className="max-w-screen-xl mx-auto text-gray-500" />
+      <hr className="max-w-screen-xl mx-auto border-gray-600" />
       {/* Copyright Notice */}
-      <div className="text-center text-gray-400 mt-6">
+      <div className="text-center text-gray-400 mt-6 text-sm px-4">
         &copy; {new Date().getFullYear()} Summit.AI. All rights reserved.
       </div>
     </footer>
