@@ -5,13 +5,13 @@ const WhyToUse = () => {
   return (
     <>
       <Container id="Features"  className="text-center bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
-        <h1  className="text-white text-5xl font-bold">
+        <h1  className="text-white text-5xl max-[600px]:text-xl font-bold">
           Why To Use{" "}
           <strong className="text-emerald-500 font-extrabold">
             Summit.AI ?
           </strong>
         </h1>
-        <p className="text-xs font-bold text-gray-300 my-6">
+        <p className="text-xs font-bold text-gray-300 my-6 max-[600px]:my-4">
           <strong>Summit.AI</strong> has got immense powers to help you improve
           your overall personality!
         </p>
