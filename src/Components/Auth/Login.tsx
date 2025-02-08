@@ -72,7 +72,7 @@ const Login = () => {
   }, []);
   const ModalData = (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">
+      <div className="flex items-center  justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">
         <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-4">
           <p className="text-black text-lg font-semibold">{response}</p>
           <div className="flex justify-end">
@@ -97,9 +97,9 @@ const Login = () => {
     <>
       {/* <Container > */}
       {isOpen && <Modal data={ModalData} />}
-      <div className="h-full flex bg-black/90 ">
-        <div className="w-1/2 mx-4 flex flex-col justify-center items-center">
-          <h1 className="text-5xl font-bold text-white">
+      <div className="h-full max-[600px]:flex-col flex bg-black/90 ">
+        <div className="w-1/2 max-[600px]:px-5 max-[600px]:mx-1 max-[600px]:my-5 mx-4 max-[600px]:w-full flex flex-col justify-center items-center">
+          <h1 className="text-5xl max-[600px]:text-xl font-bold text-white">
             Create A{" "}
             <span className="text-emerald-500 font-extrabold">Free</span>{" "}
             Account
@@ -117,7 +117,7 @@ const Login = () => {
             </svg>
             <input
               type="email"
-              className="grow text-white p-2 focus:outline-0"
+              className="grow text-white max-[600px]:text-sm p-2 focus:outline-0"
               name="email"
               onChange={handleChange}
               placeholder="Email"
@@ -136,7 +136,7 @@ const Login = () => {
               type="text"
               name="name"
               onChange={handleChange}
-              className="grow p-2 focus:outline-0 text-white"
+              className="grow p-2 max-[600px]:text-sm focus:outline-0 text-white"
               placeholder="Username"
             />
           </label>
@@ -144,7 +144,7 @@ const Login = () => {
             <FaShield className="text-gray-400" />
             <input
               type="password"
-              className="grow text-white p-2 focus:outline-0"
+              className="grow max-[600px]:text-sm text-white p-2 focus:outline-0"
               name="password"
               onChange={handleChange}
               placeholder="Enter Your Password..."
@@ -158,7 +158,7 @@ const Login = () => {
           </button>
         </div>
         <img
-          className="w-1/2 h-screen"
+          className="w-1/2 max-[600px]:w-full max-[600px]:h-full h-screen"
           src="https://img.freepik.com/free-vector/man-reading-concept-illustration_114360-8515.jpg?ga=GA1.1.1152584770.1732648307&semt=ais_hybrid"
           alt="No Image"
         />
