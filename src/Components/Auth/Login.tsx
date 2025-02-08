@@ -58,11 +58,9 @@ const Login = () => {
           : res?.data?.exisitingUser,
     });
     SetResponse(res?.data?.message);
-jscookie.set("userToken", res?.data?.token, {
+    jscookie.set("userToken", res?.data?.token, {
       expires: 7,
-      secure: true,
-      sameSite: "Lax",
-      domain:".onrender.com"
+      domain: ".onrender.com",
     });
     setIsOpen(true);
   };
