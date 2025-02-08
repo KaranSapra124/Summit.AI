@@ -61,8 +61,9 @@ const Login = () => {
     jscookie.set("userToken", res?.data?.token, {
       expires: 7,
       secure: true,
-      sameSite: "None",
+      sameSite: "Lax",
       path: "/",
+      domain:".onrender.com"
     });
 
     setIsOpen(true);
