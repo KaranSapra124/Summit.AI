@@ -104,3 +104,10 @@ export const getUsersAdmin = async (
   const users = await UserModel.find();
   res.json({ message: "Users Fetched Successfully!", users });
 };
+
+export const editUserAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  console.log(req.body);
+};
