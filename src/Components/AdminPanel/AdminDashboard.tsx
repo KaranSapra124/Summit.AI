@@ -1,16 +1,6 @@
-// import { useContext } from "react";
-// import {
-//   AdminContext,
-//   adminContextInterface,
-//   adminDataValues,
-// } from "../../Utils/AdminReducer";
-// import Container from "../Global/Container";
 import { Link, Outlet } from "react-router-dom";
 
 const AdminDashboard = () => {
-  // const context = useContext(AdminContext);
-  // const { adminData } = context as adminContextInterface;
-  // const { email } = adminData as adminDataValues;
   interface linkType {
     title: string;
     link: string;
@@ -33,9 +23,9 @@ const AdminDashboard = () => {
       link: "/admin/settings",
     },
   ];
+
   return (
     <>
-      {/* <Container className="bg-black/80 h-screen"> */}
       <div className="flex    bg-black/80 h-screen w-full text-center">
         <div className="w-fit bg-gray-900 p-10 h-full">
           <h1 className="text-xl font-bold text-emerald-500">Summit.AI</h1>
@@ -61,7 +51,6 @@ const AdminDashboard = () => {
         </div>
         <Outlet />
       </div>
-      {/* </Container> */}
     </>
   );
 };
