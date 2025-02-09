@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../../Helper/Modal";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,12 @@ const AdminLogin = () => {
       setIsOpen(true);
     }
   };
+
+  useEffect(() => {
+    if (document.cookie.includes("adminToken")) {
+      Navigate("/admin");
+    }
+  }, []);
   const modalData = (
     <div className="flex h-screen   w-full justify-end relative  ">
       <div className="flex   absolute  items-center gap-8  top-2 right-2   h-fit my-auto justify-center bg-white p-2  rounded-lg shadow-md max-w-sm mx-auto">
