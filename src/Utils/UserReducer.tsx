@@ -57,7 +57,6 @@ export const UserReducers = (state: userState, action: UserAction) => {
       return { ...state, theme: action.payload };
     }
     case "SET_USER": {
-      console.log(action.payload, "PAYLOAD");
       return { ...state, userData: action.payload };
     }
   }

@@ -12,6 +12,11 @@ import { initialState, UserReducers } from "./Utils/UserReducer";
 import OTPForm from "./Components/UserPanel/Components/Settings/OTPForm";
 import ChangePassword from "./Components/UserPanel/Components/Settings/ChangePassword";
 import Layout from "./Components/UserPanel/Components/TextBoxLayout/Layout";
+import {
+  AdminContext,
+  adminInitialState,
+  adminReducer,
+} from "./Utils/AdminReducer";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -50,14 +55,19 @@ function App() {
           element: <ChangePassword />,
         },
         {
-          path:"/user/main-interface",
-          element:<Layout/>
-        }
+          path: "/user/main-interface",
+          element: <Layout />,
+        },
       ],
     },
   ]);
   const [state, dispatch] = useReducer(UserReducers, initialState);
+  const [adminState, adminDispatch] = useReducer(
+    adminReducer,
+    adminInitialState
+  );
   const { theme, userData } = state;
+  const { adminData } = adminState;
   return (
     <>
       {/* <Navbar />
@@ -68,11 +78,15 @@ function App() {
       <Plans />
       <Footer /> */}
       {/* <Login /> */}
-      <UserContext.Provider
-        value={{ theme: theme, userData: userData, dispatch: dispatch }}
+      <AdminContext.Provider
+        value={{ adminData: adminData, adminDispatch: adminDispatch }}
       >
-        <RouterProvider router={appRoutes} />
-      </UserContext.Provider>
+        <UserContext.Provider
+          value={{ theme: theme, userData: userData, dispatch: dispatch }}
+        >
+          <RouterProvider router={appRoutes} />
+        </UserContext.Provider>
+      </AdminContext.Provider>
     </>
   );
 }
