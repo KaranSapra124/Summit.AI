@@ -1,4 +1,22 @@
+import axios from "axios";
+import { useState } from "react";
+
 const AdminLogin = () => {
+  interface adminCredentials {
+    email: string;
+    password: string;
+  }
+  const [formData, setFormData] = useState<adminCredentials>({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async () => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/login`,
+      { formData }
+    );
+  };
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl  sm:mx-auto">
@@ -15,6 +33,12 @@ const AdminLogin = () => {
                 {/* Email Input */}
                 <div className="relative">
                   <input
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        [e.target.name]: e.target.value,
+                      }))
+                    }
                     autoComplete="off"
                     id="email"
                     name="email"
@@ -33,6 +57,12 @@ const AdminLogin = () => {
                 {/* Password Input */}
                 <div className="relative">
                   <input
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        [e.target.name]: e.target.value,
+                      }))
+                    }
                     autoComplete="off"
                     id="password"
                     name="password"
@@ -50,7 +80,10 @@ const AdminLogin = () => {
 
                 {/* Submit Button */}
                 <div className="relative">
-                  <button className="bg-emerald-500 hover:cursor-pointer hover:bg-emerald-600 text-white font-medium rounded-md px-4 py-2 w-full">
+                  <button
+                    onClick={handleSubmit}
+                    className="bg-emerald-500 hover:cursor-pointer hover:bg-emerald-600 text-white font-medium rounded-md px-4 py-2 w-full"
+                  >
                     Submit
                   </button>
                 </div>
