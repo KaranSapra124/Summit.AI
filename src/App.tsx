@@ -20,6 +20,7 @@ import {
 import AdminDashboard from "./Components/AdminPanel/AdminDashboard";
 import DashboardLayout from "./Components/AdminPanel/Components/Dashboard/DashboardLayout";
 import AdminLogin from "./Components/AdminPanel/Components/Auth/AdminLogin";
+import Users from "./Components/AdminPanel/Components/Users/Users";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -70,6 +71,10 @@ function App() {
         {
           path: "/admin",
           element: <DashboardLayout />,
+        },
+        {
+          path: "/admin/users",
+          element: <Users />,
         },
       ],
     },

@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Users",
-      link: "/admin/user",
+      link: "/admin/users",
     },
     {
       title: "Plans",
