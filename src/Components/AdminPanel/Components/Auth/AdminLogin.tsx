@@ -2,9 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import Modal from "../../../Helper/Modal";
 import { RxCross1 } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const Navigate = useNavigate();
   const [response, setResponse] = useState<string>("");
   interface adminCredentials {
     email: string;
@@ -23,8 +25,15 @@ const AdminLogin = () => {
         withCredentials: true,
       }
     );
-    setIsOpen(true);
     setResponse(res?.data?.message);
+    if (
+      res?.data?.message !== "Invalid Credentials" &&
+      res?.data?.message !== "Admin Not Found!"
+    ) {
+      Navigate("/admin");
+    } else {
+      setIsOpen(true);
+    }
   };
   const modalData = (
     <div className="flex h-screen   w-full justify-end relative  ">
