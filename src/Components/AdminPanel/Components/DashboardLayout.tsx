@@ -83,6 +83,51 @@ const MostUsedUsers = () => {
       isActive: true,
     },
     {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        plan: {
+          type: "Pro",
+          usage: 50,
+          limit: 100,
+        },
+        purchasePlan: {
+          _id: "plan_1",
+          name: "Pro Plan",
+          price: 29,
+          currency: "USD",
+          textLimit: "50,000 characters",
+          summariesPerDay: 100,
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: true,
+      },
+      {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        plan: {
+          type: "Pro",
+          usage: 50,
+          limit: 100,
+        },
+        purchasePlan: {
+          _id: "plan_1",
+          name: "Pro Plan",
+          price: 29,
+          currency: "USD",
+          textLimit: "50,000 characters",
+          summariesPerDay: 100,
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: true,
+      },
+      
+    {
       name: "John Doe",
       email: "john.doe@example.com",
       plan: {
@@ -331,7 +376,7 @@ const MostUsedUsers = () => {
     <div className="py-4">
       <h2 className="text-xl font-bold  text-white text-left">Active Users</h2>
       <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-4" />
-      <div className="overflow-x-auto h-96 overflow-y-scroll">
+      <div className="overflow-x-auto h-96 overflow-y-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs uppercase bg-gray-700 text-white">
             <tr>
