@@ -1,8 +1,9 @@
 import { FaUsers, FaChartLine, FaBell } from "react-icons/fa";
 import Container from "../../../Global/Container";
 import { userDataInterface } from "../../../../Utils/UserReducer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Divider from "../../../../Utils/Divider";
+import axios from "axios";
 
 const DashboardLayout = () => {
   interface cardType {
@@ -59,318 +60,21 @@ const DashboardLayout = () => {
 };
 
 const MostUsedUsers = () => {
-  const [users] = useState<userDataInterface[]>([
-    {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      plan: {
-        type: "Pro",
-        usage: 50,
-        limit: 100,
-      },
-      purchasePlan: {
-        _id: "plan_1",
-        name: "Pro Plan",
-        price: 29,
-        currency: "USD",
-        textLimit: "50,000 characters",
-        summariesPerDay: 100,
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: true,
-    },
-    {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        plan: {
-          type: "Pro",
-          usage: 50,
-          limit: 100,
-        },
-        purchasePlan: {
-          _id: "plan_1",
-          name: "Pro Plan",
-          price: 29,
-          currency: "USD",
-          textLimit: "50,000 characters",
-          summariesPerDay: 100,
-          fileUploads: true,
-          customization: true,
-          prioritySupport: true,
-          apiAccess: true,
-        },
-        isActive: true,
-      },
-      {
-        name: "John Doe",
-        email: "john.doe@example.com",
-        plan: {
-          type: "Pro",
-          usage: 50,
-          limit: 100,
-        },
-        purchasePlan: {
-          _id: "plan_1",
-          name: "Pro Plan",
-          price: 29,
-          currency: "USD",
-          textLimit: "50,000 characters",
-          summariesPerDay: 100,
-          fileUploads: true,
-          customization: true,
-          prioritySupport: true,
-          apiAccess: true,
-        },
-        isActive: true,
-      },
-      
-    {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      plan: {
-        type: "Pro",
-        usage: 50,
-        limit: 100,
-      },
-      purchasePlan: {
-        _id: "plan_1",
-        name: "Pro Plan",
-        price: 29,
-        currency: "USD",
-        textLimit: "50,000 characters",
-        summariesPerDay: 100,
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: true,
-    },
-
-    {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      plan: {
-        type: "Pro",
-        usage: 50,
-        limit: 100,
-      },
-      purchasePlan: {
-        _id: "plan_1",
-        name: "Pro Plan",
-        price: 29,
-        currency: "USD",
-        textLimit: "50,000 characters",
-        summariesPerDay: 100,
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: true,
-    },
-    {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      plan: {
-        type: "Free",
-        usage: 10,
-        limit: 10,
-      },
-      purchasePlan: {
-        _id: "plan_2",
-        name: "Free Plan",
-        price: 0,
-        currency: "USD",
-        textLimit: "5,000 characters",
-        summariesPerDay: 10,
-        fileUploads: false,
-        customization: false,
-        prioritySupport: false,
-        apiAccess: false,
-      },
-      isActive: true,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-    {
-      name: "David Johnson",
-      email: "david.johnson@example.com",
-      plan: {
-        type: "Enterprise",
-        usage: 200,
-        limit: 500,
-      },
-      purchasePlan: {
-        _id: "plan_3",
-        name: "Enterprise Plan",
-        price: "Custom Pricing",
-        currency: "USD",
-        textLimit: "Unlimited",
-        summariesPerDay: "Unlimited",
-        fileUploads: true,
-        customization: true,
-        prioritySupport: true,
-        apiAccess: true,
-      },
-      isActive: false,
-    },
-  ]);
+  const [users, setUsers] = useState<userDataInterface[]>([]);
+  const fetchUsers = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/get-users`,
+        { withCredentials: true }
+      );
+      setUsers(res.data.users);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <div className="py-4">
@@ -380,16 +84,16 @@ const MostUsedUsers = () => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs uppercase bg-gray-700 text-white">
             <tr>
-              <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-6 py-3 text-center border">
                 Name
               </th>
-              <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-6 py-3 text-center border">
                 Email
               </th>
-              <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-6 py-3 text-center border">
                 Plan
               </th>
-              <th scope="col" className="px-6 py-3 text-center">
+              <th scope="col" className="px-6 py-3 text-center border">
                 Active Status
               </th>
             </tr>
@@ -402,12 +106,12 @@ const MostUsedUsers = () => {
                   key={index}
                   className="border-b hover:bg-gray-50 dark:border-gray-700"
                 >
-                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  <td className="px-6 py-4 border font-medium text-gray-900 whitespace-nowrap">
                     {elem.name}
                   </td>
-                  <td className="px-6 py-4">{elem.email}</td>
-                  <td className="px-6 py-4">{elem.purchasePlan.name}</td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-6 py-4 border">{elem.email}</td>
+                  <td className="px-6 py-4 border">{elem.purchasePlan.name}</td>
+                  <td className="px-6 py-4 border text-center">
                     {elem.isActive ? "Active" : "Inactive"}
                   </td>
                 </tr>
