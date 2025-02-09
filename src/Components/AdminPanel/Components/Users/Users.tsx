@@ -106,7 +106,7 @@ const Users = () => {
                   <input
                     type="text"
                     name="name"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 cursor-pointer"
                     value={
                       finalEditItem?.purchasePlan?.name !== undefined
                         ? finalEditItem.purchasePlan.name
@@ -136,7 +136,7 @@ const Users = () => {
                   <input
                     type="text"
                     name="price"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 cursor-pointer"
                     value={
                       finalEditItem?.purchasePlan?.price !== undefined
                         ? finalEditItem?.purchasePlan?.price
@@ -166,7 +166,7 @@ const Users = () => {
                   <input
                     type="text"
                     name="currency"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 cursor-pointer"
                     value={
                       finalEditItem?.purchasePlan?.currency !== undefined
                         ? finalEditItem?.purchasePlan?.currency
@@ -196,7 +196,7 @@ const Users = () => {
                   <input
                     type="text"
                     name="textLimit"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 cursor-pointer"
                     value={
                       finalEditItem?.purchasePlan?.textLimit !== undefined
                         ? finalEditItem?.purchasePlan?.textLimit
@@ -226,7 +226,7 @@ const Users = () => {
                   <input
                     type="text"
                     name="summariesPerDay"
-                    className="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 text-gray-500 cursor-pointer"
                     value={
                       finalEditItem?.purchasePlan?.summariesPerDay !== undefined
                         ? finalEditItem?.purchasePlan?.summariesPerDay
@@ -261,7 +261,7 @@ const Users = () => {
                 type="checkbox"
                 name="isActive"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(e.target.checked);
+                  // console.log(e.target.checked);
                   setFinalEditItem((prev) => {
                     if (!prev) return undefined;
                     return {
@@ -338,7 +338,7 @@ const Users = () => {
                   {users.map((user) => (
                     <tr
                       key={user._id}
-                      className="border-t border-gray-300 even:bg-gray-100 hover:bg-gray-200"
+                      className="border-t border-gray-300 even:bg-gray-50 hover:bg-gray-200"
                     >
                       <td className="px-6 py-3 text-center border border-gray-300">
                         {user.name}
