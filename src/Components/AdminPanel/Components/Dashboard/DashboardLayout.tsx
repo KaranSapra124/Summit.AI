@@ -31,20 +31,20 @@ const DashboardLayout = () => {
   return (
     <>
       <Container className="w-full">
-        <div className="flex gap-4 justify-start ">
+        <div className="flex max-[600px]:flex-col gap-4 justify-start ">
           {cards?.map((elem, index: number) => {
             return (
               <>
                 <div
                   key={index}
-                  className="flex items-center  border bg-emerald-500 text-white border-black rounded  px-4 py-3"
+                  className="flex items-center max-[600px]:w-64 max-[600px]:mx-auto border bg-emerald-500 text-white border-black rounded  px-4 py-3"
                 >
-                  <div className="text-3xl bg-white p-1 text-emerald-500 rounded ">
+                  <div className="text-3xl max-[600px]:text-xl bg-white p-1 text-emerald-500 rounded ">
                     {elem?.icon}
                   </div>
                   <div className="mx-5">
-                    <h2 className="text-xl font-bold">{elem?.title}</h2>
-                    <p className="text-xl text-left font-extrabold text-gray-900">
+                    <h2 className="text-xl max-[600px]:text-sm font-bold">{elem?.title}</h2>
+                    <p className="text-xl max-[600px]:text-sm text-left font-extrabold text-gray-900">
                       {elem?.count}
                     </p>
                   </div>
@@ -78,7 +78,7 @@ const MostUsedUsers = () => {
 
   return (
     <div className="py-4">
-      <h2 className="text-xl font-bold  text-white text-left">Active Users</h2>
+      <h2 className="text-xl font-bold  text-white text-left max-[600px]:text-sm">Active Users</h2>
       <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-4" />
       <div className="overflow-x-auto h-96 overflow-y-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
