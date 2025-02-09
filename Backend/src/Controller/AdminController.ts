@@ -117,3 +117,12 @@ export const editUserAdmin = async (
   );
   res.json({ message: "User Updated Successfully!", updateUser });
 };
+export const deleteUserAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+
+  await UserModel.findByIdAndDelete(id);
+  res.json({ message: "User Deleted Successfully!" });
+};
