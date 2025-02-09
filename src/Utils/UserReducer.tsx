@@ -30,6 +30,7 @@ export interface userDataInterface {
     prioritySupport: boolean;
     apiAccess: boolean;
   };
+  isActive: boolean;
 }
 export const initialState: userState = {
   userData: {

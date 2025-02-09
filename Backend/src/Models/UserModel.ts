@@ -20,6 +20,7 @@ export interface User extends Document {
   password: string;
   purchasePlan: PurchasePlan | null;
   usage: number;
+  isActive: boolean;
 }
 
 const userSchema: Schema<User> = new Schema(
@@ -45,6 +46,10 @@ const userSchema: Schema<User> = new Schema(
       type: Number,
       default: 5,
       min: 0, // You can add validation like min usage if needed
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true } // Optional: Automatically adds createdAt and updatedAt fields

@@ -5,6 +5,10 @@ export type adminAction = { type: "SET_ADMIN"; payload: Object };
 export interface adminData {
   adminData: object;
 }
+export interface adminDataValues {
+  email: string;
+  password: string;
+}
 
 export const adminInitialState: adminData = {
   adminData: {

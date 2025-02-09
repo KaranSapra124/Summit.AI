@@ -17,6 +17,8 @@ import {
   adminInitialState,
   adminReducer,
 } from "./Utils/AdminReducer";
+import AdminDashboard from "./Components/AdminPanel/AdminDashboard";
+import DashboardLayout from "./Components/AdminPanel/Components/DashboardLayout";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -58,6 +60,16 @@ function App() {
           path: "/user/main-interface",
           element: <Layout />,
         },
+      ],
+    },
+    {
+      path: "/admin",
+      element: <AdminDashboard />,
+      children: [
+        {
+          path:'/admin',
+          element:<DashboardLayout/>
+        }
       ],
     },
   ]);
