@@ -11,6 +11,7 @@ export interface UserContextType {
   dispatch: React.Dispatch<UserAction>;
 }
 export interface userDataInterface {
+  _id?:string,
   name: string;
   email: string;
   plan: {
