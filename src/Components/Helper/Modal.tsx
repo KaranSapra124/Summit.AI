@@ -5,7 +5,7 @@ interface ModalProps {
 }
 const Modal: React.FC<ModalProps> = ({ data }) => {
   return (
-    <div className="absolute bg-black/50 inset-0 h-full w-full">{data}</div>
+    <div className="absolute bg-black/70 inset-0 z-[9999] h-full w-full">{data}</div>
   );
 };
 
