@@ -1,16 +1,16 @@
-import { useContext } from "react";
-import {
-  AdminContext,
-  adminContextInterface,
-  adminDataValues,
-} from "../../Utils/AdminReducer";
-import Container from "../Global/Container";
+// import { useContext } from "react";
+// import {
+//   AdminContext,
+//   adminContextInterface,
+//   adminDataValues,
+// } from "../../Utils/AdminReducer";
+// import Container from "../Global/Container";
 import { Link, Outlet } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const context = useContext(AdminContext);
-  const { adminData } = context as adminContextInterface;
-  const { email } = adminData as adminDataValues;
+  // const context = useContext(AdminContext);
+  // const { adminData } = context as adminContextInterface;
+  // const { email } = adminData as adminDataValues;
   interface linkType {
     title: string;
     link: string;

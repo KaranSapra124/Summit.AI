@@ -2,6 +2,7 @@ import { FaUsers, FaChartLine, FaBell } from "react-icons/fa";
 import Container from "../../Global/Container";
 import { userDataInterface } from "../../../Utils/UserReducer";
 import { useState } from "react";
+import Divider from "../../../Utils/Divider";
 
 const DashboardLayout = () => {
   interface cardType {
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
   return (
     <>
       <Container className="w-full">
-        <div className="flex gap-4 justify-center items-center">
+        <div className="flex gap-4 justify-center items-start">
           {cards?.map((elem, index: number) => {
             return (
               <>
@@ -58,7 +59,52 @@ const DashboardLayout = () => {
 };
 
 const MostUsedUsers = () => {
-  const [users, setUsers] = useState<userDataInterface[]>([
+  const [users] = useState<userDataInterface[]>([
+    {
+      name: "John Doe",
+      email: "john.doe@example.com",
+      plan: {
+        type: "Pro",
+        usage: 50,
+        limit: 100,
+      },
+      purchasePlan: {
+        _id: "plan_1",
+        name: "Pro Plan",
+        price: 29,
+        currency: "USD",
+        textLimit: "50,000 characters",
+        summariesPerDay: 100,
+        fileUploads: true,
+        customization: true,
+        prioritySupport: true,
+        apiAccess: true,
+      },
+      isActive: true,
+    },
+    {
+      name: "John Doe",
+      email: "john.doe@example.com",
+      plan: {
+        type: "Pro",
+        usage: 50,
+        limit: 100,
+      },
+      purchasePlan: {
+        _id: "plan_1",
+        name: "Pro Plan",
+        price: 29,
+        currency: "USD",
+        textLimit: "50,000 characters",
+        summariesPerDay: 100,
+        fileUploads: true,
+        customization: true,
+        prioritySupport: true,
+        apiAccess: true,
+      },
+      isActive: true,
+    },
+    
     {
       name: "John Doe",
       email: "john.doe@example.com",
@@ -125,26 +171,181 @@ const MostUsedUsers = () => {
       },
       isActive: false,
     },
+    {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
+      {
+        name: "David Johnson",
+        email: "david.johnson@example.com",
+        plan: {
+          type: "Enterprise",
+          usage: 200,
+          limit: 500,
+        },
+        purchasePlan: {
+          _id: "plan_3",
+          name: "Enterprise Plan",
+          price: "Custom Pricing",
+          currency: "USD",
+          textLimit: "Unlimited",
+          summariesPerDay: "Unlimited",
+          fileUploads: true,
+          customization: true,
+          prioritySupport: true,
+          apiAccess: true,
+        },
+        isActive: false,
+      },
   ]);
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4 text-white">Active Users</h2>
-      <div className="overflow-x-auto">
-        <table className="table-auto  w-full border border-gray-300">
-          <thead className="bg-gray-200 rounded">
+      <h2 className="text-xl font-bold  text-white text-left">Active Users</h2>
+      <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-4" />
+      <div className="overflow-x-auto h-96 overflow-y-scroll">
+        <table className="table-auto h-96 overflow-y-scroll w-full ">
+          <thead className="bg-black text-white rounded">
             <tr>
-              <th className="px-4 py-2 text-center border">Name</th>
-              <th className="px-4 py-2 text-center border">Email</th>
-              <th className="px-4 py-2 text-center border">Plan</th>
-              <th className="px-4 py-2 text-center border">Active Status</th>
+              <th className="px-4 py-2 text-center ">Name</th>
+              <th className="px-4 py-2 text-center ">Email</th>
+              <th className="px-4 py-2 text-center ">Plan</th>
+              <th className="px-4 py-2 text-center ">Active Status</th>
             </tr>
           </thead>
           <tbody>
             {users?.map((elem, index: number) => (
               <tr
                 key={index}
-                className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
+                className="odd:bg-white even:bg-gray-200 hover:bg-gray-100"
               >
                 <td className="px-4 py-2 border">{elem.name}</td>
                 <td className="px-4 py-2 border">{elem.email}</td>
@@ -160,7 +361,5 @@ const MostUsedUsers = () => {
     </div>
   );
 };
-
-
 
 export default DashboardLayout;
