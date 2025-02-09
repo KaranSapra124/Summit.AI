@@ -1,8 +1,8 @@
 import { FaUsers, FaChartLine, FaBell } from "react-icons/fa";
-import Container from "../../Global/Container";
-import { userDataInterface } from "../../../Utils/UserReducer";
+import Container from "../../../Global/Container";
+import { userDataInterface } from "../../../../Utils/UserReducer";
 import { useState } from "react";
-import Divider from "../../../Utils/Divider";
+import Divider from "../../../../Utils/Divider";
 
 const DashboardLayout = () => {
   interface cardType {

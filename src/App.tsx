@@ -18,7 +18,8 @@ import {
   adminReducer,
 } from "./Utils/AdminReducer";
 import AdminDashboard from "./Components/AdminPanel/AdminDashboard";
-import DashboardLayout from "./Components/AdminPanel/Components/DashboardLayout";
+import DashboardLayout from "./Components/AdminPanel/Components/Dashboard/DashboardLayout";
+import AdminLogin from "./Components/AdminPanel/Components/Auth/AdminLogin";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -67,10 +68,14 @@ function App() {
       element: <AdminDashboard />,
       children: [
         {
-          path:'/admin',
-          element:<DashboardLayout/>
-        }
+          path: "/admin",
+          element: <DashboardLayout />,
+        },
       ],
+    },
+    {
+      path: "/admin/login",
+      element: <AdminLogin />,
     },
   ]);
   const [state, dispatch] = useReducer(UserReducers, initialState);
