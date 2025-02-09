@@ -109,5 +109,11 @@ export const editUserAdmin = async (
   req: CustomRequest,
   res: Response
 ): Promise<void> => {
-  console.log(req.body);
+  const { _id } = req.body;
+  const updateUser = await UserModel.findByIdAndUpdate(
+    _id,
+    { ...req.body },
+    { new: true }
+  );
+  res.json({ message: "User Updated Successfully!", updateUser });
 };
