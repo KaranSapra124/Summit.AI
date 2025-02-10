@@ -1,8 +1,9 @@
-import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // Importing icons from react-icons
 
 const AdminDashboard = () => {
+  const Navigate = useNavigate()
   interface linkType {
     title: string;
     link: string;
@@ -16,6 +17,12 @@ const AdminDashboard = () => {
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(()=>{
+    if(!document.cookie.includes("adminToken")){
+Navigate("/admin/login")
+    }
+  },[])
 
   return (
     <>

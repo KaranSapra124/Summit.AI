@@ -38,6 +38,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     if (document.cookie.includes("adminToken")) {
+      // console.log("EXECUTED")
       Navigate("/admin");
     }
   }, []);
