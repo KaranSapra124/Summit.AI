@@ -34,7 +34,8 @@ const Plans = () => {
   const handleChangeItem = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItem((prev) => prev && { ...prev, [e.target.name]: e.target.value });
   };
-  //   const handleChangeAddItem =
+  const handleChangeAddItem = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setAddItem((prev) => prev && { ...prev, [e.target.name]: e.target.value });
 
   const handleSave = async () => {
     isAdd
@@ -228,11 +229,7 @@ const Plans = () => {
           type="text"
           name="name"
           value={addItem?.name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setAddItem(
-              (prev) => prev && { ...prev, [e.target.name]: e.target.value }
-            )
-          }
+          onChange={handleChangeAddItem}
           placeholder="Plan Name"
           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -241,7 +238,7 @@ const Plans = () => {
           type="number"
           name="price"
           value={item?.price}
-          onChange={handleChangeItem}
+          onChange={handleChangeAddItem}
           placeholder="Price"
           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -250,7 +247,7 @@ const Plans = () => {
           type="text"
           name="currency"
           value={item?.currency}
-          onChange={handleChangeItem}
+          onChange={handleChangeAddItem}
           placeholder="Currency (e.g., USD, INR)"
           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -259,7 +256,7 @@ const Plans = () => {
           type="text"
           name="textLimit"
           value={item?.textLimit}
-          onChange={handleChangeItem}
+          onChange={handleChangeAddItem}
           placeholder="Text Limit (e.g., 1000 words)"
           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -268,7 +265,7 @@ const Plans = () => {
           type="number"
           name="summariesPerDay"
           value={item?.summariesPerDay}
-          onChange={handleChangeItem}
+          onChange={handleChangeAddItem}
           placeholder="Summaries Per Day (e.g., Unlimited)"
           className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -280,7 +277,7 @@ const Plans = () => {
           name="fileUploads"
           checked={item?.fileUploads}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setItem(
+            setAddItem(
               (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
             )
           }
@@ -297,7 +294,7 @@ const Plans = () => {
           name="customization"
           checked={item?.customization}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setItem(
+            setAddItem(
               (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
             )
           }
@@ -314,7 +311,7 @@ const Plans = () => {
           name="prioritySupport"
           checked={item?.prioritySupport}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setItem(
+            setAddItem(
               (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
             )
           }
@@ -331,7 +328,7 @@ const Plans = () => {
           name="apiAccess"
           checked={item?.apiAccess}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setItem(
+            setAddItem(
               (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
             )
           }
