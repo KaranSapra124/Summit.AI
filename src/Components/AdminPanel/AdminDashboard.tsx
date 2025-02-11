@@ -1,7 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // Importing icons from react-icons
-
+import JsCookie from "js-cookie";
 const AdminDashboard = () => {
   const Navigate = useNavigate();
   interface linkType {
@@ -13,7 +13,6 @@ const AdminDashboard = () => {
     { title: "Dashboard", link: "/admin" },
     { title: "Users", link: "/admin/users" },
     { title: "Plans", link: "/admin/plans" },
-    { title: "Settings", link: "/admin/settings" },
     // { title: "Plans", link: "/admin/plans" },
   ];
 
@@ -54,6 +53,15 @@ const AdminDashboard = () => {
                 {elem.title}
               </Link>
             ))}
+            <button
+              onClick={() => {
+                JsCookie.remove("adminToken");
+                Navigate("/admin/login");
+              }}
+              className="bg-red-500 text-white font-bold p-2 rounded-sm hover:bg-red-600 transition-all cursor-pointer shadow-sm shadow-white"
+            >
+              Log Out
+            </button>
           </div>
         </div>
 
