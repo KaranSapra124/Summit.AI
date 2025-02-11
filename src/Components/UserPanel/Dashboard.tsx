@@ -129,7 +129,7 @@ const Dashboard = () => {
         theme === "Dark"
           ? "bg-gradient-to-tr from-black/60 via-gray-900/90 to-black/90"
           : "bg-gray-100"
-      } flex h-screen max-[600px]:h-full`}
+      } flex h-screen max-[600px]:h-screen`}
     >
       {/* Hamburger Menu */}
       <div className="md:hidden fixed top-4 left-4 z-50">
@@ -186,21 +186,19 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="flex-1 ml-0  p-4">
         {pathname === "/user" ? (
-          <div className="grid sm:grid-cols-3 justify-center gap-4 h-fit mx-auto">
-            {aiTextSummarizerDashboardData?.map((elem, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`${
-                    theme === "Dark"
-                      ? "text-white bg-emerald-500 "
-                      : "text-black bg-gray-200 "
-                  } p-4 w-full rounded-2xl h-52 max-[600px]:h-44 max-[600px]:w-44  text-wrap shadow-lg flex flex-col`}
-                >
-                  <Cards title={elem?.title} value={elem?.value} />
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 max-w-6xl max-[600px]:w-full max-[600px]:grid-cols-2 mx-auto">
+            {aiTextSummarizerDashboardData?.map((elem, index) => (
+              <div
+                key={index}
+                className={`${
+                  theme === "Dark"
+                    ? "text-white bg-emerald-600"
+                    : "text-gray-800 bg-gray-100"
+                } p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-start justify-between`}
+              >
+                <Cards title={elem?.title} value={elem?.value} />
+              </div>
+            ))}
           </div>
         ) : (
           <Outlet />
