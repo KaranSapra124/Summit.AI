@@ -11,18 +11,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 dbConfig();
-app.options(
-  "http://summit-ai.onrender.com",
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-); // Preflight requests
+// app.options(
+//   "http://summit-ai.onrender.com",
+//   cors({
+//     origin: process.env.FRONTEND_URL,
+//     credentials: true,
+//   })
+// ); // Preflight requests
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "https://summit-ai-backend.onrender.com",
     credentials: true,
+    
   })
 );
 app.use(express.json());
