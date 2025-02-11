@@ -12,20 +12,18 @@ const Plans = () => {
   const [plans, setPlans] = useState<PricingPlanType[]>([]);
   const [isEdit, setIsEdit] = useState<Boolean>(false);
   const [item, setItem] = useState<PricingPlanType | null>(null);
-  const [isChangeItem, setIsChangeItem] = useState<Boolean>(false);
   const handleEdit = (item: PricingPlanType) => {
     setIsEdit(true);
     setItem(item);
   };
   const handleChangeItem = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItem((prev) => prev && { ...prev, [e.target.name]: e.target.value });
-    setIsChangeItem((prev) => !prev);
+  };
+  const handleSave = () => {
+    console.log(item);
   };
   const modalData = (
-    <div
-      key={isChangeItem}
-      className="p-6 bg-white rounded-xl shadow-lg max-w-lg space-y-4"
-    >
+    <div className="p-6 bg-white max-[600px]:mx-10 rounded-xl mx-auto mt-10 shadow-lg max-w-lg space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-800">
           Edit Pricing Plan
@@ -36,7 +34,7 @@ const Plans = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid max-[600px]:grid-cols-1  grid-cols-2 gap-2">
         <input
           type="text"
           name="name"
@@ -87,8 +85,12 @@ const Plans = () => {
         <input
           type="checkbox"
           name="fileUploads"
-          checked={item?.fileUploads ? true : false}
-          onChange={handleChangeItem}
+          checked={item?.fileUploads}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setItem(
+              (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
+            )
+          }
           className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
         <label htmlFor="fileUploads" className="text-gray-700">
@@ -101,7 +103,11 @@ const Plans = () => {
           type="checkbox"
           name="customization"
           checked={item?.customization}
-          onChange={handleChangeItem}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setItem(
+              (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
+            )
+          }
           className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
         <label htmlFor="customization" className="text-gray-700">
@@ -114,7 +120,11 @@ const Plans = () => {
           type="checkbox"
           name="prioritySupport"
           checked={item?.prioritySupport}
-          onChange={handleChangeItem}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setItem(
+              (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
+            )
+          }
           className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
         <label htmlFor="prioritySupport" className="text-gray-700">
@@ -127,7 +137,11 @@ const Plans = () => {
           type="checkbox"
           name="apiAccess"
           checked={item?.apiAccess}
-          onChange={handleChangeItem}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setItem(
+              (prev) => prev && { ...prev, [e.target.name]: e.target.checked }
+            )
+          }
           className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
         />
         <label htmlFor="apiAccess" className="text-gray-700">
@@ -136,7 +150,7 @@ const Plans = () => {
       </div>
 
       <button
-        // onClick={handleSave}
+        onClick={handleSave}
         className="w-full py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition duration-200"
       >
         Save
