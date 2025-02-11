@@ -11,7 +11,6 @@ const Cards: React.FC<CardType> = ({ title, value }) => {
   const { theme } = context as userState;
   return (
     <div className="mt-auto ">
-      {/* <h2 className="text-[5rem]">{icon}</h2> */}
       <h2 className="text-3xl max-[600px]:text-xs text-gray-900  text-left font-extrabold">
         {value}
       </h2>

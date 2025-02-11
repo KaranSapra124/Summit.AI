@@ -1,10 +1,28 @@
 import Container from "../Global/Container";
-import { pricingPlans, PricingPlanType } from "../../Utils/PlanData";
+import { PricingPlanType } from "../../Utils/PlanData";
 import Divider from "../../Utils/Divider";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const Plans = () => {
+  const [pricingPlans, setPricingPlans] = useState<PricingPlanType[]>([]);
+
   const isFeatureAvailable = (val: boolean, feature: string) => {
     return val ? `✔️ ${feature}` : `❌ ${feature}`;
   };
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/get-plans`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setPricingPlans(res?.data?.plans);
+    };
+    fetchPlans();
+  });
   return (
     <>
       <Container className="bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
