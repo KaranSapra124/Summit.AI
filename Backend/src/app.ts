@@ -21,7 +21,7 @@ dbConfig();
 
 app.use(
   cors({
-    origin: "https://summit-ai-backend.onrender.com",
+    origin: "https://summit-ai.onrender.com",
     credentials: true,
     
   })
