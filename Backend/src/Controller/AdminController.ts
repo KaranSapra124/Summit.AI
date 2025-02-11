@@ -157,6 +157,15 @@ export const addPlanAdmin = async (
   res: Response
 ): Promise<void> => {
   console.log(req.body);
-  // const addPlan = await PlanModel.create(...req.body);
-  // res.json({ message: "Plan Added Successfully!", addPlan });
+  const addPlan = await PlanModel.create(...req.body);
+  res.json({ message: "Plan Added Successfully!", addPlan });
+};
+
+export const deletePlanAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  await PlanModel.findByIdAndDelete(id);
+  res.json({ message: "Plan Deleted Successfully!" });
 };

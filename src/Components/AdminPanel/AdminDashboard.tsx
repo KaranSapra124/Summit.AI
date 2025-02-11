@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     { title: "Users", link: "/admin/users" },
     { title: "Plans", link: "/admin/plans" },
     { title: "Settings", link: "/admin/settings" },
-    { title: "Plans", link: "/admin/plans" },
+    // { title: "Plans", link: "/admin/plans" },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -348,6 +348,21 @@ const Plans = () => {
     </div>
   );
 
+  const handleDelete = async (id: string) => {
+    const res = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/delete-plan/${id}`,
+      { withCredentials: true }
+    );
+    toast.success(res?.data?.message);
+    (async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/plans`,
+        { withCredentials: true }
+      );
+      setPlans(res?.data?.plans);
+    })();
+  };
+
   useEffect(() => {
     (async () => {
       const res = await axios.get(
@@ -357,8 +372,6 @@ const Plans = () => {
       setPlans(res?.data?.plans);
     })();
   }, []);
-
-  useEffect(() => console.log(addItem, "ITEMEMEM"), [addItem]);
 
   return (
     <>
@@ -428,7 +441,7 @@ const Plans = () => {
                           <FaEdit />
                         </button>
                         <button
-                          //   onClick={() => handleDelete(user)}
+                          onClick={() => handleDelete(user?._id || "")}
                           className="text-red-500 hover:text-red-700"
                         >
                           <FaTrash />
