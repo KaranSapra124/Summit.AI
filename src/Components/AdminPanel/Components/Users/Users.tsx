@@ -310,7 +310,9 @@ const Users = () => {
       {isEdit && <Modal data={editItem} />}
       <div className="h-full w-full max-[600px]:mt-12 flex flex-col justify-center ">
         <div className="relative  px-4 py-10  shadow-lg  h-full">
-          <h1 className="text-2xl font-bold text-white text-left max-[600px]:text-sm">Users</h1>
+          <h1 className="text-2xl font-bold text-white text-left max-[600px]:text-sm">
+            Users
+          </h1>
           <Divider className="h-1 w-12 bg-emerald-500 my-4 rounded-full" />
           {users?.length > 0 ? (
             <div className="overflow-x-auto overflow-y-auto bg-white">
@@ -379,7 +381,7 @@ const Users = () => {
     </>
   );
 };
-const SkeletonLoader: React.FC = () => {
+export const SkeletonLoader: React.FC = () => {
   return (
     <svg
       className="animate-spin my-52 h-16 w-16 mx-auto"

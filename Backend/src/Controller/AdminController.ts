@@ -126,3 +126,15 @@ export const deleteUserAdmin = async (
   await UserModel.findByIdAndDelete(id);
   res.json({ message: "User Deleted Successfully!" });
 };
+
+export const getPlansAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const plans = await PlanModel.find();
+    res.json({ message: "Plans Fetched!", plans });
+  } catch (err) {
+    res.json({ message: "Something Went Wrong!", err });
+  }
+};

@@ -1,4 +1,5 @@
 export type PricingPlanType = {
+  _id?: string;
   name: string;
   price: number | "Custom Pricing";
   currency: string;

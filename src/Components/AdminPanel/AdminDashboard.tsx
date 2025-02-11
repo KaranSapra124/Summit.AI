@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // Importing icons from react-icons
 
 const AdminDashboard = () => {
-  const Navigate = useNavigate()
+  const Navigate = useNavigate();
   interface linkType {
     title: string;
     link: string;
@@ -14,15 +14,16 @@ const AdminDashboard = () => {
     { title: "Users", link: "/admin/users" },
     { title: "Plans", link: "/admin/plans" },
     { title: "Settings", link: "/admin/settings" },
+    { title: "Plans", link: "/admin/plans" },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(()=>{
-    if(!document.cookie.includes("adminToken")){
-Navigate("/admin/login")
+  useEffect(() => {
+    if (!document.cookie.includes("adminToken")) {
+      Navigate("/admin/login");
     }
-  },[])
+  }, []);
 
   return (
     <>
