@@ -11,7 +11,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 dbConfig();
-app.options("*", cors()); // Preflight requests
+app.options(
+  "*",
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+); // Preflight requests
 
 app.use(
   cors({
