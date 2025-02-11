@@ -138,3 +138,25 @@ export const getPlansAdmin = async (
     res.json({ message: "Something Went Wrong!", err });
   }
 };
+
+export const editPlansAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  const { _id } = req.body;
+  const updatePlan = await PlanModel.findByIdAndUpdate(
+    _id,
+    { ...req.body },
+    { new: true }
+  );
+  res.json({ message: "Plan Updated Successfully!", updatePlan });
+};
+
+export const addPlanAdmin = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  console.log(req.body);
+  // const addPlan = await PlanModel.create(...req.body);
+  // res.json({ message: "Plan Added Successfully!", addPlan });
+};

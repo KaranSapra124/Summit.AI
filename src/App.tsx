@@ -22,6 +22,8 @@ import DashboardLayout from "./Components/AdminPanel/Components/Dashboard/Dashbo
 import AdminLogin from "./Components/AdminPanel/Components/Auth/AdminLogin";
 import Users from "./Components/AdminPanel/Components/Users/Users";
 import Plans from "./Components/AdminPanel/Components/Plans/Plans";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -78,9 +80,9 @@ function App() {
           element: <Users />,
         },
         {
-          path:"/admin/plans",
-          element:<Plans/>
-        }
+          path: "/admin/plans",
+          element: <Plans />,
+        },
       ],
     },
     {
@@ -105,6 +107,7 @@ function App() {
       <Plans />
       <Footer /> */}
       {/* <Login /> */}
+      <ToastContainer />
       <AdminContext.Provider
         value={{ adminData: adminData, adminDispatch: adminDispatch }}
       >
