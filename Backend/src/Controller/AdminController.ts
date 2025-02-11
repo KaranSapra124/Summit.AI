@@ -28,13 +28,6 @@ export const adminLogin = async (
     const { formData } = req.body;
     const { email, password } = formData as AdminLoginRequest;
     const admin = await AdminModel.findOne({ email: email });
-    // console.log(admin)
-    // const hashPass = await hash(password, 5);
-    // const newAdmin = await AdminModel.create({
-    //   email: email,
-    //   password: hashPass,
-    // });
-    // res.json({ message: "Admin Created!", newAdmin });
     if (admin) {
       const isTrue = await compare(password, admin.password);
 
@@ -46,15 +39,12 @@ export const adminLogin = async (
                 "SECRET_KEY is not defined in the environment variables!"
               );
             }
-            res.cookie(
-              "adminToken",
-              generateToken(admin._id.toString(), secretKey, "7d"),
-              {
-                maxAge: 7 * 24 * 60 * 60 * 1000,
-                secure: true,
-              }
-            );
-            res.json({ message: "Admin Logged In!", admin });
+            const token = generateToken(admin._id.toString(), secretKey, "7d");
+            res.cookie("adminToken", token, {
+              maxAge: 7 * 24 * 60 * 60 * 1000,
+              secure: true,
+            });
+            res.json({ message: "Admin Logged In!", admin, token });
           })()
         : res.json({ message: "Invalid Credentials" });
     } else {

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Modal from "../../../Helper/Modal";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import JsCookie from "js-cookie";
 
 const AdminLogin = () => {
   const [isOpen, setIsOpen] = useState<Boolean>(false);
@@ -26,6 +27,10 @@ const AdminLogin = () => {
       }
     );
     setResponse(res?.data?.message);
+    JsCookie.set("adminToken", res?.data?.token, {
+      secure: true,
+    });
+
     if (
       res?.data?.message !== "Invalid Credentials" &&
       res?.data?.message !== "Admin Not Found!"
