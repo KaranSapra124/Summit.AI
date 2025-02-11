@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 dbConfig();
 app.options(
-  "*",
+  "http://summit-ai.onrender.com",
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
