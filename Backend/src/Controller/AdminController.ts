@@ -91,8 +91,13 @@ export const getUsersAdmin = async (
   req: CustomRequest,
   res: Response
 ): Promise<void> => {
-  const users = await UserModel.find();
-  res.json({ message: "Users Fetched Successfully!", users });
+  try {
+    const users = await UserModel.find();
+
+    res.json({ message: "Users Fetched Successfully!", users });
+  } catch (err) {
+    res.json({ message: "Something Went Wrong", err });
+  }
 };
 
 export const editUserAdmin = async (

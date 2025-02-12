@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   // Allow specific origin
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://phenomenal-faun-96eab9.netlify.app/"
+    "https://phenomenal-faun-96eab9.netlify.app"
   );
 
   // Allow specific HTTP methods
