@@ -16,33 +16,40 @@ const allowedOrigins = [
   "https://summit-ai.onrender.com", // Production
 ];
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
+// app.use((req, res, next) => {
+//   const origin = req.headers.origin;
 
-  // Check if the request's origin is in the allowedOrigins list
-  if (allowedOrigins.includes(origin || "")) {
-    res.setHeader("Access-Control-Allow-Origin", origin || "");
-    res.setHeader("Access-Control-Allow-Credentials", "true"); // Needed for credentials
-  }
+//   // Check if the request's origin is in the allowedOrigins list
+//   if (allowedOrigins.includes(origin || "")) {
+//     res.setHeader("Access-Control-Allow-Origin", origin || "");
+//     res.setHeader("Access-Control-Allow-Credentials", "true"); // Needed for credentials
+//   }
 
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "PUT, GET, HEAD, POST, DELETE, OPTIONS"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With, Origin"
-  );
-  res.setHeader("Access-Control-Max-Age", "7200"); // Preflight cache duration
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "PUT, GET, HEAD, POST, DELETE, OPTIONS"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, X-Requested-With, Origin"
+//   );
+//   res.setHeader("Access-Control-Max-Age", "7200"); // Preflight cache duration
 
-  if (req.method === "OPTIONS") {
-    res.status(204).end(); // Immediately respond to preflight requests
-    return;
-  }
+//   if (req.method === "OPTIONS") {
+//     res.status(204).end(); // Immediately respond to preflight requests
+//     return;
+//   }
 
-  next();
-});
+//   next();
+// });
 
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
 app.use(express.json());
 app.use(CookieParser());
 
