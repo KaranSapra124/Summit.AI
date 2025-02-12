@@ -10,7 +10,7 @@ export const userAuth = (
   next: NextFunction
 ) => {
   const { userToken } = req.cookies;
-  console.log(userToken)
+  // console.log(userToken)
 
   try {
     const secretKey = process.env.SECRET_KEY;

@@ -45,7 +45,6 @@ const Login = () => {
       user,
       {
         withCredentials: true,
-       
       }
     );
 
@@ -91,8 +90,6 @@ const Login = () => {
 
   return (
     <>
-      {/* <Container > */}
-      {/* {isOpen && <Modal data={ModalData} />} */}
       <div className="h-full max-[600px]:flex-col flex bg-black/90 ">
         <div className="w-1/2 max-[600px]:px-5 max-[600px]:mx-1 max-[600px]:my-5 mx-4 max-[600px]:w-full flex flex-col justify-center items-center">
           <h1 className="text-5xl max-[600px]:text-xl font-bold text-white">

@@ -8,6 +8,7 @@ import { UserAction, userDataInterface } from "../../Utils/UserReducer";
 import Cookies from "js-cookie";
 import { FaBook } from "react-icons/fa6";
 import Cards from "./Components/Dashboard/Cards";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   interface UserContextType {
@@ -59,6 +60,7 @@ const Dashboard = () => {
         }
       );
       dispatch({ type: "SET_USER", payload: res?.data?.user });
+      toast.success("Logged In Successfully!");
     };
     fetchUser();
   }, []);
