@@ -48,7 +48,12 @@ dbConfig();
 //   next();
 // });
 
-app.use(cors({ origin: "https://summit-ai.onrender.com", credentials: true }));
+app.use(
+  cors({
+    origin: "https://phenomenal-faun-96eab9.netlify.app/",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(CookieParser());
 
