@@ -11,48 +11,38 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 dbConfig();
-// app.use((req, res, next) => {
-//   // Allow specific origin
-//   res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "*");
+const allowedOrigins = [
+  "http://localhost:5173", // Development
+  "https://summit-ai.onrender.com", // Production
+];
 
-//   // Allow specific HTTP methods
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-//   );
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
 
-//   // Allow specific headers
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, Accept, X-Requested-With, Origin"
-//   );
+  // Check if the request's origin is in the allowedOrigins list
+  if (allowedOrigins.includes(origin || "")) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "");
+    res.setHeader("Access-Control-Allow-Credentials", "true"); // Needed for credentials
+  }
 
-//   // Allow credentials (cookies or authentication headers)
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, GET, HEAD, POST, DELETE, OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Requested-With, Origin"
+  );
+  res.setHeader("Access-Control-Max-Age", "7200"); // Preflight cache duration
 
-//   // Allow private network requests (optional, for devices on the same network)
-//   res.setHeader("Access-Control-Allow-Private-Network", "true");
+  if (req.method === "OPTIONS") {
+    res.status(204).end(); // Immediately respond to preflight requests
+    return;
+  }
 
-//   // Cache preflight request results for 2 hours (browser caps may override this)
-//   res.setHeader("Access-Control-Max-Age", "7200");
+  next();
+});
 
-//   // Handle preflight requests (important for CORS to work)
-//   if (req.method === "OPTIONS") {
-//     res.status(204).end(); // Respond with 204 No Content for preflight
-//     return;
-//   }
-
-//   next();
-// });
-
-console.log(process.env.FRONTEND_URL);
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
 app.use(express.json());
 app.use(CookieParser());
 
