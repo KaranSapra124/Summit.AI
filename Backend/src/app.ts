@@ -16,6 +16,11 @@ const allowedOrigins = [
   "https://summit-ai.onrender.com", // Production
 ];
 
+app.use((req, res, next) => {
+  // const origin  =
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "");
+  next();
+});
 // app.use((req, res, next) => {
 //   const origin = req.headers.origin;
 
