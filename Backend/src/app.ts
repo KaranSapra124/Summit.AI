@@ -11,20 +11,43 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 dbConfig();
-// app.options(
-//   "http://summit-ai.onrender.com",
-//   cors({
-//     origin: process.env.FRONTEND_URL,
-//     credentials: true,
-//   })
-// ); // Preflight requests
+app.use((req, res, next) => {
+  // Allow specific origin
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://summit-ai.onrender.com"
+  );
 
-app.use(
-  cors({
-    origin: "https://summit-ai.onrender.com/",
-    credentials: true,
-  })
-);
+  // Allow specific HTTP methods
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+  );
+
+  // Allow specific headers
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Accept, X-Requested-With, Origin"
+  );
+
+  // Allow credentials (cookies or authentication headers)
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+
+  // Allow private network requests (optional, for devices on the same network)
+  res.setHeader("Access-Control-Allow-Private-Network", "true");
+
+  // Cache preflight request results for 2 hours (browser caps may override this)
+  res.setHeader("Access-Control-Max-Age", "7200");
+
+  // Handle preflight requests (important for CORS to work)
+  if (req.method === "OPTIONS") {
+    res.status(204).end(); // Respond with 204 No Content for preflight
+    return;
+  }
+
+  next();
+});
+
 app.use(express.json());
 app.use(CookieParser());
 
