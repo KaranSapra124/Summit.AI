@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import Modal from "../Helper/Modal";
 import { useNavigate } from "react-router-dom";
 import { FaShield } from "react-icons/fa6";
 import { UserContext } from "../../Utils/UserContext";
