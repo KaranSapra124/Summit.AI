@@ -21,9 +21,9 @@ dbConfig();
 
 app.use(
   cors({
-    origin: "https://summit-ai.onrender.com/",
-    credentials: true,
-
+    origin: "*",
+    // credentials: true,
+    // allowedHeaders:""
   })
 );
 app.use(express.json());
