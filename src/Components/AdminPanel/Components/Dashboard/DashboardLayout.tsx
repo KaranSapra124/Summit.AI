@@ -65,8 +65,9 @@ const MostUsedUsers = () => {
   const [users, setUsers] = useState<userDataInterface[]>([]);
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(
+      const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/get-users`,
+        {},
         { withCredentials: true }
       );
       setUsers(res.data.users);
