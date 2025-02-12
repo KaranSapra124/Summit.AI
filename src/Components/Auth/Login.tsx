@@ -6,6 +6,7 @@ import { FaShield } from "react-icons/fa6";
 import { UserContext } from "../../Utils/UserContext";
 import { UserAction } from "../../Utils/UserReducer";
 import jscookie from "js-cookie";
+import { toast } from "react-toastify";
 
 const Login = () => {
   interface UserContextType {
@@ -25,8 +26,6 @@ const Login = () => {
     password: "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [response, SetResponse] = useState("");
   const context = useContext(UserContext);
   const { dispatch } = context as UserContextType;
 
@@ -46,10 +45,10 @@ const Login = () => {
       user,
       {
         withCredentials: true,
+       
       }
     );
 
-    // console.log(res)
     dispatch({
       type: "SET_USER",
       payload:
@@ -57,46 +56,43 @@ const Login = () => {
           ? res?.data?.newUser
           : res?.data?.exisitingUser,
     });
-    SetResponse(res?.data?.message);
-    jscookie.set("userToken", res?.data?.token, {
-      secure: true, // True for HTTPS
-      // sameSite: "None", // Or "Lax" depending on your setup
-      // domain: ".onrender.com", // Match backend domain
-      // domain: ".onrender.com",
-    });
-    setIsOpen(true);
+    toast.success(res?.data?.message);
+    jscookie.set("userToken", res?.data?.token);
+    res?.data?.message !== "Password Incorrect!" && Navigate("/user");
+
+    // setIsOpen(true);
   };
 
   useEffect(() => {
     if (document.cookie.includes("userToken")) Navigate("/user");
   }, []);
-  const ModalData = (
-    <>
-      <div className="flex items-center  justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">
-        <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-4">
-          <p className="text-black text-lg font-semibold">{response}</p>
-          <div className="flex justify-end">
-            <button
-              onClick={() => {
-                // console.log(response)
-                setIsOpen(false);
+  // const ModalData = (
+  //   <>
+  //     <div className="flex items-center  justify-center min-h-screen bg-gray-800/20 bg-opacity-50 fixed inset-0 z-50">
+  //       <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 space-y-4">
+  //         <p className="text-black text-lg font-semibold">{response}</p>
+  //         <div className="flex justify-end">
+  //           <button
+  //             onClick={() => {
+  //               // console.log(response)
+  //               setIsOpen(false);
 
-                response !== "Password Incorrect!" && Navigate("/user");
-              }}
-              className="px-4 py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-800 transition duration-300"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+  //               response !== "Password Incorrect!" && Navigate("/user");
+  //             }}
+  //             className="px-4 py-2 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-800 transition duration-300"
+  //           >
+  //             Close
+  //           </button>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </>
+  // );
 
   return (
     <>
       {/* <Container > */}
-      {isOpen && <Modal data={ModalData} />}
+      {/* {isOpen && <Modal data={ModalData} />} */}
       <div className="h-full max-[600px]:flex-col flex bg-black/90 ">
         <div className="w-1/2 max-[600px]:px-5 max-[600px]:mx-1 max-[600px]:my-5 mx-4 max-[600px]:w-full flex flex-col justify-center items-center">
           <h1 className="text-5xl max-[600px]:text-xl font-bold text-white">
