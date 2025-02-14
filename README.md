@@ -65,7 +65,7 @@ Summit.AI is a SaaS application designed to provide users with AI-powered text s
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/summit-ai.git
+   git clone https://github.com/KaranSapra124/Summit.AI.git
    ```
 
 2. Navigate to the project directory:
