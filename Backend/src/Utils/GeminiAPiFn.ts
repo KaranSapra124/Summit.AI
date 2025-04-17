@@ -12,11 +12,11 @@ export const geminiSummarize = async (text: string): Promise<string> => {
 };
 
 export const geminiCorrect = async (text: string): Promise<string> => {
-    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Correct the grammar and spelling mistakes in the following and only return corrected sentence with mistakes and corrections:\n\n${text}` });
+    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Correct the grammar and spelling mistakes in the following and only return corrected sentence with mistakes and corrections in seperate lines:\n\n${text}` });
     return result.text as string;
 };
 
 export const geminiDetectLang = async (text: string): Promise<string> => {
-    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Detect the language of this text:\n\n${text}` });
+    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Detect the language of this text & only return language:\n\n${text}` });
     return result.text as string;
 };
