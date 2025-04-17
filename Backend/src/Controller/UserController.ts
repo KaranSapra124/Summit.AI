@@ -214,13 +214,13 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
 
   try {
     // Decrement usage only for summarization
-    if (selectedVal === "summarize") {
+    // if (selectedVal === "summarize") {
       await UserModel.findOneAndUpdate(
         { _id: userId, "purchasePlan.summariesPerDay": { $gt: 0 } },
         { $inc: { "purchasePlan.summariesPerDay": -1 } },
         { new: true }
       );
-    }
+    // }
 
     let resultText = "";
 
