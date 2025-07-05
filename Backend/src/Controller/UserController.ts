@@ -7,7 +7,7 @@ import { sendAcknowledgeEmail, sendOTP, sendResetPasswordLink } from "../Utils/N
 import PlanModel, { Plan } from "../Models/PlanModel";
 import axios from "axios";
 import { GoogleGenAI } from "@google/genai"
-import { geminiCorrect, geminiDetectLang, geminiSummarize } from "../Utils/GeminiAPiFn";
+import { geminiCorrect, geminiDetectLang, geminiEnhanceEssayWriting, geminiSummarize } from "../Utils/GeminiAPiFn";
 
 interface UserLoginRequest {
   name: string;
@@ -339,7 +339,11 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
       resultText = await geminiCorrect(para);
     } else if (selectedVal === "detect") {
       resultText = await geminiDetectLang(para);
-    } else {
+    }
+    else if (selectedVal === "Enhance My Writing") {
+      resultText = await geminiEnhanceEssayWriting(para)
+    }
+    else {
       resultText = "Invalid option selected.";
     }
 
