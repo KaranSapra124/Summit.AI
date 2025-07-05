@@ -27,6 +27,7 @@ const ResetPassword: React.FC = () => {
     };
 
     const handleSubmit = async () => {
+        if (formData?.newPassword !== formData?.confirmPassword) return toast.error("Passwords not matched!");
         const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/reset-password`,
             formData,
@@ -65,7 +66,7 @@ const ResetPassword: React.FC = () => {
                     </svg>
                     <input
                         type="password"
-                        name="password"
+                        name="newPassword"
                         className="grow text-white max-[600px]:text-sm p-2 focus:outline-0"
                         onChange={handleChange}
                         placeholder="New Password"
