@@ -25,6 +25,7 @@ import Plans from "./Components/AdminPanel/Components/Plans/Plans";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ForgotPassword from "./Components/Auth/ForgotPassword";
+import ResetPassword from "./Components/Auth/ResetPassword";
 
 function App() {
   const appRoutes = createBrowserRouter([
@@ -49,6 +50,10 @@ function App() {
     {
       element: <ForgotPassword />,
       path: "/forgot-password"
+    },
+    {
+      element: <ResetPassword />,
+      path: "/reset-password"
     },
     {
       element: <Dashboard />,
