@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface formDataInterface {
     email: string | null,
@@ -10,6 +10,7 @@ interface formDataInterface {
 }
 const ResetPassword: React.FC = () => {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate()
     const [formData, setFormData] = useState<formDataInterface>({
         email: searchParams?.get("email"),
         token: searchParams?.get("token"),
@@ -32,6 +33,9 @@ const ResetPassword: React.FC = () => {
                 withCredentials: true,
             }
         )
+        const { data } = res;
+        alert(data?.message)
+        navigate("/login")
     }
     return (
         <div className="h-full max-[600px]:flex-col flex flex-row-reverse bg-black/90">

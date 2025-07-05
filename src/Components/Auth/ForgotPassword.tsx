@@ -11,11 +11,13 @@ const ForgotPassword: React.FC = () => {
     const handleSubmit = async () => {
         const res = await axios.post(
             `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/forgot-password`,
-            {email:email},
+            { email: email },
             {
                 withCredentials: true,
             }
         )
+        const { data } = res;
+        alert(data?.message)
     }
     return (
         <>

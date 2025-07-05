@@ -14,6 +14,7 @@ export const generateToken = (
   return sign({ userId: id }, secretKey, { expiresIn } as SignOptions);
 };
 
+
 export const verifyToken = (token: string, secretKey: string) => {
   return verify(token, secretKey);
 };

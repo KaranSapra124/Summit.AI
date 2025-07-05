@@ -197,9 +197,10 @@ const resetPassword = async (req: CustomRequest, res: Response): Promise<void> =
   const isValid = verifyToken(token, secret_key);
 
   if (isValid) {
-    const hashPass = await hash(password, 5);
-    await UserModel.findOneAndUpdate({ email: email, password: hashPass }, { new: true })
-    const message = ` <div style="max-width:600px;margin:auto;background-color:#ffffff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);font-family:Segoe UI,sans-serif;">
+    try {
+      const hashPass = await hash(password, 5);
+      await UserModel.findOneAndUpdate({ email: email, password: hashPass }, { new: true })
+      const message = ` <div style="max-width:600px;margin:auto;background-color:#ffffff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);font-family:Segoe UI,sans-serif;">
     
     <div style="text-align:center;margin-bottom:24px;">
       <h1 style="font-size:24px;font-weight:bold;color:#10b981;margin-bottom:8px;">
@@ -243,11 +244,17 @@ const resetPassword = async (req: CustomRequest, res: Response): Promise<void> =
       You’re receiving this email because you have an active account on Summit.AI.
     </div>
   </div>`;
-    await sendAcknowledgeEmail(email, `Password Changed SUccessfully!`, message);
+      await sendAcknowledgeEmail(email, `Password Changed SUccessfully!`, message);
 
-    res.json({
-      message: "Password Changed Successfully!"
-    });
+      res.json({
+        message: "Password Changed Successfully!"
+      });
+    } catch (err) {
+      res.json({
+        message: "Password not changed , try again!",
+        err
+      });
+    }
   }
 }
 
