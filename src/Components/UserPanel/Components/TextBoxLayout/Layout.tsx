@@ -97,7 +97,7 @@ const Layout = () => {
   const grammarModalData = (
     <>
       {/* Corrected Essay */}
-      <div className=" max-h-96   overflow-x-scroll m-20">
+      <div className=" max-h-96   overflow-x-scroll max-[600px]:m-10 m-20">
         <div className="bg-white p-4 rounded shadow ">
           <h2 className="text-lg font-bold text-emerald-600 mb-2">✅ Corrected Essay</h2>
           <p className="text-gray-800 whitespace-pre-wrap">{formData?.para}</p>
