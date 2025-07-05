@@ -57,3 +57,25 @@ export const sendOTP = async (
     throw error;
   }
 };
+
+export const sendResetPasswordLink = async (
+  tomail: string,
+  subject: string,
+  message: string
+): Promise<SMTPTransport.SentMessageInfo> => {
+  const mailOptions = {
+    from: `"Summit.AI" <${email}>`, // sender address
+    to: tomail, // list of receivers
+    subject: subject, // Subject line
+    html: message, // plain text body
+  };
+  try {
+    // send mail with defined transport object
+    const result = await transporter.sendMail(mailOptions);
+    return result;
+  } catch (error) {
+    //  Handle errors here
+
+    throw error;
+  }
+};

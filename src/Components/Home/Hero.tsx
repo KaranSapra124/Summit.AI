@@ -20,7 +20,7 @@ const Hero = () => {
             summarizing Your huge paragraphs into smaller and concised form
             which helps you to save your time and energy.
           </p>
-          <button onClick={()=>Navigate("/login")} className="border border-gray-300 w-fit mx-auto  max-[600px]:text-xs   hover:bg-gray-300   text-gray-200 cursor-pointer duration-200 hover:font-bold font-semibold p-2 rounded-lg">
+          <button onClick={()=>Navigate("/login")} className="border border-gray-300 w-fit mx-auto  max-[600px]:text-xs   hover:bg-gray-300 hover:text-black transition-all    text-gray-200 cursor-pointer duration-500 hover:font-bold font-semibold p-2 rounded-lg">
             Try Now, It's Free!
           </button>
           <SubComponent />

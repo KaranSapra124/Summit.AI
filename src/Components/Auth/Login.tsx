@@ -74,7 +74,7 @@ const Login: React.FC<loginProps> = ({ isLogin }) => {
       <div className="h-full max-[600px]:flex-col flex bg-black/90 ">
         <div className="w-1/2 max-[600px]:px-5 max-[600px]:mx-1 max-[600px]:my-5 mx-4 max-[600px]:w-full flex flex-col justify-center items-center">
           <h1 className="text-5xl max-[600px]:text-xl font-bold text-white">
-            Create A{" "}
+            Create An{" "}
             <span className="text-emerald-500 font-extrabold">Free</span>{" "}
             Account
           </h1>
@@ -126,12 +126,15 @@ const Login: React.FC<loginProps> = ({ isLogin }) => {
               placeholder="Enter Your Password..."
             />
           </label>
-          <button
-            onClick={handleSubmit}
-            className="bg-emerald-500 mr-auto cursor-pointer font-bold p-2 rounded-md text-white"
-          >
-            {isLogin ? "Login" : "Register"}
-          </button>
+          <div className="flex justify-between w-full items-center">
+            <button
+              onClick={handleSubmit}
+              className="bg-emerald-500 mr-auto cursor-pointer font-bold p-2 rounded-md text-white"
+            >
+              {isLogin ? "Login" : "Register"}
+            </button>
+            <Link className="text-sm text-emerald-400 hover:underline font-semibold" to={"/forgot-password"}>Forgot Password?</Link>
+          </div>
           {isLogin ? (
             <Link
               to="/register"

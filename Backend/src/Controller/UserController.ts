@@ -3,7 +3,7 @@ import UserModel, { User } from "../Models/UserModel";
 import { hash, compare } from "bcrypt";
 import { generateToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
-import { sendAcknowledgeEmail, sendOTP } from "../Utils/Nodemailer";
+import { sendAcknowledgeEmail, sendOTP, sendResetPasswordLink } from "../Utils/Nodemailer";
 import PlanModel, { Plan } from "../Models/PlanModel";
 import axios from "axios";
 import { GoogleGenAI } from "@google/genai"
@@ -149,6 +149,48 @@ const getUser = async (req: CustomRequest, res: Response): Promise<void> => {
   }
 };
 
+const forgotPassword = async (req: CustomRequest, res: Response): Promise<void> => {
+  const secret_key: string = process.env.SECRET_KEY || "";
+  const frontendUrl: string = process.env.FRONTEND_URL || "";
+  const { email } = req.body;
+  const userId = await UserModel.findOne({ email: email });
+  const token = generateToken(userId?._id || "", secret_key, "1");
+  const _url = `${frontendUrl}/reset-password?email=${email}&token=${token}`
+  const mail = await sendResetPasswordLink(email, "Reset Password Link", `<div style="font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background: white; border-radius: 10px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h2 style="color: #2d89ef; margin-bottom: 10px;">Summit.AI Password Reset</h2>
+      <p style="font-size: 16px; color: #333;">Hi <strong>${userId?.name}</strong>,</p>
+
+      <p style="font-size: 15px; color: #555;">
+        We received a request to reset your password for your Summit.AI account.
+        If you didn’t make this request, you can safely ignore this email.
+      </p>
+
+      <p style="text-align: center; margin: 30px 0;">
+        <a href="${_url}" style="background-color: #2d89ef; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+          Reset Your Password
+        </a>
+      </p>
+
+      <p style="font-size: 14px; color: #777;">
+        This link will expire in 1 hour for your security. If you continue to have trouble, please reach out to our support team.
+      </p>
+
+      <hr style="margin: 30px 0;">
+      <p style="font-size: 13px; color: #aaa; text-align: center;">
+        © ${new Date().getFullYear()} Summit.AI • All rights reserved
+      </p>
+    </div>
+  </div>`)
+  if (mail.accepted) {
+    res.status(200).send({ message: "Password reset mail sent!" })
+  }
+  else {
+    res.status(401).send({ message: "Error while sending!" })
+
+  }
+}
+
 const changePassword = async (
   req: CustomRequest,
   res: Response
@@ -215,11 +257,11 @@ const getResult = async (req: CustomRequest, res: Response): Promise<void> => {
   try {
     // Decrement usage only for summarization
     // if (selectedVal === "summarize") {
-      await UserModel.findOneAndUpdate(
-        { _id: userId, "purchasePlan.summariesPerDay": { $gt: 0 } },
-        { $inc: { "purchasePlan.summariesPerDay": -1 } },
-        { new: true }
-      );
+    await UserModel.findOneAndUpdate(
+      { _id: userId, "purchasePlan.summariesPerDay": { $gt: 0 } },
+      { $inc: { "purchasePlan.summariesPerDay": -1 } },
+      { new: true }
+    );
     // }
 
     let resultText = "";
@@ -263,4 +305,5 @@ export {
   purchasePlan,
   getResult,
   updateProfile,
+  forgotPassword
 };
