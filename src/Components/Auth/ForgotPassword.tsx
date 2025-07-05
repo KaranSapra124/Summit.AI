@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState<String>("")
@@ -17,7 +18,7 @@ const ForgotPassword: React.FC = () => {
             }
         )
         const { data } = res;
-        alert(data?.message)
+       toast.success(data?.message)
     }
     return (
         <>

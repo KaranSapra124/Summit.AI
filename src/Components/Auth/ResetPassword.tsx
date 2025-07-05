@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 interface formDataInterface {
     email: string | null,
@@ -34,7 +35,7 @@ const ResetPassword: React.FC = () => {
             }
         )
         const { data } = res;
-        alert(data?.message)
+        toast.success(data?.message)
         navigate("/login")
     }
     return (

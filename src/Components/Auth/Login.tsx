@@ -49,6 +49,7 @@ const Login: React.FC<loginProps> = ({ isLogin }) => {
       {
         withCredentials: true,
       }
+
     );
 
     dispatch({
@@ -66,7 +67,8 @@ const Login: React.FC<loginProps> = ({ isLogin }) => {
   };
 
   useEffect(() => {
-    if (document.cookie.includes("userToken")) Navigate("/user");
+    const cookie = document.cookie
+    if (cookie.includes("userToken") && !cookie.includes("userToken=undefined") ) Navigate("/user");
   }, []);
 
   return (
