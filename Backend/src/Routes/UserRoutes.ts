@@ -7,13 +7,15 @@ import {
   getResult,
   getUser,
   purchasePlan,
+  resetPassword,
   updateProfile,
   userLogin,
 } from "../Controller/UserController";
 import { userAuth } from "../Middlewares/Auth";
 const router = Router();
 router.post("/login", userLogin);
-router.post("/forgot-password", forgotPassword); 
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password",resetPassword)
 router.post("/get-user", userAuth, getUser);
 router.post("/change-password/:email", userAuth, changePassword);
 router.post("/alter-password", userAuth, alterPassword);

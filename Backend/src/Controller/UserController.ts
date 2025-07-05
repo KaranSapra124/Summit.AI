@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel, { User } from "../Models/UserModel";
 import { hash, compare } from "bcrypt";
-import { generateToken } from "../Utils/JwtConfig";
+import { generateToken, verifyToken } from "../Utils/JwtConfig";
 import { JwtPayload } from "jsonwebtoken";
 import { sendAcknowledgeEmail, sendOTP, sendResetPasswordLink } from "../Utils/Nodemailer";
 import PlanModel, { Plan } from "../Models/PlanModel";
@@ -154,7 +154,7 @@ const forgotPassword = async (req: CustomRequest, res: Response): Promise<void> 
   const frontendUrl: string = process.env.FRONTEND_URL || "";
   const { email } = req.body;
   const userId = await UserModel.findOne({ email: email });
-  const token = generateToken(userId?._id || "", secret_key, "1");
+  const token = generateToken(userId?._id || "", secret_key, "1h");
   const _url = `${frontendUrl}/reset-password?email=${email}&token=${token}`
   const mail = await sendResetPasswordLink(email, "Reset Password Link", `<div style="font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background: white; border-radius: 10px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -188,6 +188,66 @@ const forgotPassword = async (req: CustomRequest, res: Response): Promise<void> 
   else {
     res.status(401).send({ message: "Error while sending!" })
 
+  }
+}
+
+const resetPassword = async (req: CustomRequest, res: Response): Promise<void> => {
+  const secret_key = process.env.SECRET_KEY || ""
+  const { email, password, token } = req.body
+  const isValid = verifyToken(token, secret_key);
+
+  if (isValid) {
+    const hashPass = await hash(password, 5);
+    await UserModel.findOneAndUpdate({ email: email, password: hashPass }, { new: true })
+    const message = ` <div style="max-width:600px;margin:auto;background-color:#ffffff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);font-family:Segoe UI,sans-serif;">
+    
+    <div style="text-align:center;margin-bottom:24px;">
+      <h1 style="font-size:24px;font-weight:bold;color:#10b981;margin-bottom:8px;">
+        Your Password Has Been Successfully Changed!
+      </h1>
+      <p style="color:#4b5563;font-size:15px;">
+        You're all set. Welcome back to smarter, safer AI with <strong>Summit.AI</strong>.
+      </p>
+    </div>
+
+    <div>
+      <p style="color:#111827;font-size:15px;margin-bottom:16px;">
+        Hi!,
+      </p>
+      <p style="color:#111827;font-size:15px;margin-bottom:16px;">
+        This is a confirmation that your password was successfully updated.
+        If you did not make this change, please <a href="https://summit-ai.onrender.com/contact" style="color:#10b981;font-weight:500;text-decoration:none;">contact support</a> immediately.
+      </p>
+
+      <p style="color:#111827;font-size:15px;margin-bottom:16px;">
+        We're committed to keeping your account secure. You can now log in using your new password and continue your journey with:
+      </p>
+
+      <ul style="padding-left:20px;margin-bottom:16px;color:#111827;">
+        <li style="margin-bottom:8px;">✨ Powerful AI Summarization</li>
+        <li style="margin-bottom:8px;">⚡ Clean & intuitive dashboard</li>
+        <li>🚀 Upgrade options for advanced features</li>
+      </ul>
+
+      <div style="text-align:center;margin-top:24px;">
+        <a
+          href="https://summit-ai.onrender.com/login"
+          style="background-color:#10b981;color:#ffffff;padding:12px 20px;border-radius:5px;font-weight:bold;text-decoration:none;font-size:15px;">
+          Log In to Summit.AI
+        </a>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid #d1d5db;margin-top:32px;padding-top:16px;text-align:center;font-size:13px;color:#6b7280;">
+      &copy; ${new Date().getFullYear()} Summit.AI. All rights reserved.<br />
+      You’re receiving this email because you have an active account on Summit.AI.
+    </div>
+  </div>`;
+    await sendAcknowledgeEmail(email, `Password Changed SUccessfully!`, message);
+
+    res.json({
+      message: "Password Changed Successfully!"
+    });
   }
 }
 
@@ -305,5 +365,6 @@ export {
   purchasePlan,
   getResult,
   updateProfile,
-  forgotPassword
+  forgotPassword,
+  resetPassword
 };
