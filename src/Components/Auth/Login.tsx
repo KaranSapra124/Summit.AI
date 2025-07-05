@@ -68,7 +68,7 @@ const Login: React.FC<loginProps> = ({ isLogin }) => {
 
   useEffect(() => {
     const cookie = document.cookie
-    if (cookie.includes("userToken") && !cookie.includes("userToken=undefined") ) Navigate("/user");
+    if (cookie.includes("userToken") && !cookie.includes("userToken=undefined")) Navigate("/user");
   }, []);
 
   return (

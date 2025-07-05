@@ -60,7 +60,7 @@ const Dashboard = () => {
         }
       );
       dispatch({ type: "SET_USER", payload: res?.data?.user });
-      toast.success("Logged In Successfully!");
+     
     };
     fetchUser();
   }, []);

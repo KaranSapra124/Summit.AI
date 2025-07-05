@@ -18,7 +18,7 @@ const ForgotPassword: React.FC = () => {
             }
         )
         const { data } = res;
-       toast.success(data?.message)
+        toast.success(data?.message)
     }
     return (
         <>
