@@ -11,7 +11,7 @@ export interface UserContextType {
   dispatch: React.Dispatch<UserAction>;
 }
 export interface userDataInterface {
-  _id?:string,
+  _id?: string,
   name: string;
   email: string;
   plan: {
@@ -31,6 +31,7 @@ export interface userDataInterface {
     prioritySupport: boolean;
     apiAccess: boolean;
   };
+  usage: number;
   isActive: boolean;
 }
 export const initialState: userState = {
