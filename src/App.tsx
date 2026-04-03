@@ -128,7 +128,9 @@ function App() {
         <UserContext.Provider
           value={{ theme: theme, userData: userData, dispatch: dispatch }}
         >
-          <RouterProvider router={appRoutes} />
+          <div className={theme.toLowerCase()}>
+            <RouterProvider router={appRoutes} />
+          </div>
         </UserContext.Provider>
       </AdminContext.Provider>
     </>

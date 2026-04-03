@@ -1,115 +1,123 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaLock, FaCheckCircle } from 'react-icons/fa';
 
 interface formDataInterface {
-    email: string | null,
-    token: string | null,
-    newPassword: string | null,
-    confirmPassword: string | null
+    email: string | null;
+    token: string | null;
+    newPassword: string | null;
+    confirmPassword: string | null;
 }
+
 const ResetPassword: React.FC = () => {
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<formDataInterface>({
         email: searchParams?.get("email"),
         token: searchParams?.get("token"),
         newPassword: "",
         confirmPassword: ""
-    })
+    });
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target as HTMLInputElement;
+        const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value
-        }))
+        }));
     };
 
     const handleSubmit = async () => {
-        if (formData?.newPassword !== formData?.confirmPassword) return toast.error("Passwords not matched!");
-        const res = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/reset-password`,
-            formData,
-            {
-                withCredentials: true,
-            }
-        )
-        const { data } = res;
-        toast.success(data?.message)
-        navigate("/login")
-    }
+        if (!formData.newPassword || !formData.confirmPassword) {
+            return toast.error("Please fill in all fields");
+        }
+        if (formData.newPassword !== formData.confirmPassword) {
+            return toast.error("Passwords do not match!");
+        }
+
+        try {
+            const res = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/reset-password`,
+                formData,
+                {
+                    withCredentials: true,
+                }
+            );
+            const { data } = res;
+            toast.success(data?.message || "Password reset successful!");
+            navigate("/login");
+        } catch (error: any) {
+            toast.error(error?.response?.data?.message || "Failed to reset password");
+        }
+    };
+
     return (
-        <div className="h-full max-[600px]:flex-col flex flex-row-reverse bg-black/90">
+        <div className="min-h-screen flex items-center justify-center radial-bg p-6 relative overflow-hidden">
+             {/* Background Orbs */}
+             <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/10 blur-[120px] rounded-full -z-10" />
+             
+            <div className="w-full max-w-md animate-in fade-in zoom-in duration-500">
+                <div className="glass p-8 md:p-10 rounded-[2.5rem] border-white/10 shadow-2xl text-center">
+                    {/* Header */}
+                    <div className="mb-10">
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-linear-to-br from-primary to-secondary mb-4 shadow-lg shadow-primary/20">
+                            <span className="text-white font-black text-xl">S</span>
+                        </div>
+                        <h1 className="text-3xl font-black text-white tracking-tight uppercase mb-2">
+                            Reset Password
+                        </h1>
+                        <p className="text-white/40 text-sm">
+                            Create a new secure password for your Summit.AI account.
+                        </p>
+                    </div>
 
-            <div className="max-[600px]:px-5 max-[600px]:mx-1 max-[600px]:my-5 mx-4 max-[600px]:w-full flex flex-col justify-center items-center w-1/2">
-                <h1 className="text-5xl max-[600px]:text-xl font-bold text-white">
-                    Reset{" "}
-                    <span className="text-emerald-500 font-extrabold">Password</span>
-                </h1>
+                    {/* Form */}
+                    <div className="space-y-6">
+                        <div className="group relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/30 group-focus-within:text-primary-light">
+                                <FaLock size={18} />
+                            </div>
+                            <input
+                                type="password"
+                                name="newPassword"
+                                onChange={handleChange}
+                                className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all font-inter"
+                                placeholder="New Password"
+                            />
+                        </div>
 
-                <p className='text-gray-200 my-2 text-sm font-semibold'>
-                    Enter your new password below. Make sure it's strong and something you’ll remember.
-                </p>
+                        <div className="group relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/30 group-focus-within:text-primary-light">
+                                <FaCheckCircle size={18} />
+                            </div>
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                onChange={handleChange}
+                                className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all font-inter"
+                                placeholder="Confirm New Password"
+                            />
+                        </div>
 
-                <div className="h-1 w-12 bg-emerald-500 rounded-full my-4"></div>
+                        <button
+                            onClick={handleSubmit}
+                            className="w-full py-4 rounded-2xl bg-linear-to-r from-primary to-secondary text-white font-black text-lg hover:glow-indigo transition-all duration-300 transform active:scale-95 shadow-xl shadow-primary/10"
+                        >
+                            Update Password
+                        </button>
+                    </div>
 
-                {/* New Password */}
-                <label className="input border border-emerald-500 rounded-md w-full p-2 my-4 input-bordered flex items-center gap-2">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                        fill="white"
-                        className="h-4 w-4 opacity-70"
-                    >
-                        <path d="M8 1a4 4 0 0 0-4 4v3H3.5A1.5 1.5 0 0 0 2 9.5v4A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12.5 8H12V5a4 4 0 0 0-4-4Zm-2.5 4a2.5 2.5 0 1 1 5 0v3h-5V5Z" />
-                    </svg>
-                    <input
-                        type="password"
-                        name="newPassword"
-                        className="grow text-white max-[600px]:text-sm p-2 focus:outline-0"
-                        onChange={handleChange}
-                        placeholder="New Password"
-                    />
-                </label>
-
-                {/* Confirm Password */}
-                <label className="input border border-emerald-500 rounded-md w-full p-2 my-4 input-bordered flex items-center gap-2">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                        fill="white"
-                        className="h-4 w-4 opacity-70"
-                    >
-                        <path d="M8 1a4 4 0 0 0-4 4v3H3.5A1.5 1.5 0 0 0 2 9.5v4A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-4A1.5 1.5 0 0 0 12.5 8H12V5a4 4 0 0 0-4-4Zm-2.5 4a2.5 2.5 0 1 1 5 0v3h-5V5Z" />
-                    </svg>
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        className="grow text-white max-[600px]:text-sm p-2 focus:outline-0"
-                        onChange={handleChange}
-                        placeholder="Confirm Password"
-                    />
-                </label>
-
-                <div className="flex justify-between w-full items-center">
-                    <button
-                        onClick={handleSubmit}
-                        className="bg-emerald-500 mr-auto cursor-pointer font-bold p-2 rounded-md text-white"
-                    >
-                        Reset Password
-                    </button>
+                    <div className="mt-8">
+                        <p className="text-xs text-white/20 leading-relaxed font-medium">
+                            Make sure your password is at least 8 characters long and includes a mix of letters, numbers, and symbols.
+                        </p>
+                    </div>
                 </div>
             </div>
-
-            <img
-                className="w-1/2 max-[600px]:w-full max-[600px]:h-full h-screen"
-                src="reset-password-image.jpg"
-                alt="No Image"
-            />
         </div>
+    );
+};
 
-    )
-}
-
-export default ResetPassword
+export default ResetPassword;

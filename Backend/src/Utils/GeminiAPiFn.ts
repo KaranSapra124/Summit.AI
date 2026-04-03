@@ -1,26 +1,27 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API as string });
-
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API as string);
 
 export const geminiSummarize = async (text: string): Promise<string> => {
-    const result = await genAI.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: `Summarize the following in 5 sentences & only return summary:\n\n${text}`
-    });
-    return result.text as string;
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const result = await model.generateContent(`Summarize the following in 5 sentences & only return summary:\n\n${text}`);
+  const response = await result.response;
+  return response.text();
 };
 
 export const geminiCorrect = async (text: string): Promise<string> => {
-    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Correct the grammar and spelling mistakes in the following and only return corrected sentence with mistakes and corrections in seperate lines:\n\n${text}` });
-    return result.text as string;
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const result = await model.generateContent(`Correct the grammar and spelling mistakes in the following and only return corrected sentence with mistakes and corrections in seperate lines:\n\n${text}`);
+  const response = await result.response;
+  return response.text();
 };
 
 export const geminiDetectLang = async (text: string): Promise<string> => {
-    const result = await genAI.models.generateContent({ model: "gemini-2.0-flash", contents: `Detect the language of this text & only return language:\n\n${text}` });
-    return result.text as string;
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const result = await model.generateContent(`Detect the language of this text & only return language:\n\n${text}`);
+  const response = await result.response;
+  return response.text();
 };
-
 
 export const geminiEnhanceEssayWriting = async (text: string): Promise<string> => {
   const prompt = `
@@ -53,10 +54,8 @@ ${text}
 """
 `;
 
-  const result = await genAI.models.generateContent({
-    model: "gemini-1.5-flash", // Or use gemini-1.5-pro if you have access
-    contents: prompt
-  });
-
-  return result.text as string;
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  return response.text();
 };

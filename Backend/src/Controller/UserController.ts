@@ -6,7 +6,6 @@ import { JwtPayload } from "jsonwebtoken";
 import { sendAcknowledgeEmail, sendOTP, sendResetPasswordLink } from "../Utils/Nodemailer";
 import PlanModel, { Plan } from "../Models/PlanModel";
 import axios from "axios";
-import { GoogleGenAI } from "@google/genai"
 import { geminiCorrect, geminiDetectLang, geminiEnhanceEssayWriting, geminiSummarize } from "../Utils/GeminiAPiFn";
 
 interface UserLoginRequest {

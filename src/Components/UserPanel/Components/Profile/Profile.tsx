@@ -1,35 +1,32 @@
-import { FaEdit } from "react-icons/fa";
-import Divider from "../../../../Utils/Divider";
-import Container from "../../../Global/Container";
+import { FaEdit, FaUserCircle, FaEnvelope, FaIdCard, FaChartBar, FaCalendarCheck } from "react-icons/fa";
 import { useContext, useState } from "react";
 import Modal from "../../../Helper/Modal";
 import { UserContext } from "../../../../Utils/UserContext";
 import {
   UserContextType,
   userDataInterface,
-  // userState,
 } from "../../../../Utils/UserReducer";
 import axios from "axios";
+import { RxCross1 } from "react-icons/rx";
 
 interface profileDetails {
   name: string;
   email: string;
-  // PurchasePlan: planDetail;
 }
+
 function Profile() {
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const context = useContext(UserContext);
-  const { theme, userData, dispatch } = context as UserContextType;
+  const { userData, dispatch } = context as UserContextType;
   const { name, email, purchasePlan } = userData as userDataInterface;
 
   const [details, setDetails] = useState<profileDetails>({
-    name: name || "John Doe",
-    email: email || "john.doe@example.com",
+    name: name || "User",
+    email: email || "user@example.com",
   });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target as HTMLInputElement;
-    console.log(name, value);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setDetails((prev) => ({
       ...prev,
       [name]: value,
@@ -37,12 +34,16 @@ function Profile() {
   };
 
   const handleSubmit = async (name: string, email: string) => {
-    await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update-profile`,
-      { name: name, email: email },
-      { withCredentials: true }
-    );
-    await fetchUser();
+    try {
+        await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update-profile`,
+          { name, email },
+          { withCredentials: true }
+        );
+        await fetchUser();
+    } catch (error) {
+        console.error("Error updating profile:", error);
+    }
   };
 
   const fetchUser = async () => {
@@ -55,187 +56,151 @@ function Profile() {
   };
 
   const profileModalData = (
-    <div
-      className={`p-6 bg-white flex flex-col relative mt-52  rounded-2xl shadow-xl w-96 mx-auto space-y-6`}
-    >
-      <h1 className="text-2xl font-bold text-gray-800">Update Profile</h1>
-      <div className="space-y-4">
-        <input
-          onChange={handleChange}
-          type="text"
-          name="name"
-          value={details?.name}
-          placeholder="Enter Your Name..."
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          onChange={handleChange}
-          type="email"
-          name="email"
-          value={details?.email}
-          placeholder="Enter Your Email..."
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <div className="flex justify-between space-x-4">
+    <div className="relative glass p-8 md:p-12 rounded-[2.5rem] border-white/10 shadow-2xl animate-in zoom-in duration-300 max-w-md w-full text-center">
+        <header className="mb-8">
+            <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Update <span className="gradient-text">Profile</span></h2>
+            <p className="text-white/40 text-sm italic">Keep your credentials up to date.</p>
+        </header>
+
+        <div className="space-y-6 mb-10">
+            <div className="group relative">
+               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/30 group-focus-within:text-primary-light">
+                 <FaUserCircle size={18} />
+               </div>
+               <input
+                 type="text"
+                 name="name"
+                 value={details.name}
+                 onChange={handleChange}
+                 className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+                 placeholder="Full Name"
+               />
+            </div>
+
+            <div className="group relative">
+               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/30 group-focus-within:text-primary-light">
+                 <FaEnvelope size={18} />
+               </div>
+               <input
+                 type="email"
+                 name="email"
+                 value={details.email}
+                 onChange={handleChange}
+                 className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all font-inter"
+                 placeholder="Email Address"
+               />
+            </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+             <button
+              onClick={() => setIsOpen(false)}
+              className="py-4 rounded-2xl glass text-white font-bold hover:bg-white/10 transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                await handleSubmit(details.name, details.email);
+                setIsOpen(false);
+              }}
+              className="py-4 rounded-2xl bg-linear-to-r from-primary to-secondary text-white font-black hover:glow-indigo transition-all shadow-lg"
+            >
+              Save Changes
+            </button>
+        </div>
+
         <button
-          onClick={async () => {
-            await handleSubmit(details?.name, details?.email);
-            setIsOpen(false);
-          }}
-          className="w-full px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-all"
+            onClick={() => setIsOpen(false)}
+            className="absolute top-6 right-6 w-10 h-10 glass rounded-full flex items-center justify-center text-white/50 hover:text-white transition-all font-bold"
         >
-          Submit
+            <RxCross1 size={18} />
         </button>
-        <button
-          onClick={() => {
-            setIsOpen(false);
-          }}
-          className="w-full cursor-pointer px-4 py-2 font-semibold text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 transition-all"
-        >
-          Cancel
-        </button>
-      </div>
     </div>
   );
-  // console.log(userData);
 
   return (
-    <>
+    <div className="max-w-4xl mx-auto py-8">
       {isOpen && <Modal data={profileModalData} />}
-      <Container className="w-full">
-        <div
-          className={`flex justify-between items-center max-[600px]:flex-col shadow-sm ${
-            theme === "Dark" ? "bg-gray-100/40" : "bg-gray-900"
-          } rounded-lg p-2 `}
-        >
-          <img
-            className="w-22 max-[600px]:w-10 rounded-full mx-5"
-            src="https://i.pinimg.com/236x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg"
-            alt="No Image"
-          />
-          <div>
-            <FaEdit
-              onClick={() => setIsOpen(true)}
-              className="text-white text-3xl cursor-pointer max-[600px]:text-[1.5rem] hover:bg-black transition-all duration-200 ml-auto  border p-1 rounded-full"
-            />
-            <h1
-              className={`text-xl max-[600px]:text-xs font-bold ${
-                theme === "Dark" ? "text-black" : "text-white/60"
-              }`}
-            >
-              <span className="text-gray-200 font-extrabold ">
-                Owner Name :{" "}
-              </span>
-              {name}
-            </h1>
-            <Divider className="h-0.5  w-full bg-black rounded-full my-2 " />
-            <h2
-              className={`text-xl max-[600px]:text-xs font-bold ${
-                theme === "Dark" ? "text-black" : "text-white/60"
-              }`}
-            >
-              {" "}
-              <span className="text-gray-200 font-extrabold ">
-                Owner Email :{" "}
-              </span>
-              {email}
-            </h2>
+      
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <header className="mb-12">
+             <h1 className="text-4xl md:text-5xl font-black text-white mb-4">My <span className="gradient-text">Profile</span></h1>
+             <p className="text-white/40 text-lg font-medium">Manage your personal settings and subscription details.</p>
+          </header>
+
+          <div className="relative glass p-8 md:p-12 rounded-[3.5rem] border-white/5 flex flex-col md:flex-row items-center gap-12 mb-12 shadow-2xl overflow-hidden">
+             {/* Backdrop Effect */}
+             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -z-10" />
+
+             <div className="relative group">
+                <img
+                    className="w-32 h-32 md:w-44 md:h-44 rounded-[3rem] border-4 border-white/5 p-2 object-cover shadow-2xl transition-transform duration-500 group-hover:scale-105"
+                    src="https://i.pinimg.com/236x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg"
+                    alt="User"
+                />
+                <button 
+                    onClick={() => setIsOpen(true)}
+                    className="absolute -bottom-2 -right-2 w-12 h-12 bg-linear-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-white shadow-xl hover:glow-indigo transition-all transform hover:scale-110 active:scale-95"
+                >
+                    <FaEdit size={20} />
+                </button>
+             </div>
+
+             <div className="flex-grow space-y-6">
+                <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest flex items-center gap-2">
+                        <FaIdCard className="text-primary-light" /> Full Identity
+                    </span>
+                    <h2 className="text-3xl font-black text-white tracking-tight">{name}</h2>
+                </div>
+                <div className="flex flex-col gap-1">
+                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest flex items-center gap-2">
+                        <FaEnvelope className="text-secondary" /> Secure Email
+                    </span>
+                    <p className="text-xl font-bold text-white/60">{email}</p>
+                </div>
+             </div>
           </div>
-        </div>
-        <div
-          className={`shadow-sm  ${
-            theme === "Dark" ? "shadow-white" : "shadow-gray-900"
-          } bg-gray-100/40 my-2  p-2 w-full justify-center rounded-md items-center`}
-        >
-          <h2 className="text-gray-900 max-[600px]:text-sm my-2 text-2xl font-extrabold">
-            Plan Details:
-          </h2>
-          <Divider className="h-0.5 w-12 bg-emerald-500 my-2 rounded-full"/>
-          <div className="flex justify-between">
+
+          <div className="space-y-6">
+             <div className="flex items-center justify-between mb-8">
+                <h3 className="text-2xl font-black text-white px-2">Subscription <span className="gradient-text">Overview</span></h3>
+                <div className="h-px flex-grow mx-8 bg-white/5" />
+             </div>
+
             {purchasePlan ? (
-              <table
-                className={`flex justify-between w-full rounded-sm max-[600px]:flex-col  border ${
-                  theme === "Dark" ? "border-gray-100 " : "border-gray-900"
-                }`}
-              >
-                <td
-                  className={`border ${
-                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                  }  w-full  p-2 font-bold`}
-                >
-                  <tr
-                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
-                      theme === "Dark" ? "border-white" : "border-gray-900"
-                    }`}
-                  >
-                    Plan Name
-                  </tr>
-                  <td
-                    className={`text-xl max-[600px]:text-sm font-extrabold ${
-                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                    } py-4`}
-                  >
-                    {purchasePlan.name}
-                  </td>
-                </td>
-                <td
-                  className={`border ${
-                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                  }  w-full  p-2 font-bold`}
-                >
-                  <tr
-                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
-                      theme === "Dark" ? "border-white" : "border-gray-900"
-                    }`}
-                  >
-                    Plan Limit
-                  </tr>
-                  <td
-                    className={`text-xl max-[600px]:text-sm font-extrabold ${
-                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                    } py-4`}
-                  >
-                    {purchasePlan.name == "Pro Plan"
-                      ? 50
-                      : purchasePlan.name === "Free Plan"
-                      ? 5
-                      : 100}
-                  </td>
-                </td>
-                <td
-                  className={`border ${
-                    theme === "Dark" ? "border-gray-100" : "border-gray-900"
-                  }  w-full  p-2 font-bold`}
-                >
-                  <tr
-                    className={`text-lg max-[600px]:text-sm  border-b-2 ${
-                      theme === "Dark" ? "border-white" : "border-gray-900"
-                    }`}
-                  >
-                    Plan Usage
-                  </tr>
-                  <td
-                    className={`text-xl max-[600px]:text-sm font-extrabold ${
-                      theme === "Dark" ? "text-gray-100" : "text-gray-900"
-                    } py-4`}
-                  >
-                    {purchasePlan.summariesPerDay}
-                  </td>
-                </td>
-              </table>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="group p-8 rounded-[2.5rem] glass hover:bg-white/5 transition-all text-center">
+                    <FaChartBar className="text-3xl text-primary-light mx-auto mb-4 grayscale group-hover:grayscale-0 transition-all duration-500" />
+                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest block mb-2">Plan Name</span>
+                    <p className="text-2xl font-black text-white group-hover:text-primary-light transition-colors">{purchasePlan.name}</p>
+                </div>
+
+                <div className="group p-8 rounded-[2.5rem] glass hover:bg-white/5 transition-all text-center">
+                    <FaCalendarCheck className="text-3xl text-secondary mx-auto mb-4 grayscale group-hover:grayscale-0 transition-all duration-500" />
+                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest block mb-2">Max Summaries</span>
+                    <p className="text-2xl font-black text-white group-hover:text-secondary transition-colors">
+                      {purchasePlan.name === "Pro Plan" ? 50 : purchasePlan.name === "Free Plan" ? 5 : 100}
+                    </p>
+                </div>
+
+                <div className="group p-8 rounded-[2.5rem] glass hover:bg-white/5 transition-all text-center border-emerald-500/10 hover:border-emerald-500/30">
+                    <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
+                    </div>
+                    <span className="text-[10px] font-black text-white/20 uppercase tracking-widest block mb-2">Daily Usage</span>
+                    <p className="text-2xl font-black text-emerald-400">{purchasePlan.summariesPerDay}</p>
+                </div>
+              </div>
             ) : (
-              <h1 className="text-center text-white font-extrabold">
-                No Plan Exists
-              </h1>
+              <div className="p-12 text-center glass rounded-[3rem] border border-white/5">
+                <p className="text-white/30 font-bold italic tracking-wide lowercase">Subscription data unavailable or no active plan found.</p>
+              </div>
             )}
-            {/* <h1>{details.plan.type}</h1>
-            <p>{details.plan.limit}</p>
-            <p>{details.plan.usage}</p> */}
           </div>
-        </div>
-      </Container>
-    </>
+      </div>
+    </div>
   );
 }
 

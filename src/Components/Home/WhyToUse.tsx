@@ -1,85 +1,84 @@
-import Divider from "../../Utils/Divider";
-import Container from "../Global/Container";
+import { FaMagic, FaSpellCheck, FaGlobe, FaReadme, FaSearch, FaKeyboard } from "react-icons/fa";
 
 const WhyToUse = () => {
   return (
-    <>
-      <Container id="Features"  className="text-center bg-gradient-to-br  from-black/60 via-gray-900/90 to-black/90">
-        <h1  className="text-white text-5xl max-[600px]:text-xl font-bold">
-          Why To Use{" "}
-          <strong className="text-emerald-500 font-extrabold">
-            Summit.AI ?
-          </strong>
-        </h1>
-        <p className="text-xs font-bold text-gray-300 my-6 max-[600px]:my-4">
-          <strong>Summit.AI</strong> has got immense powers to help you improve
-          your overall personality!
-        </p>
-        <Divider className="h-1 w-12 mx-auto bg-emerald-500 rounded-full my-2"/>
-        <div >
-          <DisplayPoints />
+    <section id="features" className="py-24 relative overflow-hidden transition-colors duration-300">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -z-10" />
+        
+        <div className="container mx-auto px-6">
+            <div className="text-center max-w-3xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary-light mb-4 block">Core Capabilities</span>
+                <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tight text-main uppercase">
+                    Why Choose <span className="gradient-text">Summit.AI?</span>
+                </h2>
+                <div className="h-1.5 w-24 bg-linear-to-r from-primary to-secondary mx-auto rounded-full mb-8 shadow-lg shadow-primary/20" />
+                <p className="text-lg text-muted leading-relaxed font-medium">
+                    Experience the future of content processing with our comprehensive suite of AI tools designed to elevate your productivity.
+                </p>
+            </div>
+
+            <DisplayPoints />
         </div>
-      </Container>
-    </>
+    </section>
   );
 };
 
 const DisplayPoints = () => {
-  type dataType = { title: string; description: string };
-  const data: dataType[] = [
+  const data = [
     {
       title: "Automatic Correction",
-      description:
-        "Automatically detects and corrects common grammar and spelling mistakes in your text.",
+      description: "Intelligently identifies and fixes grammar and spelling errors instantly.",
+      icon: <FaMagic className="text-3xl text-primary-light" />,
     },
     {
-      title: "Grammar Check",
-      description:
-        "Identifies grammatical errors and provides suggestions to improve sentence structure.",
+      title: "Grammar Excellence",
+      description: "Sophisticated sentence structure analysis for professional writing.",
+      icon: <FaSpellCheck className="text-3xl text-secondary" />,
     },
     {
-      title: "Language Check",
-      description:
-        "Analyzes your text for consistency in tone, style, and language usage.",
+      title: "Language Consistency",
+      description: "Maintain a flawless tone and style across all your documents.",
+      icon: <FaGlobe className="text-3xl text-primary" />,
     },
     {
-      title: "Readability",
-      description:
-        "Evaluates the readability of your content and suggests improvements for better clarity.",
+      title: "Readability Insights",
+      description: "Optimize your content for maximum impact and clarity.",
+      icon: <FaReadme className="text-3xl text-accent" />,
     },
     {
-      title: "Spell Checker",
-      description:
-        "Quickly identifies spelling errors and offers correct alternatives.",
+       title: "Deep Search",
+       description: "Extract core meanings and keywords from any text source.",
+       icon: <FaSearch className="text-3xl text-primary-light" />,
     },
     {
-      title: "Summarization & Keyword Extraction",
-      description:
-        "Generates concise summaries and extracts important keywords from your text.",
+      title: "Smart Summarization",
+      description: "Condense massive paragraphs into clear, concise summaries.",
+      icon: <FaKeyboard className="text-3xl text-secondary" />,
     },
   ];
+
   return (
-    <>
-      <ul className="flex gap-2 max-[600px]:flex-col">
-        {data?.map((elem, index) => {
-          return (
-            <>
-              <li key={index} className="w-64 max-[600px]:w-full ">
-                <div className="shadow border-l-2 max-[600px]:h-fit max-[600px]:p-5 max-[600px]:rounded-lg border-b-2 my-4  border-emerald-500 bg-gradient-to-br from-black/50 to-black/90 shadow-black  rounded-sm h-28 p-2 ">
-                  <h2 className="text-sm  line-clamp-1 text-gray-200 font-extrabold">
-                    {elem?.title}
-                  </h2>
-                  <Divider className="h-1 w-12 bg-emerald-500 rounded-full my-3 mx-auto"/>
-                  <p className="text-xs text-center font-light  text-white">
-                    {elem?.description}
-                  </p>
-                </div>
-              </li>
-            </>
-          );
-        })}
-      </ul>
-    </>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {data.map((elem, index) => (
+        <div 
+            key={index} 
+            className="group relative p-10 rounded-[2.5rem] glass hover:glass-glow transition-all duration-500 transform hover:-translate-y-2 border-white/5"
+        >
+          <div className="mb-8 p-5 w-fit rounded-2xl bg-white/5 group-hover:bg-primary/20 transition-all duration-500 shadow-inner">
+            {elem.icon}
+          </div>
+          <h3 className="text-xl font-black mb-4 text-main group-hover:text-primary-light transition-colors uppercase tracking-tight">
+            {elem.title}
+          </h3>
+          <p className="text-muted text-sm leading-relaxed group-hover:text-main transition-colors font-medium">
+            {elem.description}
+          </p>
+          
+          <div className="absolute bottom-0 left-10 right-10 h-1 bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        </div>
+      ))}
+    </div>
   );
 };
 

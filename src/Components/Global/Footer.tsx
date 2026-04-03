@@ -1,4 +1,3 @@
-import Container from "./Container";
 import { FaTwitter, FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
@@ -18,46 +17,72 @@ const Footer = () => {
   ];
 
   return (
-    <footer className=" border-gray-500 bg-gradient-to-tr  from-black/60 via-gray-900/90 to-black/90 text-white py-8">
-      <Container className="flex flex-col space-y-8 items-center justify-center md:justify-between md:flex-row py-8 px-6 max-w-screen-xl mx-auto">
-        {/* Logo and App Name */}
-        <div className="text-2xl font-bold text-center md:text-left">
-          <span className="text-emerald-400 font-extrabold">Summit</span>
-          <span className="text-emerald-400 font-extrabold">.AI</span>
+    <footer className="bg-surface-low border-t border-white/5 text-white/70 py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="col-span-1 md:col-span-1">
+             <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 bg-linear-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                  <span className="text-white font-black text-sm">S</span>
+                </div>
+                <h2 className="text-xl font-black gradient-text tracking-tight uppercase">SummIt.AI</h2>
+              </div>
+              <p className="text-sm leading-relaxed text-white/50">
+                Revolutionizing text summarization with advanced AI. Simple, fast, and high-quality results at your fingertips.
+              </p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="md:ml-auto">
+            <h3 className="text-white font-bold mb-6">Quick Links</h3>
+            <nav className="flex flex-col gap-4 text-sm">
+              {navLinks.slice(0, 3).map((link, index) => (
+                <a key={index} href={`#${link}`} className="hover:text-primary-light transition-colors">
+                  {link}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* Company */}
+          <div className="md:ml-auto">
+            <h3 className="text-white font-bold mb-6">Company</h3>
+            <nav className="flex flex-col gap-4 text-sm">
+              {navLinks.slice(3).map((link, index) => (
+                <a key={index} href={`#${link}`} className="hover:text-primary-light transition-colors">
+                  {link}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* Social */}
+          <div className="md:ml-auto">
+            <h3 className="text-white font-bold mb-6">Connect</h3>
+            <div className="flex gap-4">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-white/50 hover:text-white hover:border-primary-light/50 transition-all duration-300"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center gap-4 text-sm md:gap-6 md:text-base">
-          {navLinks.map((link, index) => (
-            <a
-              key={index}
-              href="#"
-              className="text-gray-300 hover:text-blue-500 transition-colors whitespace-nowrap"
-            >
-              {link}
-            </a>
-          ))}
-        </nav>
-
-        {/* Social Media Links */}
-        <div className="flex space-x-4 justify-center">
-          {socialLinks.map((social, index) => (
-            <a
-              key={index}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-blue-500 transition-colors text-xl"
-            >
-              {social.icon}
-            </a>
-          ))}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-white/40">
+          <p>&copy; {new Date().getFullYear()} Summit.AI. All rights reserved.</p>
+          <div className="flex gap-8">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+          </div>
         </div>
-      </Container>
-      <hr className="max-w-screen-xl mx-auto border-gray-600" />
-      {/* Copyright Notice */}
-      <div className="text-center text-gray-400 mt-6 text-sm px-4">
-        &copy; {new Date().getFullYear()} Summit.AI. All rights reserved.
       </div>
     </footer>
   );

@@ -1,65 +1,82 @@
-import {  useState } from "react";
-import Container from "../../../Global/Container";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FaShieldAlt, FaArrowLeft } from "react-icons/fa";
 
 const OTPForm = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { state } = location;
-  //   const { OTP } = state;
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
+
   const handleChange = (val: string, ind: number) => {
+    if (val.length > 1) return;
     const newOtp = [...otp];
     newOtp[ind] = val;
     setOtp(newOtp);
+    
     if (val && ind < otp.length - 1) {
-      (document.getElementById(`${ind + 1}`) as HTMLInputElement)?.focus();
-    } else if (val === "" && ind < otp.length) {
-      (document.getElementById(`${ind - 1}`) as HTMLInputElement)?.focus();
+      (document.getElementById(`otp-${ind + 1}`) as HTMLInputElement)?.focus();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, ind: number) => {
+    if (e.key === "Backspace" && !otp[ind] && ind > 0) {
+      (document.getElementById(`otp-${ind - 1}`) as HTMLInputElement)?.focus();
     }
   };
 
   const handleSubmit = () => {
-    state == otp.join("")
-      ? Navigate("/user/change-password")
-      : alert("Incorrect OTP");
+    const combinedOtp = otp.join("");
+    if (state == combinedOtp) {
+      navigate("/user/change-password");
+    } else {
+      alert("Incorrect OTP code. Please check and try again.");
+    }
   };
 
   return (
-    <>
-      <Container className=" mx-auto  h-fit rounded-md">
-        <div className="bg-white p-10 flex flex-col  rounded-sm">
-          <h1 className="text-xl font-bold text-center my-2">
-            Verify OTP Here
-          </h1>
-          <div className="flex h-fit gap-2">
-            {otp?.map((_, index: number) => {
-              return (
-                <>
-                  <input
-                    autoFocus={index == 0}
-                    max={10}
-                    onChange={(e) => handleChange(e.target.value, index)}
-                    className=" bg-white shadow shadow-black p-2    w-10 text-right rounded appearance-none"
-                    key={index}
-                    type="number"
-                    id={`${index}`}
-                    value={otp[index]}
-                    placeholder="0"
-                  />
-                </>
-              );
-            })}
-          </div>
-          <button
-            className="bg-emerald-500 w-fit mx-auto text-white font-bold p-1 rounded-sm my-2"
-            onClick={() => handleSubmit()}
-          >
-            Verify
-          </button>
+    <div className="flex items-center justify-center p-4">
+      <div className="glass p-10 md:p-14 rounded-[3rem] border-white/5 shadow-2xl max-w-md w-full text-center animate-in zoom-in duration-500">
+        <header className="mb-10">
+            <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-primary/20">
+                <FaShieldAlt className="text-primary-light text-2xl" />
+            </div>
+            <h1 className="text-3xl font-black text-white mb-2 uppercase tracking-tight">Verify <span className="gradient-text">Identity</span></h1>
+            <p className="text-white/40 text-sm font-medium">We've sent a 6-digit code to your email. Enter it below to proceed.</p>
+        </header>
+
+        <div className="flex justify-center gap-3 mb-10">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              id={`otp-${index}`}
+              type="text"
+              maxLength={1}
+              value={digit}
+              autoFocus={index === 0}
+              onChange={(e) => handleChange(e.target.value, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              className="w-12 h-14 md:w-14 md:h-16 text-center text-2xl font-black bg-white/5 border border-white/10 rounded-2xl text-white focus:outline-none focus:border-primary-light/50 focus:ring-1 focus:ring-primary-light/30 transition-all font-inter"
+            />
+          ))}
         </div>
-      </Container>
-    </>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full py-5 rounded-2xl bg-linear-to-r from-primary to-secondary text-white font-black text-lg hover:glow-indigo transition-all transform active:scale-95 shadow-xl shadow-primary/20 mb-8"
+        >
+          Verify Code
+        </button>
+
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center justify-center gap-2 mx-auto text-white/30 text-xs font-bold hover:text-white transition-colors uppercase tracking-widest"
+        >
+          <FaArrowLeft size={10} />
+          Back to settings
+        </button>
+      </div>
+    </div>
   );
 };
 

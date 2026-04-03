@@ -1,133 +1,166 @@
 import { useContext, useState } from "react";
-import Container from "../../../Global/Container";
 import Modal from "../../../Helper/Modal";
 import { UserContext } from "../../../../Utils/UserContext";
 import { UserAction } from "../../../../Utils/UserReducer";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaLock, FaPalette, FaEnvelope, FaShieldAlt } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
 
 const Settings = () => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const context = useContext(UserContext);
-  const { theme, dispatch } = context as UserContextType;
+  
   interface UserContextType {
     theme: string;
-    userData: object; // You can be more specific about this type if needed
+    userData: object;
     dispatch: React.Dispatch<UserAction>;
   }
+  
+  const { theme, dispatch } = context as UserContextType;
 
   const [email, setEmail] = useState<string>("");
-  const [isPass, setIsPass] = useState<Boolean>(false);
+  const [isPass, setIsPass] = useState<boolean>(false);
 
   const sendOTP = async (email: string) => {
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/change-password/${email}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    Navigate("/user/otp-form", {
-      state: res?.data?.OTP,
-    });
+    try {
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/change-password/${email}`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+        navigate("/user/otp-form", {
+          state: res?.data?.OTP,
+        });
+    } catch (error) {
+        console.error("Error sending OTP:", error);
+    }
   };
 
   const passwordModal = (
-    <div className="fixed inset-0 flex justify-center items-center bg-black/90 bg-opacity-50 z-50">
-      <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg w-11/12 max-w-sm sm:max-w-md text-center">
-        <h2 className="text-lg md:text-xl font-bold text-left mb-4 text-gray-700">
-          Enter Your Email
-        </h2>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          value={email}
-          className="w-full p-3 mb-4 border border-gray-500 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter Your Email..."
-        />
-        <div className="flex flex-col md:flex-row justify-between gap-4">
-          <button
-            onClick={() => sendOTP(email)}
-            className="w-full md:w-1/2 font-semibold py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 cursor-pointer transition-all focus:outline-none"
-          >
-            Send
-          </button>
-          <button
-            onClick={() => setIsPass(false)}
-            className="w-full md:w-1/2 py-2 font-semibold cursor-pointer bg-red-500 text-white rounded-md transition-all hover:bg-red-600 focus:outline-none"
-          >
-            Cancel
-          </button>
+    <div className="relative glass p-8 md:p-12 rounded-[2.5rem] border-white/10 shadow-2xl animate-in zoom-in duration-300 max-w-md w-full text-center">
+        <header className="mb-8">
+            <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-red-500/20">
+                <FaLock className="text-red-400 text-2xl" />
+            </div>
+            <h2 className="text-2xl font-black text-white mb-2 uppercase tracking-tight">Security Check</h2>
+            <p className="text-white/40 text-sm">Enter your registered email to receive a password reset code.</p>
+        </header>
+
+        <div className="space-y-6 mb-10">
+            <div className="group relative">
+               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-white/30 group-focus-within:text-primary-light">
+                 <FaEnvelope size={18} />
+               </div>
+               <input
+                 type="email"
+                 value={email}
+                 onChange={(e) => setEmail(e.target.value)}
+                 className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/5 rounded-2xl text-white placeholder:text-white/20 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all font-inter"
+                 placeholder="Email Address"
+               />
+            </div>
         </div>
-      </div>
+
+        <div className="grid grid-cols-2 gap-4">
+             <button
+              onClick={() => setIsPass(false)}
+              className="py-4 rounded-2xl glass text-white font-bold hover:bg-white/10 transition-all"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => sendOTP(email)}
+              className="py-4 rounded-2xl bg-linear-to-r from-red-500 to-orange-500 text-white font-black hover:glow-red transition-all shadow-lg"
+            >
+              Send OTP
+            </button>
+        </div>
+
+        <button
+            onClick={() => setIsPass(false)}
+            className="absolute top-6 right-6 w-10 h-10 glass rounded-full flex items-center justify-center text-white/50 hover:text-white transition-all"
+        >
+            <RxCross1 size={18} />
+        </button>
     </div>
   );
 
   return (
-    <>
+    <div className="max-w-4xl mx-auto py-8 px-4">
       {isPass && <Modal data={passwordModal} />}
-      <Container className="p-4 sm:p-6 md:p-10 w-full h-screen">
-        <h1
-          className={`text-lg md:text-3xl font-bold ${
-            theme === "Dark" ? "text-gray-100" : "text-gray-900"
-          }`}
-        >
-          Settings
-        </h1>
-        <div className="my-4">
-          {/* Change Password Section */}
-          <div
-            className={`flex flex-col max-[600px]:flex-row sm:flex-row p-4 items-center rounded-md my-4 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
-              theme === "Dark" ? "shadow-white" : "shadow-gray-900"
-            }`}
-          >
-            <h1
-              className={`mb-2 sm:mb-0 ${
-                theme === "Dark" ? "text-white" : "text-black"
-              } text-xs md:text-xl font-semibold`}
-            >
-              Change Account Password
-            </h1>
-            <button
-              onClick={() => setIsPass(true)}
-              className="bg-red-500 cursor-pointer hover:bg-red-600 transition-all duration-150 text-white max-[600px]:p-0.5 max-[600px]:text-xs font-bold p-2 rounded-sm"
-            >
-              Change Password
-            </button>
+      
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <header className="mb-12">
+             <h1 className="text-4xl md:text-5xl font-black text-white mb-4">Account <span className="gradient-text">Settings</span></h1>
+             <p className="text-white/40 text-lg font-medium">Configure your account preferences and security options.</p>
+          </header>
+
+          <div className="space-y-8">
+              {/* Security Section */}
+              <section className="group glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:bg-white/5 transition-all duration-500">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                      <div className="flex items-center gap-6">
+                          <div className="w-16 h-16 bg-linear-to-br from-red-500/20 to-orange-500/10 rounded-2xl flex items-center justify-center border border-red-500/20">
+                              <FaShieldAlt className="text-red-400 text-2xl" />
+                          </div>
+                          <div>
+                              <h2 className="text-xl font-black text-white mb-1 uppercase tracking-tight">Login Credentials</h2>
+                              <p className="text-white/30 text-sm font-medium italic">Update your password regularly to keep your account secure.</p>
+                          </div>
+                      </div>
+                      <button
+                        onClick={() => setIsPass(true)}
+                        className="px-8 py-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 font-bold hover:bg-red-500 hover:text-white transition-all transform hover:scale-105 active:scale-95"
+                      >
+                        Change Password
+                      </button>
+                  </div>
+              </section>
+
+              {/* Personalization Section */}
+              <section className="group glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:bg-white/5 transition-all duration-500">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                      <div className="flex items-center gap-6">
+                          <div className="w-16 h-16 bg-linear-to-br from-primary/20 to-secondary/10 rounded-2xl flex items-center justify-center border border-primary/20">
+                              <FaPalette className="text-primary-light text-2xl" />
+                          </div>
+                          <div>
+                              <h2 className="text-xl font-black text-white mb-1 uppercase tracking-tight">Visual Theme</h2>
+                              <p className="text-white/30 text-sm font-medium italic">Switch between light and dark mode for your workspace.</p>
+                          </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 py-3 px-6 glass rounded-2xl border-white/5">
+                          <span className={`text-xs font-black uppercase tracking-widest ${theme === 'Light' ? 'text-white' : 'text-white/20'}`}>Light</span>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                                onChange={(e) => {
+                                    const isChecked = e.target.checked;
+                                    dispatch({
+                                        type: "SET_THEME",
+                                        payload: isChecked ? "Dark" : "Light",
+                                    });
+                                }}
+                                type="checkbox"
+                                checked={theme === "Dark"}
+                                className="sr-only peer"
+                            />
+                            <div className="w-14 h-8 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-1 after:bg-white/20 after:border-white/10 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary/50"></div>
+                          </label>
+                          <span className={`text-xs font-black uppercase tracking-widest ${theme === 'Dark' ? 'text-primary-light' : 'text-white/20'}`}>Dark</span>
+                      </div>
+                  </div>
+              </section>
           </div>
-          {/* Theme Toggle Section */}
-          <div
-            className={`flex flex-col max-[600px]:flex-row sm:flex-row p-4 items-center rounded-md my-4 border-l-4 border-emerald-500 justify-between w-full shadow-sm ${
-              theme === "Dark" ? "shadow-white" : "shadow-gray-900"
-            }`}
-          >
-            <h1
-              className={`mb-2 sm:mb-0 ${
-                theme === "Dark" ? "text-white" : "text-black"
-              } text-lg md:text-xl max-[600px]:text-sm font-semibold`}
-            >
-              Theme
-            </h1>
-            <label className="inline-flex  items-center cursor-pointer">
-              <input
-                onChange={(e) => {
-                  const isChecked = (e.target as HTMLInputElement).checked;
-                  dispatch({
-                    type: "SET_THEME",
-                    payload: isChecked ? "Dark" : "Light",
-                  });
-                }}
-                type="checkbox"
-                checked={theme === "Dark" ? true : false}
-                className="sr-only peer"
-              />
-              <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
-              <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
-            </label>
-          </div>
-        </div>
-      </Container>
-    </>
+          
+          <footer className="mt-16 text-center">
+              <p className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em]">Summit.AI Control Panel v2.1.0</p>
+          </footer>
+      </div>
+    </div>
   );
 };
 
